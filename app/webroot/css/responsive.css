@@ -1,0 +1,110 @@
+@media screen and (max-width: 1200px){
+    .main p > img{ float: left; height: auto!important; margin-top: 20px; width: 270px!important; }
+    .mealThumb{ min-height: 677px; }
+    .mealThumb h5{ text-align: center;  }
+    .mealThumb h5 span.pull-right{ width: 100%; margin-left: 0;  }
+    .mealThumb h5{ display: inline-block; width: 100%; line-height: 20px; }
+    .product-details{ padding-top: 1px !important;  }
+    .dropdown-toggle{ width: 100px; }
+    .firstInfo article > ul > li{ margin-left: 5px; }
+}
+@media screen and (max-width: 1023px){  
+    .header .navbar-brand{padding: 20px 0 0; }
+    .navbar-brand > img{ width: 187px; }
+    .pro-box{ margin: 0 auto; }
+    .yumCommunity > .container > h3 + .row > .col-sm-4{ width:100%; }
+    .community-img { width: 20%; }
+    .steps{ height: auto;  }
+    .steps img { display: block; width: 100%; }
+    .feature-products h2{ font-size: 32px; }
+    .main h1{ font-size: 20px; }
+    #UserLoginForm{ width:300px; }
+    .main h1 > img { width: 100% !important; height: auto!important; }
+    #map_canvas{ width:100%!important; margin-top: 30px; }
+    .mealThumb h5{ text-align: center;  }
+    .mealThumb h5 span.pull-right{ width: 100%; margin-left: 0;  }
+    .mealThumb h5{ display: inline-block; width: 100%; line-height: 20px; }
+    .product-details{ padding-top: 1px !important;  }
+    .col-sm-3 .explore-img{ width: 100%; height: auto; }
+    .logistiecs li{ clear: both; }
+    .nav-tabs > li > a { padding: 5px 4px !important; }
+    .exp-yum .row > .col-sm-3, .exp-yum .row > .col-sm-9 h4{ text-align: center; margin-top: 15px; }
+    .mealThumb{ max-width: 470px; margin: 15px auto;  }
+    .pro-box{ width: 420px; }
+    
+    
+}
+@media screen and (max-width: 767px){  
+    
+    .caption h1{ font-size: 24px; }
+    .footer{ position: static; }
+    .navbar-brand img{ max-width: 210px; padding-top: 3px;}
+    .navbar-toggle{ margin-top: 25px; }    
+    .nav.navbar-nav.navbar-right { margin: 0 !important; overflow: hidden; padding: 20px 0; }
+    .header .navbar-default li a{ border-radius: 0; }
+    .footer{ text-align: center; }
+    h4.text-center { margin-top: 20px; }
+    .social-icons.text-center{ padding: 0; }
+    .signup-main{ width: auto; }
+    .main p > img { height: auto !important; width: 100% !important; }
+    .yum-contact-main { float: none; margin: 0; padding-left: 0; width: 95%; }
+    .exp-yum .row > .col-sm-3, .exp-yum .row > .col-sm-9 h4{ text-align: center; margin-top: 15px; }
+    .mealThumb{ max-width: 470px; margin: 15px auto;  }
+    .product-details{ padding-top: 1px !important;  }
+    .firstInfo article > ul > li{ margin-left: 0; line-height: 24px; width: 100%; }
+    .nav-tabs > li{ margin-bottom: 2px!important; }
+    .nav-tabs a{ border-bottom: 0px !important; }
+    li.order { margin-top: 20px; }
+    .user-name { display: inline-block; padding: 3px 0; width: 100%; }
+    .dropdown-toggle{ width: auto; }
+/*    .pro-box{ width: 304px; }*/
+}
+@media (max-width: 1023px) and (orientation: landscape) { 
+    .pro-box{ width: 65%; }
+}
+@media screen and (max-width: 599px){ 
+    .caption h1{ font-size: 20px; }
+    .home-slider .btn-row { margin: 0; width: 100%; text-align: center; }
+    .home-slider .btn-row > form { float: none; margin-right: 0px; margin-bottom: 15px; margin-top: 15px; width: 100%; }
+    .community-img { margin-bottom: 15px; width: 100%; }
+    .community-text { width: 100%; margin-bottom: 15px; }    
+    .com-thumb.story-yum, .com-thumb p{ text-align: center; }
+    .com-thumb{ padding: 10px; }
+    .com-thumb.story-yum h5, .footer{ text-align: center; }
+    .signup-main{ padding: 15px 30px; }
+    .feature-products h2{ font-size: 24px; }
+    .signup-main h3{ font-size: 24px; }
+    .navbar-default #exampleModal .modal-dialog{ width: auto; }
+    .mealThumb { margin: 15px auto; max-width: 320px; }
+    .nav-tabs > li{ width: 100%; }
+    .mealThumb h5{ text-align: center;  }
+    .mealThumb h5 span.pull-right{ width: 100%; margin-left: 0;  }
+    .mealThumb h5{ display: inline-block; width: 100%; line-height: 20px; }
+    .text-right1{ float: left; }
+    .product-details{ padding-top: 1px !important;  }
+    .nav-tabs > li > a { border: 1px solid #ccc !important; border-radius: 4px; }
+    .no-padd{ padding: 0!important; }
+    .header .navbar-default li{ margin-left: 0; }
+    .home-slider{ padding: 60px 0; }    
+    select.meal-unit { width: 150px; }
+    .pro-box{ width: 304px }
+    
+    
+    
+}
+
+@media screen and (max-width: 320px){ 
+/*    .pro-box{ width: 270px; }*/
+    .pro-box{ width: 100%; }
+    .signup img { margin: 15px 0 0 15px; }
+    .main h1{ font-size: 28px; }
+    .home-slider{ padding: 25px 0; }
+}
+@media screen and (max-width: 240px){
+    .navbar-brand { position: absolute; }
+    .navbar-toggle { margin-top: 65px; }
+}
+@media screen and ( min-width: 768px){ 
+    .main-explore{ min-height:  }
+/*    section.feature-products { min-height: 750px; }*/
+}
