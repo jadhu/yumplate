@@ -27,15 +27,21 @@
   <tbody> 
   <tr> 
   <td valign="top" xml="lang"> <div style="color: #737373; font-family: Arial; font-size: 14px; line-height: 150%; text-align: left;"> 
-  <p>Your order has been received and is now being processed. Your order details are shown below for your reference:</p> 
-  <h2 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Order: #<?php //echo $shop['Order']['id'];?></h2> 
+  <p> Dear <?php echo $shop['Order']['first_name'].' '.$shop['Order']['last_name'];?>, Your order has been received and is now being processed. Your order details are shown below for your reference.One of our YUMplate staff will be contacting you shortly:</p> 
+  <h2 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Order: #<?php echo $shop['Order']['id'];?></h2> 
 
   <table cellspacing="0" cellpadding="6" border="1" style="width: 100%; border: 1px solid #eee;"> <thead> 
   <tr>
   <th style="text-align: left; border: 1px solid #eee;" scope="col">Product</th>
-  <th style="text-align: left; border: 1px solid #eee;" scope="col">Quantity</th>
-  <th style="text-align: left; border: 1px solid #eee;" scope="col">Chef Name</th>
   <th style="text-align: left; border: 1px solid #eee;" scope="col">Price</th>
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Quantity</th>
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Pickup Time</th>
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Pickup Date</th>
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Chef Name</th>
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Chef Rating</th>
+
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Discount</th>
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Subtotal</th>
   </tr> </thead> 
   <tbody> 
   <?php foreach ($shop['OrderItem'] as $orderitem): ?>
@@ -43,14 +49,28 @@
    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee; word-wrap: break-word;" xml="lang">
    <?php echo $orderitem['name']; ?>
 
+   </td>
+   <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><span class="amount">
+   $<?php echo $orderitem['price']; ?></span>
    </td> 
    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><?php echo $orderitem['quantity']; ?>
+   </td>
+    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><?php echo date('h:i A', strtotime($orderitem['pick_time_from'])).'-'.date('h:i A', strtotime($orderitem['pick_time_to'])); ?>
+   </td>  
+   <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><?php echo $orderitem['order_date']; ?>
    </td> 
    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><span class="name">
  <?php echo $orderitem['cook_name']; ?>	</span>
    </td> 
+   <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang">
+   <a href="http://projects.udaantechnologies.com/yumplate/u/<?php echo $orderitem['username']; ?>" target="_blank">
+   <img src="http://projects.udaantechnologies.com/yumplate/img/ReviewStar/<?php echo ($orderitem['cook_rating']>5)?5:$orderitem['cook_rating']; ?>_star.png"/></a>
+   </td>
+    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><span class="amount">
+   <?php echo !empty($orderitem['discount'])?'$'.$orderitem['discount']:''; ?></span>
+   </td>
    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><span class="amount">
-   $<?php echo $orderitem['price']; ?></span>
+   $<?php echo $orderitem['subtotal']; ?></span>
    </td> 
    </tr> 
    <?php endforeach; ?>
@@ -59,19 +79,25 @@
     
     <tr>
     <th style="text-align: left; border: 1px solid #eee;" scope="row" colspan="2">Payment Method:</th> 
-    <td style="text-align: left; border: 1px solid #eee;" xml="lang">Paypal</td> 
+    <td colspan="5" style="text-align: left; border: 1px solid #eee;" xml="lang">Paypal</td> 
+    </tr> 
+    <tr><th style="text-align: left; border: 1px solid #eee;" scope="row" colspan="2">Hst:</th> 
+    <td colspan="5" style="text-align: left; border: 1px solid #eee;" xml="lang"><span class="amount">$<?php echo $shop['Order']['subtotal'];?></span></td> 
     </tr> 
     <tr><th style="text-align: left; border: 1px solid #eee;" scope="row" colspan="2">Order Total:</th> 
-    <td style="text-align: left; border: 1px solid #eee;" xml="lang"><span class="amount">$<?php echo $shop['Order']['total'];?></span></td> 
+    <td colspan="5" style="text-align: left; border: 1px solid #eee;" xml="lang"><span class="amount">$<?php echo $shop['Order']['total'];?></span></td> 
     </tr> 
     </tfoot> 
     </table> 
-
-    <h2 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Customer details</h2> 
-    <p><strong>Email:</strong> 
-    <a target="_blank" onclick="top.Popup.composeWindow('pcompose.php?sendto=<?php echo $shop['Order']['email'];?>'); return false;" href="mailto:swetanka.jaiswal@webenturetech.com"><?php echo $shop['Order']['email'];?></a>
+    <p><strong>Order Date:</strong><?php echo date('Y-m-d',strtotime($shop['Order']['created']));?></p> 
+   
+     
+    <!--h2 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Customer details</h2> 
+    <p><strong>First Name:</strong> 
+    <!--a target="_blank" onclick="top.Popup.composeWindow('pcompose.php?sendto=<?php echo $shop['Order']['email'];?>'); return false;" href="mailto:swetanka.jaiswal@webenturetech.com"><?php echo $shop['Order']['email'];?></a>
+    <?php echo $shop['Order']['first_name'];//$this->Session->read('Auth.User.first_name');?>
     </p> 
-    <p><strong>Tel:</strong> <?php echo $shop['Order']['phone'];?></p> 
+    <p><strong>Last Name:</strong> <?php echo $shop['OrderItem']['last_name'];//$this->Session->read('Auth.User.last_name');?></p--> 
     <table cellspacing="0" cellpadding="0" border="0" style="width: 100%; vertical-align: top;"> 
     <tbody> 
      <tr> 
@@ -84,6 +110,11 @@
      </tr> 
      </tbody> 
      </table> 
+     <h3 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Contact Details</h3> 
+     <p><strong>Email:</strong> 
+    <a target="_blank" onclick="top.Popup.composeWindow('pcompose.php?sendto=<?php echo $shop['OrderInfo']['email'];?>'); return false;" href="mailto:swetanka.jaiswal@webenturetech.com"><?php echo $shop['OrderInfo']['email'];?></a>
+    </p> 
+    <p><strong>Tel:</strong> <?php echo $shop['OrderInfo']['phone'];?></p> 
      </div> 
      </td> 
      </tr> 

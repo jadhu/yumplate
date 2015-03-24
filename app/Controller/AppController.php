@@ -79,6 +79,23 @@ class AppController extends Controller {
         } else {
             $this->Auth->allow();
         }
+
+
+
+
+        // for set value from db in settings
+
+        $this->loadModel('Setting');
+        $settings=$this->Setting->find('first');
+        Configure::write('Settings.ADMIN_EMAIL',$settings['Setting']['order_mail']);
+        Configure::write('Settings.SUPPORT_EMAIL',$settings['Setting']['support_mail']);
+        $values=Configure::read('Settings');
+
+
+        $this->loadModel('MetaSetting');
+        $meta_settings=$this->MetaSetting->find('first');
+        $this->set(compact('meta_settings'));
+    
         
     }
 

@@ -20,9 +20,11 @@ echo "This meal available on ".$day=$product['Product']['day'];
 
                             </figure>
                             <article>
-                                <button class="pull-right btn become-btn add_meal_cart">
+                                 <?php if(!empty($meal_day) ){ ?>
+                                <button class="pull-right btn become-btn add_meal_cart" data-meal-id="<?php echo $product['Product']['id'] ; ?>" data-order-day="<?php echo strtolower($meal_day);?>">
                                     + Add to Cart
                                 </button>
+                                 <?php } ?>
                                 <?php 
                             echo $this->Html->link('Add your review',array('controller'=>'products','action'=>'view','slug'=>$product['Product']['slug']),array('class'=>'pull-right btn become-btn add-review'));
                             ?>
@@ -37,7 +39,7 @@ echo "This meal available on ".$day=$product['Product']['day'];
                                      ?>
                                     
                                      </div>
-                                    (<?php echo count($product['Review']); ?>  reviews)
+                                    (<?php echo count($product['Review']); ?> <span data-product-id="<?php echo $product['Product']['id']; ?>" class="review-comment" style="cursor:pointer;">reviews</span>)
                                     </div>
                                     <?php }else{?>
                                      <div class="ratings">
@@ -51,7 +53,7 @@ echo "This meal available on ".$day=$product['Product']['day'];
                                        
                                     }?>
                                     </ul>
-                                    (<?php echo count($product['Review']); ?>  reviews)
+                                    (<?php echo count($product['Review']); ?> reviews)
                                     </div>
                                     <?php } ?>
                             <!-- Nav tabs -->

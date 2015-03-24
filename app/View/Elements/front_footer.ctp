@@ -16,7 +16,7 @@
                             <li>|</li>
                             <li>
                             <?php 
-                            echo $this->Html->link('Contact','/contact');
+                            echo $this->Html->link('Contact Us','/contact');
                             ?>
                               
                             </li>
@@ -46,7 +46,7 @@
                         <h4 class="text-center">Social</h4>
                         <ul class="social-icons text-center">
                             <li>
-                                <a  href="https://www.facebook.com/yumplate" target="_blank" class="icon1" ></a>
+                                <a  href="https://www.facebook.com/pages/Yumplate/346586222196988" target="_blank" class="icon1" ></a>
                             </li>
                             <!--li>
                                 <a  href="#" class="icon2"></a>
@@ -55,7 +55,7 @@
                                 <a  href="https://instagram.com/yumplate" target="_blank" class="icon3"></a>
                             </li>
                             <li>
-                                <a  href="https://twitter.com/yum-platelinks" target="_blank" class="icon4" ></a>
+                                <a  href="https://twitter.com/yum_plate" target="_blank" class="icon4" ></a>
                             </li>
                             <!--li>
                                 <a  href="#" class="icon5" ></a>

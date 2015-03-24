@@ -6,7 +6,7 @@
 	if(!empty($products)){
 		foreach ($products as $key => $value) {?>
     <div class="row">
-		<div class="col-sm-3">
+		<div class="col-sm-4 explore-yum-img">
 		<?php 
 		  echo $this->Html->image('/images/small/'.$value['Product']['image'],
 									array(
@@ -19,21 +19,22 @@
 		  ?>
 			
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-8">
 			<h4><?php echo $value['Product']['name'];?></h4>
 			<p><?php echo $value['Product']['story'];?></p>
 			<p>
-				Available: <?php echo $value['Product']['day'];?>
+				Available On: <?php echo ucfirst($value['Product']['day']);?>
 			</p>
 			<p>
-				<?php echo $value['User']['city'];?>, <?php echo $value['User']['country'];?>
+				Place : <?php echo $value['User']['city'];?>, <?php echo $value['User']['country'];?>
 			</p>
 		</div>
 	</div>
 	
 	<hr/>
 	
-		<?php }}else{
-			echo '<p class="note-msg"> Your search returns no results. </p>';
+		<?php }
+       echo $this->element('pagination'); 
+	}else{  echo '<p class="note-msg"> Your search returns no results. <br /><br /><br /><a href="http://projects.udaantechnologies.com/yumplate/products/ExploreYum/keywords=" class="btn btn-primary">May be suggust</a> </p>';
 			}?>
 </div>

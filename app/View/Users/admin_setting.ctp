@@ -12,6 +12,22 @@ $(document).ready(function() {
         title: 'hst',
         placement: 'right',
     });
+
+    $('.support_mail').editable({
+       name: 'support_mail',
+        url: '<?php echo $this->webroot; ?>admin/users/setting_editable',
+        title: 'Setting',
+        title: 'support_mail',
+        placement: 'right',
+    });
+
+    $('.order_mail').editable({
+       name: 'order_mail',
+        url: '<?php echo $this->webroot; ?>admin/users/setting_editable',
+        title: 'Setting',
+        title: 'hst',
+        placement: 'right',
+    });
 });
     </script>
 
@@ -20,8 +36,18 @@ $(document).ready(function() {
      <br/>
 
 <table class="table-bordered table">
-<td>Recipe HST %</td>
-<td><span class="hst" data-value="<?php echo $setting['Setting']['hst']; ?>" data-pk="<?php echo $setting['Setting']['id']; ?>"> <?php echo $setting['Setting']['hst']; ?></span></td>
+<tr>
+<td width="350px;">Recipe HST %</td>
+<td><span class="hst" data-value="<?php echo $setting['Setting']['hst']; ?>" data-pk="<?php echo $setting['Setting']['id']; ?>"> <?php echo $setting['Setting']['hst']; ?></span></td><br />
+</tr>
+<tr>
+<td width="350px;">Support E-Mail Address </td>
+<td><span class="support_mail" data-value="<?php echo $setting['Setting']['support_mail']; ?>" data-pk="<?php echo $setting['Setting']['id']; ?>"> <?php echo $setting['Setting']['support_mail']; ?></span></td>
+</tr>
+<tr>
+<td width="350px;">Order Sent Out E-Mail Address </td>
+<td><span class="order_mail" data-value="<?php echo $setting['Setting']['order_mail']; ?>" data-pk="<?php echo $setting['Setting']['id']; ?>"> <?php echo $setting['Setting']['order_mail']; ?></span></td>
+</tr>
 </table>
 
 <h2>Discount Setting</h2>

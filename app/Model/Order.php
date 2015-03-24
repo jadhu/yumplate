@@ -93,6 +93,19 @@ class Order extends AppModel {
             'finderQuery' => '',
             'counterQuery' => '',
         )
+        
+    );
+
+public $hasOne=array(
+     'OrderInfo'=>array(
+        'className' => 'OrderInfo',
+        'foreignKey' => 'order_id',
+         'dependent' => true,
+        ),
+      /* 'User'=>array(
+        'className' => 'User',
+        'foreignKey' => 'user_id',
+        )*/
     );
 
 //////////////////////////////////////////////////

@@ -229,10 +229,11 @@ function redirect url for searching category
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Category->save($this->request->data)) {
-                $this->Session->setFlash('The category has been saved');
+
+                $this->Session->setFlash('The category has been updated','default',array('class'=>'alert alert-success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash('The category could not be saved. Please, try again.');
+                $this->Session->setFlash('The category could not be saved. Please, try again.','default',array('class'=>'alert alert-danger'));
             }
         } else {
             $this->request->data = $this->Category->find('first', array('conditions' => array('Category.id' => $id)));

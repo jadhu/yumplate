@@ -5,7 +5,7 @@ $(document).ready(function(){
 //for session message to hide
 
 if($('#flashMessage').length==1){
-   //$('#flashMessage').fadeOut( 3000 );
+   $('#flashMessage').fadeOut( 5000 );
 }
 
 
@@ -41,16 +41,7 @@ checkQuery(user_id);
 UserProducts(user_id, counter);
 UserProductsTomorrow(user_id, counter+1);
 UserReview();
-/*$(".rating-wrap").each(function(){
 
- $('#product_'+$(this).data('product')).jRate({
-    rating:$(this).data('rating'), 
-    readOnly: true
-   });
-
-
-  //console.log($(this).data('rating'));
-}); */
 
 }
 
@@ -138,27 +129,33 @@ $(document).on('click','.add_meal_cart',function(){
   }else{
     mealId=$(this).attr('data-meal-id');
   }
-
- var page_url=$('#page_url').val();
+  day =$(this).attr('data-order-day');
+  var order_date=$(this).attr('data-order-date');
+  var page_url=$('#page_url').val();
+  var html='';
     $.ajax({
 
             'url':page_url+'ajax/addCart/',
             'type':'POST',
             'async': false,
-            'data':{'cookId':cookId,'mealId':mealId,'userId':loginUser,'comment':comment},
+            'data':{'cookId':cookId,'mealId':mealId,'userId':loginUser,'comment':comment,'day':day,'order_date':order_date},
             'dataType': "json",
             'success':function(data){
+               $('#message').show(); 
                 if(data.type=='success'){
+
                   $('.cart-btn').text(data.count);
 
-                  $('#message').html('<div class="alert alert-success">'+data.msg+'</div>').fadeOut( 3000 );
-                  $('#message').show();  
-                  $('#message').focus();
+                  html +='<div class="alert alert-success">'+data.msg+' for '+data.order_day+' pickup.For any other day, scroll down to pick from the menu.';
+                  
+                  $('#message').html(html).fadeOut( 10000 );
+                  
+                  
                 }else{
                   $('.cart-btn').text(data.count);
-                  $('#message').show();
-                  $('#message').html('<div class="alert alert-danger">'+data.msg+'</div>').fadeOut( 3000 );
-                  $('#message').focus();
+                 
+                  $('#message').html('<div class="alert alert-danger">'+data.msg+'</div>').fadeOut( 5000 );
+                  
                 }
 
             } 
@@ -178,10 +175,14 @@ $('.remove-add-cart').click(function(){
 
   //for get price on unit  change 
     $('.meal-unit').on('change',function(){
-        getPrice();
+       var cartId=$(this).closest('tr').attr('id');
+       var quantity=$(this).val();
+       var productId=$(this).closest('tr').attr('data-product-id');
+       updateCart(cartId,quantity,productId);
+        //getPrice();
     });
     // on page load
-   getPrice();
+   //getPrice();
 
 
 
@@ -252,6 +253,7 @@ if($('.readMore').length!=0){
 
 if($('#cook_id').length!=0){
  $(document).on('click','#addcoment',function(){
+
     if($('.reviewLine li:last-child').text().trim()=='No more comment'){
         return false;
     }
@@ -288,10 +290,92 @@ if($('#forget_pass').length!=0){
 }
 
 
+// for view the comments per meal
+$(document).on('click','.review-comment',function(){
+  var productId=$(this).attr('data-product-id');
+  var page_url=$('#page_url').val();
+  $.ajax({
+        'url':page_url+'ajax/showComment/',
+         'type':'POST',
+         'data':{'productId':productId},
+         'dataType': "html",
+          beforeSend:function(){
+             // $("#loader_div").show();
+             },
+         'success':function(data){
+             $('#ReviewModal').modal('show');
+             $('#comment_section').html(data);
+               
+         } 
+    });
+});
 
+//ends here
 
 });
 
+
+//function for update cart for discount,quantity , price
+function updateCart(cartId,quantity,productId){
+  var page_url=$('#page_url').val();
+  $.ajax({
+        'url':page_url+'ajax/updateCart/',
+         'type':'POST',
+         'async': false,
+         'data':{'cartId':cartId,'quantity':quantity,'productId':productId},
+         'dataType': "json",
+         beforeSend:function(){
+             // $("#loader_div").show();
+             },
+         'success':function(data){
+             window.location.href=page_url+'carts';
+               
+         } 
+    });
+}
+
+
+//function for calculate price 
+
+function getPrice(){
+    var mealHst=$('.meal-hst').data('hst');
+    var ProductItems=new Array();
+    var totalPrice=0;
+    var hst=0;
+    var subTotal=0;
+    var Items=0;
+      $(".meal-unit option:selected").each(function(){
+        var unit=$(this).text();
+        var price=$(this).parent().parent().siblings('.meal-price').data('price');
+
+        var total =unit*price;
+         Items=parseInt(Items)+parseInt(unit);
+        
+         $(this).parent().parent().siblings('.total-price').text('$'+total);
+          subTotal=parseInt(subTotal)+ parseInt(total);
+          ProductItems.push(unit+'~'+$(this).parent().parent().siblings('.product-ids').attr('data-product-id'));
+       });
+
+   
+    var productIds=ProductItems.join('|');
+    hst =(subTotal*mealHst)/100;
+    totalPrice=hst+subTotal;
+    var totalP =totalPrice.toFixed(2);
+    var hstP =hst.toFixed(2);
+
+   
+
+    $('.hst-val').text('$'+hstP);
+    $('#meal-subtotal').text('$'+subTotal);
+    $('#meal-total').text('$'+totalP);
+    $('#meal-total').attr('data-total',totalP);
+
+    $('#meal-items').text(Items);
+    $('#ProductItems').val(Items);
+    $('#ProductProductId').val(productIds);
+
+ 
+}
 //function for delete from cart
 function deleteCart(id){
     var cartId=id; 
@@ -306,7 +390,7 @@ function deleteCart(id){
          'success':function(data){
                if(data.type=='success'){
                    $('#'+id).remove();
-                   getPrice();
+                  window.location.href=page_url+'carts';
                }
 
          } 
@@ -417,47 +501,7 @@ function UserReview(){
  $('#addcoment').attr('data-limit',$('.reviewLine').children().length);
 }
 
-//function for calculate price 
 
-function getPrice(){
-    var mealHst=$('.meal-hst').data('hst');
-    var ProductItems=new Array();
-    var totalPrice=0;
-    var hst=0;
-    var subTotal=0;
-    var Items=0;
-  $(".meal-unit option:selected").each(function(){
-    var unit=$(this).text();
-    var price=$(this).parent().parent().siblings('.meal-price').data('price');
-
-    var total =unit*price;
-     Items=parseInt(Items)+parseInt(unit);
-    
-     $(this).parent().parent().siblings('.total-price').text('$'+total);
-      subTotal=parseInt(subTotal)+ parseInt(total);
-      ProductItems.push(unit+'~'+$(this).parent().parent().siblings('.product-ids').attr('data-product-id'));
-   });
-
-
-     var productIds=ProductItems.join('|');
-    hst =(subTotal*mealHst)/100;
-    totalPrice=hst+subTotal;
-    var totalP =totalPrice.toFixed(2);
-    var hstP =hst.toFixed(2);
-
-   
-
-    $('.hst-val').text('$'+hstP);
-    $('#meal-subtotal').text('$'+subTotal);
-    $('#meal-total').text('$'+totalP);
-    $('#meal-total').attr('data-total',totalP);
-
-    $('#meal-items').text(Items);
-    $('#ProductItems').val(Items);
-    $('#ProductProductId').val(productIds);
-
- 
-}
 
 
 

@@ -45,8 +45,8 @@ class PaypalComponent extends Component {
 
 ////////////////////////////////////////////////////////////
 
-    public function step1($paymentAmount ) {
-
+    public function step1($paymentAmount) {
+          
         $resArray = $this->CallShortcutExpressCheckout($paymentAmount);
 
         $ack = strtoupper($resArray['ACK']);
@@ -60,6 +60,10 @@ class PaypalComponent extends Component {
     public function CallShortcutExpressCheckout($paymentAmount) {
         $nvpstr = '&PAYMENTREQUEST_0_AMT='. $paymentAmount;
         $nvpstr .= '&PAYMENTREQUEST_0_PAYMENTACTION=' . $this->paymentType;
+        $nvpstr .='&PAYMENTREQUEST_0_ITEMAMT='.$paymentAmount.
+        $nvpstr .='&L_PAYMENTREQUEST_0_AMT0='.$paymentAmount.
+       // $nvpstr .='&L_PAYMENTREQUEST_0_QTY0='.$itemQty.
+        //$nvpstr .='&PAYMENTREQUEST_0_AMT='.$ItemTotalPrice.   
         $nvpstr .= '&RETURNURL=' . $this->returnURL;
         $nvpstr .= '&CANCELURL=' . $this->cancelURL;
         $nvpstr .= '&PAYMENTREQUEST_0_CURRENCYCODE=' . $this->currencyCodeType;

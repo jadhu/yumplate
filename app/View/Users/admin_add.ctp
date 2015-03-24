@@ -1,4 +1,4 @@
-<h2>Add Cook</h2>
+<h2>Add User</h2>
 
 <br />
 <script>
@@ -34,7 +34,7 @@ function goBack() {
         <?php echo $this->Form->input('password', array('class' => 'form-control','type' => 'password')); ?>
     </div>    
 	<div class="col-sm-4">
-		 <?php echo $this->Form->input('cpassword', array('class' => 'form-control','type' => 'password','label' => 'confirm password')); ?>
+		 <?php echo $this->Form->input('cpassword', array('class' => 'form-control','type' => 'password','label' => 'Confirm Password')); ?>
     </div>    
 	<div class="col-sm-4">
         <?php echo $this->Form->input('city', array('class' => 'form-control')); ?>

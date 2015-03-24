@@ -7,7 +7,7 @@ class OrdersController extends AppController {
 
 	public function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow(array('orders'));
+		$this->Auth->allow(array('orders','admin_change_order_status'));
 	}
 
 ////////////////////////////////////////////////////////////
@@ -20,7 +20,9 @@ class OrdersController extends AppController {
             'Order' => array(
                 'recursive' => -1,
                 'contain' => array(
-                    'OrderItem'
+                    'OrderItem',
+                    'OrderInfo',
+                    // 'User'
                 ),
                 'conditions' => array(
                 ),
@@ -45,6 +47,7 @@ class OrdersController extends AppController {
                 'Order.id' => $id
             )
         ));
+       // pr( $order);
         if (empty($order)) {
             return $this->redirect(array('action'=>'index'));
         }
@@ -83,9 +86,10 @@ class OrdersController extends AppController {
         if ($this->Order->delete()) {
             $this->Session->setFlash('Order deleted','default',array('class'=>'alert alert-success'));
             return $this->redirect(array('action'=>'index'));
-        }
+        }else{
         $this->Session->setFlash('Order was not deleted','default',array('class'=>'alert alert-danger'));
         return $this->redirect(array('action' => 'index'));
+      }
     }
 
 ////////////////////////////////////////////////////////////
@@ -104,35 +108,50 @@ class OrdersController extends AppController {
                      'conditions'=>array(
                         'Cart.user_id'=>$this->Session->read('Auth.User.id')
                          ),
-                     'contain'=>array('Product','User')
+                     'contain'=>array(
+                        'Product'=>array('fields'=>array('id','name','image','slug','pick_time_to','price','pick_time_from','day')),
+                        'User'=>array('fields'=>array('id','first_name','last_name','city','country')),
+                        'User.Coupon'=>array('fields'=>array('discount'))
+                        )
               ));
 
          $ChefArr=array();
          $cartArr=array();
+         $dicountArr=array();
          foreach ($carts as $key => $value) {
 
-            $cartArr[$value['Product']['day']][$key]['Product']=$value['Product'];
-            $cartArr[$value['Product']['day']][$key]['User']=$value['User'];
-            $cartArr[$value['Product']['day']][$key]['cart_id']=$value['Cart']['id'];
-            $cartArr[$value['Product']['day']][$key]['comment']=$value['Cart']['comment'];
-             if(!in_array($value['Cart']['cook_id'], $ChefArr)){
-                $ChefArr[]=$value['Cart']['cook_id'];
-             }
-            
-         }
+            $cartArr[$value['Cart']['pick_up_day']][$key]['Product']=$value['Product'];
+            $cartArr[$value['Cart']['pick_up_day']][$key]['User']=$value['User'];
+            $cartArr[$value['Cart']['pick_up_day']][$key]['Cart']=$value['Cart'];
+           }
         
-      // for discount 
-         $dicountArr=$this->Coupon->find('all',array(
-                               'conditions'=>array(
-                                    'Coupon.user_id'=>$ChefArr,
-                                    'Coupon.active'=>1
-                                )
-                        ));
-
-       // pr($dicountArr);
+    
+        
+      // pr($dicountArr);
+        $this->set(compact('dicountArr'));
+       //pr($cartArr);
         $this->set('cart_meals',$cartArr);
         $this->set('setting',$this->Setting->find('first'));
      
     }
 
+//////////////////////////////////////////////////////////////
+ public function admin_change_order_status($id,$status) {
+  $this->loadModel('Order');
+  $this->Order->id = $id;
+  if (!$this->Order->exists()) {
+  throw new NotFoundException('Invalid order');
+  }
+
+  if($this->Order->saveField('order_status',$status)){
+  $this->Session->setFlash('Order status changed successfully','default',array('class'=>'alert alert-success'));
+  return $this->redirect(array('action'=>'index'));
+  }else{
+  $this->Session->setFlash('Order status not changed','default',array('class'=>'alert alert-danger'));
+  return $this->redirect(array('action' => 'index'));
+  }
+
+ }
+
+ //////////////////////////////////
 }

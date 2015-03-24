@@ -3,6 +3,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><?php echo $title_for_layout; ?></title>
+    <?php
+//echo $this->Html->meta('viewport','width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1');
+if($this->params->params['controller']=='products' && $this->params->params['action']=='view' ){ ?>
+<meta name="description" content="<?php echo !empty($product['Product']['story'])?strip_tags($product['Product']['story']):'';?>">
+<!--meta name="keywords" content="HTML,CSS,XML,JavaScript"-->
+<meta name="meal" content="<?php echo $product['Product']['name'];?>">
+
+<?php } ?>
+
     <?php 
     echo $this->Html->meta('icon');
     echo $this->Html->css(array('bootstrap', 'jquery-ui', 'admin')); ?>
@@ -33,7 +42,8 @@
                 <li><?php echo $this->Html->link('Categories', array('controller' => 'categories', 'action' => 'index', 'admin' => true)); ?></li>
                 <li><?php echo $this->Html->link('Stories', array('controller' => 'stories', 'action' => 'index', 'admin' => true)); ?></li>
                 <li><?php echo $this->Html->link('Recipes', array('controller' => 'products', 'action' => 'index', 'admin' => true)); ?></li>
-                <li><?php echo $this->Html->link('Recipe Settings', array('controller' => 'users', 'action' => 'setting', 'admin' => true)); ?></li>
+                <li><?php echo $this->Html->link('Settings', array('controller' => 'users', 'action' => 'setting', 'admin' => true)); ?></li>
+                <li><?php echo $this->Html->link('Meta Settings', array('controller' => 'users', 'action' => 'meta_setting', 'admin' => true)); ?></li>
                 <li><?php echo $this->Html->link('Orders', array('controller' => 'orders', 'action' => 'index', 'admin' => true)); ?></li>
                 <li><?php //echo $this->Html->link('Orders Items', array('controller' => 'order_items', 'action' => 'index', 'admin' => true)); ?></li>
                 <li><?php echo $this->Html->link('Pages', array('controller' => 'pages', 'action' => 'index', 'admin' => true)); ?></li>
@@ -66,7 +76,12 @@
     <div class="sqldump">
         <?php echo $this->element('sql_dump'); ?>
     </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.insert-anchor').wrap('<li>');
+    });
 
+</script>
 </body>
 </html>
 

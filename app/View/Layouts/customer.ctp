@@ -27,7 +27,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-        <?php echo $this->Html->link($this->Html->image('/images/YumPlate-Beta.png'),'/customer',array('class'=>'navbar-brand','escape'=>false)); ?>
+        <?php echo $this->Html->link($this->Html->image('/images/YumPlate-Beta.png'),'/',array('class'=>'navbar-brand','escape'=>false)); ?>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
@@ -35,7 +35,7 @@
                 <li><?php //echo $this->Html->link('Profile', array('controller' => 'users', 'action' => 'view', 'customer' => true)); ?></li>
                 <li><?php echo $this->Html->link('Change Password', array('controller' => 'users', 'action' => 'customer_change_password', 'customer' => true)); ?></li>
                 
-                <li><?php echo $this->Html->link('View Site', array('controller' => 'products', 'action' => 'index', 'admin' => false),array('target'=>'_blank')); ?></li>
+                <li><?php //echo $this->Html->link('View Site', array('controller' => 'products', 'action' => 'index', 'admin' => false),array('target'=>'_blank')); ?></li>
                 <li><?php 
                 echo $this->Html->link('Logout', array('controller' => 'users', 'action' => 'logout', 'admin' => false)); ?></li>
             </ul>
@@ -56,6 +56,11 @@
         </div-->
 
     </div>
+   <script type="text/javascript">
+    $(document).ready(function(){
+        $('.insert-anchor').wrap('<li>');
+    });
 
+</script>
 </body>
 </html>

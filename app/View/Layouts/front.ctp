@@ -22,10 +22,27 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title><?php echo Configure::read('Settings.SHOP_TITLE'); ?></title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <?php
+//echo $this->Html->meta('viewport','width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1');
+if($this->params->params['controller']=='products' && $this->params->params['action']=='view' ){ ?>
+<meta name="description" content="<?php echo !empty($product['Product']['story'])?$product['Product']['story']:'';?>">
+<!--meta name="keywords" content="HTML,CSS,XML,JavaScript"-->
+<meta name="meal" content="<?php echo $product['Product']['name'];?>">
+
+<?php } ?>
+
+<?php
+//echo $this->Html->meta('viewport','width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1');
 if($this->params->params['controller']=='users' && $this->params->params['action']=='profile' ){ ?>
+<!--- Meta tags for cooks profile-->
+<meta name="description" content="<?php echo !empty($product['User']['description'])?$product['User']['description']:'';?>">
+<!--meta name="keywords" content="HTML,CSS,XML,JavaScript"-->
+<meta name="chef" content="<?php echo $product['User']['first_name'].' '.$product['User']['last_name'];?>">
+
+<!--- Meta tags for cooks profile ends here-->
+
  
 <!-- Open Graph data -->
 <meta property="og:title" content="Yumplate" />
@@ -48,9 +65,9 @@ if($this->params->params['controller']=='users' && $this->params->params['action
 		echo $this->Html->meta('icon');
     //echo $this->Html->meta('og:description','The Turducken of Cookies');
     //echo $this->Html->meta('description','Flat, Clean, Responsive, application admin template built with bootstrap 3');
-		echo $this->Html->meta('viewport','width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1');
+		
 		echo $this->Html->css(array('bootstrap','fonts','style','animate.min','responsive','toolitup-jrate'));
-  	echo $this->Html->script(array('jquery-1.11.2.min','bootstrap','oauth','jRate','yumplate'));
+  	echo $this->Html->script(array('jquery-1.11.2.min','bootstrap','oauth','modernizr','polyfiller','yumplate'));
     
 
 		echo $this->fetch('meta');
@@ -108,7 +125,13 @@ var SITE_URL = '<?php echo SITE_URL.'yumplate/'; ?>';
         <!-- BODY SECTION -->
         <section class="<?php if($this->params->params['action']=='meal'){ echo 'bodySec';}else{echo 'feature-products';} ?>">
        <div class="<?php if($this->params->params['action']=='meal'){ echo 'meals-container';}else{echo 'container';} ?>">
-        
+      <div class="pop-up" >
+      <div class="col-sm-12">
+      <div id="message" >
+
+      </div>
+      </div>
+      </div>
          <?php echo $this->fetch('content'); ?>
 		</div>
 		 </section>
@@ -126,6 +149,18 @@ var SITE_URL = '<?php echo SITE_URL.'yumplate/'; ?>';
        ?>
 		</div>
 	</div>
+  <script>
+  $(document).ready(function(){
+    
+    webshims.setOptions({
+    waitReady: false
+    });
+    $.webshims.polyfill('forms forms-ext');
+    
+    $('.insert-anchor').wrap('<li>');
+  });
+
+</script>
 	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

@@ -5,12 +5,15 @@
     .mealThumb h5 span.pull-right{ width: 100%; margin-left: 0;  }
     .mealThumb h5{ display: inline-block; width: 100%; line-height: 20px; }
     .product-details{ padding-top: 1px !important;  }
-    .dropdown-toggle{ width: 100px; }
+    .dropdown-toggle{ width: 90px; }
     .firstInfo article > ul > li{ margin-left: 5px; }
+	#navbar .navbar-right .btn-group button { font-size: 13px;}
 }
 @media screen and (max-width: 1023px){  
     .header .navbar-brand{padding: 20px 0 0; }
-    .navbar-brand > img{ width: 187px; }
+    .navbar-brand > img{ width: 190px; }
+	.header .navbar-default li { margin-left: 5px;}
+	.header .navbar-default li a {font-size: 13px; padding: 5px 6px;} 
     .pro-box{ margin: 0 auto; }
     .yumCommunity > .container > h3 + .row > .col-sm-4{ width:100%; }
     .community-img { width: 20%; }
@@ -30,7 +33,7 @@
     .nav-tabs > li > a { padding: 5px 4px !important; }
     .exp-yum .row > .col-sm-3, .exp-yum .row > .col-sm-9 h4{ text-align: center; margin-top: 15px; }
     .mealThumb{ max-width: 470px; margin: 15px auto;  }
-    .pro-box{ width: 420px; }
+    /* .pro-box{ width: 420px; } */
     
     
 }
@@ -60,7 +63,7 @@
 /*    .pro-box{ width: 304px; }*/
 }
 @media (max-width: 1023px) and (orientation: landscape) { 
-    .pro-box{ width: 65%; }
+    /* .pro-box{ width: 65%; */ }
 }
 @media screen and (max-width: 599px){ 
     .caption h1{ font-size: 20px; }
@@ -85,9 +88,11 @@
     .nav-tabs > li > a { border: 1px solid #ccc !important; border-radius: 4px; }
     .no-padd{ padding: 0!important; }
     .header .navbar-default li{ margin-left: 0; }
-    .home-slider{ padding: 60px 0; }    
+    .home-slider{ padding: 40px  0; }    
     select.meal-unit { width: 150px; }
     .pro-box{ width: 304px }
+	.rating-wrap {float: left;
+    width: 100%;}
     
     
     
@@ -107,4 +112,15 @@
 @media screen and ( min-width: 768px){ 
     .main-explore{ min-height:  }
 /*    section.feature-products { min-height: 750px; }*/
+
+}
+@media (min-width:768px) and ( max-width: 980px){ 
+    .main-explore{ min-height:  }
+/*    section.feature-products { min-height: 750px; }*/
+.profile-btn-main{ margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+    width: 232px;}
+	.rating-wrap {overflow: hidden; 
+    width: 100%;} 
 }

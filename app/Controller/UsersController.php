@@ -9,9 +9,30 @@ class UsersController extends AppController {
     public function beforeFilter() {
 
         parent::beforeFilter();
-        $this->Auth->allow(array('login','profile','SocialRegister','contact','admin_stories','forgetPassword','paypal','review'));
+        $this->Auth->allow(array('emailTest','login','profile','SocialRegister','contact','admin_stories','forgetPassword','paypal','review','updatePassword'));
 
     }
+    
+   /* public function emailTest() {
+		$this->autoRender = false;
+		App::uses('CakeEmail', 'Network/Email');
+			try {
+				$User_Email = new CakeEmail('smtp3');
+				$User_Email->emailFormat('html');
+				$User_Email->from(array('support@yumplate.com' => 'Yumplate Support'));
+				$User_Email->to ('punit.singh@webenturetech.com');
+				$User_Email->subject("Test");
+				$user_data = "This is testing";
+				$User_Email->send($user_data);
+
+				print_r($User_Email);
+
+			} catch (Exception $e) {
+				print_r($e);
+			}
+        
+
+    }*/
 
 ////////////////////////////////////////////////////////////
 
@@ -39,13 +60,15 @@ class UsersController extends AppController {
     //echo $_SERVER['REMOTE_ADDR'] ;//AuthComponent::password('kumar@123');
 
         if ($this->request->is('post')) {
-                    
+
             if($this->Auth->login()) {
                
                  $this->User->id = $this->Auth->user('id');
-                 $data['last_login']=date('Y-m-d H:i:s');
-                 $data['ip_address']=$this->get_client_ip();
-                 $this->User->save($data);
+                // $data['last_login']=date('Y-m-d H:i:s');
+                 //$data['ip_address']=$this->get_client_ip();
+                    $this->User->saveField('last_login',date('Y-m-d H:i:s'));
+                    $this->User->saveField('ip_address',$this->get_client_ip());
+               //  $this->User->save($data);
               
                 if ($this->Auth->user('role') == 'customer') {
                       //echo $this->Auth->user('role');die;
@@ -62,8 +85,8 @@ class UsersController extends AppController {
                         'uploadDir' => ''
                     );
                     return $this->redirect(array(
-                        'controller' => 'users',
-                        'action' => 'dashboard',
+                        'controller' => 'orders',
+                        'action' => 'index',
                         'manager' => false,
                         'admin' => true
                     ));
@@ -125,12 +148,7 @@ class UsersController extends AppController {
 
     public function customer_dashboard() {
     	 $this->loadModel('Order');
-    	 $this->loadModel('Cart');
-    	 $shop = $this->Session->read('Shop');
-         if(!empty($shop)){
-           $this->Cart->deleteAll(array('Cart.user_id'=>$this->Auth->user('id')));
-           $this->Session->delete('Shop');
-         }
+    	 
     	
          
           $this->Paginator = $this->Components->load('Paginator');
@@ -238,27 +256,70 @@ class UsersController extends AppController {
     public function admin_dashboard() {
     }
 
+
+   ////////////////////////////////////////////////////////////
+
+    /*
+    function redirect url for searching category 
+
+    */
+        public function admin_searchRedirect(){
+            if($this->request->is('post')){
+              
+            $this->redirect(
+                array(
+                'controller'=>'users',
+                'action'=>'index',
+                'type'=>!empty($this->request->data['User']['type'])?$this->request->data['User']['type']:'',
+               
+               ));
+           }
+        }
+
 ////////////////////////////////////////////////////////////
- 
+
+
 
     public function admin_index() {
 
         $this->Paginator = $this->Components->load('Paginator');
 
-        $this->Paginator->settings = array(
-            'User' => array(
-                'recursive' => -1,
-                'contain' => array(
-                ),
-                'conditions' => array(
-                ),
-                'order' => array(
-                    'User.last_login' => 'DESC'
-                ),
-                'limit' => 20,
-                'paramType' => 'querystring',
-            )
-        );
+           //$condition=array();
+           if(!empty($this->params->params['named']['type'])){
+
+                    $this->Paginator->settings = array(
+                    'User' => array(
+                        'recursive' => -1,
+                        'contain' => array(
+                        ),
+                        'conditions' => array(
+                            'User.role'=>$this->params->params['named']['type']
+                        ),
+                        'order' => array(
+                            'User.last_login' => 'DESC'
+                        ),
+                        'limit' => 20,
+                        'paramType' => 'querystring',
+                    )
+                 );
+
+           }else{
+                    $this->Paginator->settings = array(
+                    'User' => array(
+                        'recursive' => -1,
+                        'contain' => array(
+                        ),
+                        'conditions' => array(
+                        ),
+                        'order' => array(
+                            'User.last_login' => 'DESC'
+                        ),
+                        'limit' => 20,
+                        'paramType' => 'querystring',
+                    )
+                 );
+           }
+        
         $users = $this->Paginator->paginate();
         ///pr($users);
         $this->set(compact('users'));
@@ -296,6 +357,8 @@ class UsersController extends AppController {
             
               $this->User->create();
               $this->User->validator()->remove('oldpassword');
+              $this->request->data['User']['city']=strtolower($this->request->data['User']['city']);
+              $this->request->data['User']['country']=strtolower($this->request->data['User']['country']);
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash('The user has been saved','default',array('class'=>'alert alert-success'));
                 return $this->redirect(array('action' => 'index'));
@@ -322,6 +385,8 @@ class UsersController extends AppController {
             }
            //pr($this->request->data);die;
              $this->User->validator()->remove('oldpassword');
+             $this->request->data['User']['city']=strtolower($this->request->data['User']['city']);
+             $this->request->data['User']['country']=strtolower($this->request->data['User']['country']);
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash('The user has been saved','default',array('class'=>'alert alert-success'));
                 return $this->redirect(array('action' => 'index'));
@@ -391,18 +456,53 @@ class UsersController extends AppController {
         $this->autoRender = false;
 
 }
+
+/////////////////////////////////////////////////////////////
+public function order_confirm() {
+	$userId = $this->Auth->user('id');
+              if(!$userId){
+                $this->Session->setFlash('Please login ','default',array('class'=>'alert alert-danger'));
+                return $this->redirect('/');
+              }
+
+}
 ////////////////////////////////////////////////////////////
+
 	public function paypal(){
          $this->layout='front';
          if($this->request->is('post')){
               $userId = $this->Auth->user('id');
-           
-			$paymentAmount =$this->priceGet($this->request->data['Product']['productId']);
+              if(!$userId){
+                $this->Session->setFlash('Please login again !','default',array('class'=>'alert alert-danger'));
+                return $this->redirect('/');
+              }
+              
+              $this->Session->write('Shop',$this->request->data);
+              $this->loadModel('Cart');
+              $Data=$this->Cart->find('all',array(
+                                         'conditions'=>array(
+                                             'Cart.user_id'=>$userId
+                                             ),
+                                        'contain'=>array(
+                                            'Product'=>array('fields'=>array('id','name','image','slug','pick_time_to','price','pick_time_from','day')),
+                                            'User'=>array('fields'=>array('id','first_name','email','username','last_name','city','country','reviews_avg_val_rating','reviews_avg_ontime_rating','reviews_avg_easyfind_rating' )),
+                                            
+                                        )
+                                   ));
+              // return $this->redirect('/');
+             // pr($Data);die;
+              $paymentAmount =$this->priceGet($Data);
+            
+			
 			if(!$paymentAmount) {
 			 return $this->redirect('/');
 			}
 		   $this->Session->write('Shop.Order.order_type', 'paypal');
+
            $this->Paypal->step1($paymentAmount);
+         }else{
+         	$this->Session->setFlash('Please fill the all informtaion','default',array('class'=>'alert alert-danger'));
+         	return $this->redirect('/order_confirm');
          }
          
 	}
@@ -410,123 +510,157 @@ class UsersController extends AppController {
 ///////////////////////////////////////////////////////////////////
 
 	//function for get price
-  public function priceGet($items){
+  public function priceGet($cartData){
   	$this->loadModel('Setting');
   	$this->loadModel('Product');
-    $this->loadModel('Coupon');
+     
   	$setting=$this->Setting->find('first');
   	$hst=$setting['Setting']['hst'];
-  	$pIds=array();
-    $prductsItems=explode('|',$items);
-      foreach ($prductsItems as $key => $value) {
-      	$val=explode('~',$value);
-      	$pIds['items'][$val[1]]=$val[0];
-      	$pIds['Ids'][$key]=$val[1];
-      }
+ 
+    
 
-      $data=$this->Product->find('all',array(
-                 'conditions'=>array(
-                     'Product.id'=>$pIds['Ids']
-                 	),
-                 'contain'=>array('User'=>array('fields'=>array('id','first_name','last_name')))
-                 ));
+   
           $cost=0;
           $total_quantity=0;
-          $priceArr=array();
           $orderData=array();
-          $discountArr=array();
           $discount=0;
+          $emailArr=array();
+        //pr($cartData);die;
 
+          foreach ($cartData as $key => $value) {
+				$orderData[$key]['Product']['image']=$value['Product']['image'];
+				$orderData[$key]['name']=$value['Product']['name'];
+				$orderData[$key]['price']=$value['Product']['price'];
+				$orderData[$key]['quantity']=$value['Cart']['quantity'];
+				$orderData[$key]['discount']=$value['Cart']['discount'];
+				$orderData[$key]['product_id']=$value['Product']['id'];
+                $orderData[$key]['pick_time_to']=$value['Product']['pick_time_to'];
+                $orderData[$key]['pick_time_from']=$value['Product']['pick_time_from'];
+                $orderData[$key]['pick_up_day']=$value['Cart']['pick_up_day'];
+                $orderData[$key]['order_date']=$value['Cart']['order_date'];
+				$orderData[$key]['cook_name']=$value['User']['first_name'].' '.$value['User']['last_name'];
 
-       foreach ($data as $key => $value) {
-      
-            $orderData[$key]['Product']['image']=$value['Product']['image'];
-            $orderData[$key]['name']=$value['Product']['name'];
-            $orderData[$key]['price']=$value['Product']['price'];
-            $orderData[$key]['quantity']=$pIds['items'][$value['Product']['id']];
-            $orderData[$key]['product_id']=$value['Product']['id'];
-            $orderData[$key]['cook_name']=$value['User']['first_name'].' '.$value['User']['last_name'];
-            $orderData[$key]['chef_id']=$value['User']['id'];;
-            $total_quantity=$total_quantity+$pIds['items'][$value['Product']['id']];
-            $price=$pIds['items'][$value['Product']['id']]*$value['Product']['price'];
-            $orderData[$key]['subtotal']=$price;
+				$orderData[$key]['username']=$value['User']['username'];
+                $orderData[$key]['cook_rating']=ceil(($value['User']['reviews_avg_val_rating']+$value['User']['reviews_avg_ontime_rating']+$value['User']['reviews_avg_easyfind_rating'])/3);
+				$orderData[$key]['chef_id']=$value['User']['id'];
+				$orderData[$key]['subtotal']=$value['Cart']['quantity']*$value['Product']['price']-$value['Cart']['discount'];
+                if(!in_array($value['User']['email'], $emailArr)){
+                     $emailArr[$key]=$value['User']['email'];
+                }
+				$discount=$discount+$value['Cart']['discount'];
+				$price=$value['Product']['price']*$value['Cart']['quantity'];
+				$cost=$cost+($price-$value['Cart']['discount']);
+				$total_quantity=$total_quantity+$value['Cart']['quantity'];
+				
 
-            if (array_key_exists($value['User']['id'],$priceArr)){
-                  $priceArr[$value['User']['id']]['price']=$priceArr[$value['User']['id']]['price']+$price;
-
-            }else{
-                 $priceArr[$value['User']['id']]['price']=$price;
-            }
-        
-     
-       }
-      
-    
-       foreach ($priceArr as $key => $value) {
-           $discountData=$this->Coupon->find('first',array(
-                                     'conditions'=>array(
-                                            'Coupon.user_id'=>$key,
-                                            'Coupon.active'=>1
-                                            ),
-                                     'contain'=>array('User'=>array('fields'=>array('id','first_name','last_name'))
-                                            )));
-          
-           if(!empty($discountData)){
-                 $today_timestamp=strtotime(date("Y-m-d"));
-                 $start_date_timestamp=strtotime($discountData['Coupon']['start_date']);
-                 $end_date_timestamp=strtotime($discountData['Coupon']['end_date']);
-                 
-                if($today_timestamp>=$start_date_timestamp && $today_timestamp<=$start_date_timestamp){
-
-                    if($value>=$discountData['Coupon']['discount_limit']){
-                        $discount=($value['price']*$discountData['Coupon']['discount'])/100;
-                    }
-                    $cost=$cost+($value['price']-$discount);
-                    $discountArr[$key]['discount']=$discount;
-                    $discountArr[$key]['total']=$value['price'];
-                    $discountArr[$key]['chef']=$discountData['User']['first_name'].' '.$discountData['User']['last_name'];
-
-               }else{
-                    $cost=$cost+$value['price'];
-                    $discountArr[$key]['discount']=0;
-                    $discountArr[$key]['total']=$value['price'];
-
-               }
-
-
-           }else{
-                $cost=$cost+$value['price'];
-                $discountArr[$key]['discount']=0;
-                $discountArr[$key]['total']=$value['price'];
-               
           }
+          
     
-       }
 
+       
+      //echo $cost;die;
       $subTotal=($cost*$hst)/100;
       $totalPrice=$subTotal+$cost;
-
-      $this->Session->write('Shop.Order.discount',$discountArr);
+        
+      $this->Session->write('Shop.Order.discount',$discount);
+      $this->Session->write('Shop.Order.user_Email',$emailArr);
       $this->Session->write('Shop.Order.order_item_count',$total_quantity);
       $this->Session->write('Shop.Order.total',round($totalPrice,2));
       $this->Session->write('Shop.Order.subtotal',round($subTotal,2));
       $this->Session->write('Shop.OrderItem',$orderData);
-     return round($totalPrice,2);
+      return round($totalPrice,2);
 
   }
 
 
-/////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////// 
 
 	public function step2() {
-
+        $this->loadModel('Order');
+        $this->Session->delete('Error');
         $token = $this->request->query['token'];
         $paypal = $this->Paypal->GetShippingDetails($token);
-
+       
         $ack = strtoupper($paypal['ACK']);
+
         if($ack == 'SUCCESS' || $ack == 'SUCESSWITHWARNING') {
             $this->Session->write('Shop.Paypal.Details', $paypal);
-            return $this->redirect(array('action' => 'review'));
+            $shop = $this->Session->read('Shop');
+          
+            if(($shop['Order']['order_type'] == 'paypal') && !empty($shop['Paypal']['Details'])) {
+		        	$shop['Order']['user_id'] = $this->Session->read('Auth.User.id');
+		            $shop['Order']['first_name'] = $shop['Paypal']['Details']['FIRSTNAME'];
+		            $shop['Order']['last_name'] = $shop['Paypal']['Details']['LASTNAME'];
+		            $shop['Order']['email'] = $shop['Paypal']['Details']['EMAIL'];
+		            $shop['Order']['phone'] = '888-888-8888';
+		            $shop['Order']['billing_address'] = $shop['Paypal']['Details']['SHIPTOSTREET'];
+		            $shop['Order']['billing_address2'] = '';
+		            $shop['Order']['billing_city'] = $shop['Paypal']['Details']['SHIPTOCITY'];
+		            $shop['Order']['billing_zip'] = $shop['Paypal']['Details']['SHIPTOZIP'];
+		            $shop['Order']['billing_state'] = $shop['Paypal']['Details']['SHIPTOSTATE'];
+		            $shop['Order']['billing_country'] = $shop['Paypal']['Details']['SHIPTOCOUNTRYNAME'];
+
+		            $shop['Order']['shipping_address'] = $shop['Paypal']['Details']['SHIPTOSTREET'];
+		            $shop['Order']['shipping_address2'] = '';
+		            $shop['Order']['shipping_city'] = $shop['Paypal']['Details']['SHIPTOCITY'];
+		            $shop['Order']['shipping_zip'] = $shop['Paypal']['Details']['SHIPTOZIP'];
+		            $shop['Order']['shipping_state'] = $shop['Paypal']['Details']['SHIPTOSTATE'];
+		            $shop['Order']['shipping_country'] = $shop['Paypal']['Details']['SHIPTOCOUNTRYNAME'];
+
+		            $shop['Order']['order_type'] = 'paypal';
+
+		            $this->Session->write('Shop.Order', $shop['Order']);
+            }
+
+             
+             $order = $shop;
+             $order['Order']['status'] = 1;
+
+	          if($shop['Order']['order_type'] == 'paypal') {
+                        
+	                $paypal = $this->Paypal->ConfirmPayment($order['Order']['total']);
+	                //debug($resArray);
+	                $ack = strtoupper($paypal['ACK']);
+	                if($ack == 'SUCCESS' || $ack == 'SUCCESSWITHWARNING') {
+	                    $order['Order']['status'] = 2;
+	                }
+	                $order['Order']['authorization'] = $paypal['ACK'];
+	                //$order['Order']['transaction'] = $paypal['PAYMENTINFO_0_TRANSACTIONID'];
+	            }
+               
+                 $save = $this->Order->saveAll($order, array('validate' => 'first'));
+                 $orderId=$this->Order->getLastInsertID();
+                 
+                
+               if(empty($this->Order->validationErrors)){
+                $chef_email=$this->Session->read('Shop.Order.user_Email');
+                array_push($chef_email,$this->Auth->user('email'));
+
+                if($save) {
+                    $shop['Order']['id']=$orderId;
+                    $save_data=$this->Order->findById($orderId);
+                    $shop['Order']['created']=$save_data['Order']['created'];
+                    $email = new CakeEmail('smtp');
+
+                    $email->from(Configure::read('Settings.SUPPORT_EMAIL'))
+                            ->cc(Configure::read('Settings.SUPPORT_EMAIL'))
+                            ->to($chef_email)
+                            ->subject('YUMplate Order information')
+                            ->template('order')
+                            ->emailFormat('html')
+                            ->viewVars(array('shop' => $shop))
+                            ->send();
+                    $this->Session->setFlash('Thank You for Your Order !','default',array('class'=>'alert alert-success'));
+                   return $this->redirect(array('action' => 'success'));
+
+                }
+            }else{
+                
+                $this->Session->write('Error',$this->Order->validationErrors);
+                return $this->redirect(array('action' => 'order_confirm'));
+            }
+            //return $this->redirect(array('action' => 'review'));
         } else {
             $ErrorCode = urldecode($paypal['L_ERRORCODE0']);
             $ErrorShortMsg = urldecode($paypal['L_SHORTMESSAGE0']);
@@ -543,156 +677,40 @@ class UsersController extends AppController {
     }
 
 
-//////////////////////////////////////////////////////////////   
-
-
-//////////////////////////////////////////////////
-
-    public function review() {
-
-        $shop = $this->Session->read('Shop');
-        $this->loadModel('Setting');
-        $setting=$this->Setting->find('first');
-        $hst=$setting['Setting']['hst'];
-        $reviewArr=array();
-         //pr($shop['OrderItem']);
-         foreach ($shop['OrderItem'] as $key => $value) {
-               $reviewArr[$value['chef_id']][]=$value;
-            
-         }
-
-         foreach ($shop['Order']['discount'] as $key => $value) {
-            if(array_key_exists($key, $reviewArr)){
-             $reviewArr[$key]['discount']=$value;
-           }
-            
-         }
-        
-         //pr($reviewArr);
-  
-        if(empty($shop)) {
-            return $this->redirect('/');
-        }
-
-        if ($this->request->is('post')) {
-
-            $this->loadModel('Order');
-
-            $this->Order->set($this->request->data);
-            if($this->Order->validates()) {
-                $order = $shop;
-                $order['Order']['discount']=json_encode($shop['Order']['discount']);
-                $order['Order']['status'] = 1;
-               
-                if($shop['Order']['order_type'] == 'paypal') {
-                    $paypal = $this->Paypal->ConfirmPayment($order['Order']['total']);
-                    //debug($resArray);
-                    $ack = strtoupper($paypal['ACK']);
-                    if($ack == 'SUCCESS' || $ack == 'SUCCESSWITHWARNING') {
-                        $order['Order']['status'] = 2;
-                    }
-                    $order['Order']['authorization'] = $paypal['ACK'];
-                    //$order['Order']['transaction'] = $paypal['PAYMENTINFO_0_TRANSACTIONID'];
-                }
-
-                if((Configure::read('Settings.AUTHORIZENET_ENABLED') == 1) && $shop['Order']['order_type'] == 'creditcard') {
-                    $payment = array(
-                        'creditcard_number' => $this->request->data['Order']['creditcard_number'],
-                        'creditcard_month' => $this->request->data['Order']['creditcard_month'],
-                        'creditcard_year' => $this->request->data['Order']['creditcard_year'],
-                        'creditcard_code' => $this->request->data['Order']['creditcard_code'],
-                    );
-                    try {
-                        $authorizeNet = $this->AuthorizeNet->charge($shop['Order'], $payment);
-                    } catch(Exception $e) {
-                        $this->Session->setFlash($e->getMessage());
-                        return $this->redirect(array('action' => 'review'));
-                    }
-                    $order['Order']['authorization'] = $authorizeNet[4];
-                    $order['Order']['transaction'] = $authorizeNet[6];
-                }
-
-                $save = $this->Order->saveAll($order, array('validate' => 'first'));
-                if($save) {
-
-                    $this->set(compact('shop'));
-
-               //  App::uses('CakeEmail', 'Network/Email');
-                  /*  $email = new CakeEmail('smtp');
-                    $email->from(Configure::read('Settings.ADMIN_EMAIL'))
-                           // ->cc(Configure::read('Settings.ADMIN_EMAIL'))
-                            ->to('pravendra.kumar@webenturetech.com')
-                            ->subject('Yumplate Order')
-                            ->template('order')
-                            ->emailFormat('html')
-                            ->viewVars(array('shop' => $shop))
-                            ->send();*/
-                    $this->Session->setFlash('Thank You for Your Order !','default',array('class'=>'alert alert-success'));
-                    if($this->Auth->user('role')=='admin'){
-                        return $this->redirect(array('action' => 'dashboard','admin'=>true));
-                    }else{
-                        return $this->redirect(array('action' => 'dashboard','customer'=>true));
-                    }
-                    
-                } else {
-                    $errors = $this->Order->invalidFields();
-                    $this->set(compact('errors'));
-                }
-            }
-        }
-        
-        if(($shop['Order']['order_type'] == 'paypal') && !empty($shop['Paypal']['Details'])) {
-        	$shop['Order']['user_id'] = $this->Session->read('Auth.User.id');
-            $shop['Order']['first_name'] = $shop['Paypal']['Details']['FIRSTNAME'];
-            $shop['Order']['last_name'] = $shop['Paypal']['Details']['LASTNAME'];
-            $shop['Order']['email'] = $shop['Paypal']['Details']['EMAIL'];
-            $shop['Order']['phone'] = '888-888-8888';
-            $shop['Order']['billing_address'] = $shop['Paypal']['Details']['SHIPTOSTREET'];
-            $shop['Order']['billing_address2'] = '';
-            $shop['Order']['billing_city'] = $shop['Paypal']['Details']['SHIPTOCITY'];
-            $shop['Order']['billing_zip'] = $shop['Paypal']['Details']['SHIPTOZIP'];
-            $shop['Order']['billing_state'] = $shop['Paypal']['Details']['SHIPTOSTATE'];
-            $shop['Order']['billing_country'] = $shop['Paypal']['Details']['SHIPTOCOUNTRYNAME'];
-
-            $shop['Order']['shipping_address'] = $shop['Paypal']['Details']['SHIPTOSTREET'];
-            $shop['Order']['shipping_address2'] = '';
-            $shop['Order']['shipping_city'] = $shop['Paypal']['Details']['SHIPTOCITY'];
-            $shop['Order']['shipping_zip'] = $shop['Paypal']['Details']['SHIPTOZIP'];
-            $shop['Order']['shipping_state'] = $shop['Paypal']['Details']['SHIPTOSTATE'];
-            $shop['Order']['shipping_country'] = $shop['Paypal']['Details']['SHIPTOCOUNTRYNAME'];
-
-            $shop['Order']['order_type'] = 'paypal';
-
-            $this->Session->write('Shop.Order', $shop['Order']);
-        }
-        // pr($shop);
-        $this->set(compact('reviewArr'));
-        $this->set(compact('shop'));
-        $this->set(compact('hst'));
-
-    } 
-
+//////////////////////////////////////////////////////
     
     public function success() {
+       $this->layout='front';
         $shop = $this->Session->read('Shop');
-        $this->Cart->clear();
-        if(empty($shop)) {
+        $this->loadModel('OrderInfo');
+        $this->loadModel('Order');
+        $this->loadModel('Cart');
+       
+       if(empty($shop)) {
             return $this->redirect('/');
         }
-        $this->set(compact('shop'));
+         
+     if(!empty($shop)){
+            $this->Cart->deleteAll(array('Cart.user_id'=>$this->Auth->user('id')));
+            $this->Session->delete('Shop');
+            }
+         
 
     }
     
+ /////////////////////////////////////////////////////
+
     public function Register(){
         $this->layout='front';
         if($this->request->is('post')){
            
-            $this->request->data['User']['username']=$this->request->data['User']['first_name'];
+            $this->request->data['User']['username']=$this->request->data['User']['email'];
             
        
                 $this->User->validator()->remove('oldpassword');
                 if($this->User->save($this->request->data)){
                 $last = $this->User->findById($this->User->id);
+                $this->User->SendRegisterMail($last);
                 $this->Session->write('Auth',$last); 
                 $this->Session->setFlash('Sucessfully Registered','default',array('class'=>'alert alert-success')); 
                 $this->redirect(array('controller'=>'products','action'=>'index'));
@@ -722,6 +740,7 @@ class UsersController extends AppController {
           if(empty($userData)){
             $this->User->validator()->remove('oldpassword');
                 if($this->User->save($data)){
+                    $this->User->SendSocialRegisterMail($data);
                     $this->Session->write('Auth',$data);
                     echo json_encode(array('type'=>'success'));die;
                 }else{
@@ -765,6 +784,7 @@ class UsersController extends AppController {
   ////////////////////////////////////////////////////////////
   //function for send mail to admin
     public function forgetPassword() {
+    	$this->autoRender=false;
        if($this->request->is('post')){
                    //pr($this->data);die;
                 $this->User->recursive = 0;
@@ -777,17 +797,15 @@ class UsersController extends AppController {
                 $userId = $user['User']['id'];
                 $userName = $user['User']['username'];
                 $fullName = $user['User']['first_name']." ".$user['User']['last_name'];
-                $newPassword = $this->generatePassword();
                
-                $newPasswordMd5 =AuthComponent::password($newPassword);
-                //pr( $newPasswordMd5); die;
-
-                if($this->User->updatePassword($userId,$newPasswordMd5))
-                 {
-                $this->User->sendForgetPassMail($this->data['User']['email'],$userName,$userId,$fullName,$newPassword);
-                $this->Session->setFlash('An email has been sent to you. Please check your inbox!','default',array('class'=>'alert alert-success'));
-                $this->redirect('/users/register');
+                if($this->User->sendForgetPassMail($this->data['User']['email'],$userName,$userId,$fullName))
+                {
+				$this->Session->setFlash('An email has been sent to you. Please check your inbox!','default',array('class'=>'alert alert-success'));
+				$this->redirect('/users/register');
+                }else{
+                	echo "email not send";die;
                 }
+               
                 }else{
                 $this->Session->setFlash('Unautharised User !','default',array('class'=>'alert alert-success'));
                 $this->redirect('/users/register');
@@ -797,6 +815,39 @@ class UsersController extends AppController {
        
     }
 
+
+ ///////////////////////////////////////////////////////////////////////
+
+    function updatePassword(){
+         $this->layout='front';
+
+
+        $token=base64_decode($this->params->params['pass'][0]);
+        $time=base64_decode($this->params['params']);
+        $userdata=$this->User->find('first',array('conditions'=>array('User.email'=>$token)));
+        $forget_time=strtotime(date($userdata['User']['forget_link_time']));
+        $forget_time_after = strtotime('+ 60 minutes',strtotime($userdata['User']['forget_link_time']));
+       	//echo date('Y-m-d h:i:s',$forget_time_after); die;
+
+        $current_time=strtotime(date('Y-m-d h:i:s'));
+        //echo $userdata['User']['forget_link_time'];die;
+        if($forget_time<=$current_time && $current_time <=$forget_time_after){
+        	 if($this->request->is('post')){
+               $this->User->id=$userdata['User']['id'];
+               $this->User->validator()->remove('oldpassword');
+               if( $this->User->save($this->request->data)){
+				$this->Session->setFlash('Successfully updated your password','default',array('class'=>'alert alert-success'));
+				$this->redirect('/');
+               }
+        	}
+        }else{
+		$this->Session->setFlash('Your link has been expired !','default',array('class'=>'alert alert-danger'));
+		$this->redirect('/');
+        }
+     
+
+
+    }
 
 //////////////////////////////////////////////////////////////////
     public function generatePassword ($length = 8){
@@ -824,48 +875,25 @@ class UsersController extends AppController {
   }
   
 
-  //////////////////////////////////////////////////////////////
-
-  public function _sendNewUserMail($email,$userName,$userId,$fullName,$pass) 
-   { 
-        $setUrl = "";
-        $this->__setSmtp();
-        $this->SwiftMailer->sendAs = 'html';
-        $this->SwiftMailer->from = SMTP_USER;
-        $this->SwiftMailer->fromName = 'Administrator';
-        //$this->SwiftMailer->cc = 'ritesh.satia@gmail.com';
-        $this->SwiftMailer->to = trim($email);
-        
-        $setUrl =FULL_BASE_URL."/users/";
-        //$this->set('setUrl',$setUrl);
-        $fpStatus = 1;
-        $this->Session->write('forgetpass.userName',$userName);
-        $this->Session->write('forgetpass.fullName',$fullName);
-        $this->Session->write('forgetpass.pass',$pass);
-        $this->Session->write('forgetpass.setUrl',$setUrl);
-        $this->Session->write('forgetpass.SITE_TITLE','Rug Studio Online');
-        $this->User->updateForgotPassStatus($userId,$fpStatus);
-        $this->SwiftMailer->send('forgot_password', 'Rug Studio Online Reset Password');
-        $this->Session->delete('forgetpass');
-
-
-  }
-
+ 
 
 //////////////////////////////////////////////////////////////
 
     public function contact(){
       $this->autoRender=false;
+        
       if($this->request->is('post')){
        //pr($this->data);die;
+         
           $email = new CakeEmail('smtp');
-          $email->sender($this->request->data['email']);
-          $email->to(Configure::read('Settings.ADMIN_EMAIL'));
+          $email->from($this->request->data['email']);
+          $email->to(Configure::read('Settings.SUPPORT_EMAIL'));
+          //$email->to('pravendra.kumar@webenturetech.com');
           $email->emailFormat('html');
           if($this->request->data['type']=='contact'){
-            $email->subject('Query mail from contact page');
+            $email->subject('Contact Us');
           }else{
-             $email->subject('Query mail from become yumcook  page');
+             $email->subject('Become a YUMcook');
           }
          
           $body =" ";
@@ -974,4 +1002,35 @@ public function admin_change_coupon_status($id,$status){
        }
 }
 //////////////////////////////////////////////////funtcions for Coupons ends here /////////////////////////////////
+
+
+///////////////////////////////////////////////funtcions for Meta keywords, description ,name/////////////////////////////////
+
+
+public function admin_meta_setting(){
+    $this->loadModel('MetaSetting');
+    $meta_settings=$this->MetaSetting->find('first');
+    $this->set(compact('meta_settings'));
+
+}
+
+///////////////////////////////////////////////////////////
+
+public function admin_meta_setting_editable(){
+        $this->loadModel('MetaSetting');
+        $model ='MetaSetting';
+    
+        $id = trim($this->request->data['pk']);
+        $field = trim($this->request->data['name']);
+        $value = trim($this->request->data['value']);
+
+        $data[$model]['id'] = $id;
+        $data[$model][$field] = $value;
+        $this->$model->save($data, false);
+
+        $this->autoRender = false;
+
+}
+///////////////////////////////////////////////funtcions for Meta keywords, description ,name ends here/////////////////////////////////
+
 }

@@ -5,7 +5,7 @@
 ?>
 <div class="yum-contact-main">
 <div class="col-sm-12 no-padding-right">                              
-	<h3 class="text-default">Query Form</h3>
+	<h3 class="text-default">Contact Us</h3>
 	<div id="FSContact1">                                      
 	    <form id="contact_form" class="contact-form">       
 	        <div class="form-group field message_board">
@@ -91,14 +91,16 @@
                             if (data.type== 'success') {
                                 
                                 $('.submit-btn').button('reset');
-                                $("input[class=form-control]").val('');
+                                $("#username").val('');
+                                $("#email").val('');
                                 $("#message").val('');
-                                $('.message_board').html('<div class="alert alert-success">Thanks for query .We will back to you soon</div>');
+                                $('.message_board').html('<div class="alert alert-success">Thanks for contacting us. We will get back to you shortly</div>');
                                 $('.message_board').fadeOut( 10000 );
                             } else {
                                 $('.submit-btn').button('reset');
                                 $("#message").val('');
-                                $("input[class=form-control]").val('');
+                                $("#username").val('');
+                                $("#email").val('');
                                 $('.message_board').html('<div class="alert alert-danger">'+data.msg+'</div>');
                                 $('.message_board').fadeOut( 10000 );
                             }

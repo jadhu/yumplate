@@ -15,7 +15,21 @@
     });
 </script>
 <div class="main-order">
-    
+
+         <div class="chef-discount-data">
+           <?php 
+           $totalItem=0;
+           $subTotal=0;
+           $total;
+           ?>
+
+             <?php foreach ($dicountArr as $key => $value) {?>
+            
+            <input type="hidden" value="<?php echo $value['discount']; ?>" id="discount_<?php echo $value['chef_id'];?>">
+            <input type="hidden" value="<?php echo $value['limit']; ?>" id="discount_limit_<?php echo $value['chef_id'];?>">
+            
+             <?php } ?>
+         </div>
         <h2 class="order-heading ">Review Order</h2>
 		<div class="row">
          <?php if(!empty($cart_meals)){ ?>
@@ -33,35 +47,57 @@
                     <th width="16%">Total</th>
                 </tr>
 				<?php foreach ($value as $key1 => $value1) { ?>
-                <tr id="<?php echo $value1['cart_id'];?>" >
+                <tr id="<?php echo $value1['Cart']['id'];?>"  data-product-id="<?php echo $value1['Product']['id'];?>" >
                     <td style="width:80px;" class="product-ids" data-product-id="<?php echo $value1['Product']['id'];?>" >
 					<?php 
                     echo $this->Html->image('/images/small/'.$value1['Product']['image'],array('alt'=>'','class'=>'order-img','url'=>array('controller'=>'products','action'=>'view','slug'=>$value1['Product']['slug'])));
                     ?>
 
-                    <td style="width: 243px;"> 
+                    <td style="width: 243px;" class="chef-info" data-chef-id="<?php echo $value1['User']['id'];?>" > 
                     <span>Chef: </span><?php echo $value1['User']['first_name'];?><br />
                     <span>Location: </span><?php echo $value1['User']['city'].' , '.$value1['User']['country'];?><br />
                     <?php echo $value1['Product']['name'];?> <br />
                     <span>Time of pick up: </span>between <?php  echo date('h:i A', strtotime($value1['Product']['pick_time_from'])).'-'.date('h:i A', strtotime($value1['Product']['pick_time_to']));?>
                     <br/>
-                        <a href="javascript:void(0);" class="remove-add-cart" data-cart-id="<?php echo $value1['cart_id'];?>">Remove</a>
+                        <a href="javascript:void(0);" class="remove-add-cart" data-cart-id="<?php echo $value1['Cart']['id'];?>">Remove</a>
                     </td>
-                    <!--td>
-                     <span class="comment" data-value="<?php echo !empty($value1['comment'])?$value1['comment']:'No comment'; ?>" data-pk="<?php echo $value1['cart_id']; ?>"><?php echo !empty($value1['comment'])?$value1['comment']:'No comment'; ?></span>
-                    </td-->
-                    <td class="meal-price" data-price="<?php echo $value1['Product']['price'];?>">$<?php echo $value1['Product']['price'];?></td>
+                 <td class="meal-price" data-price="<?php echo $value1['Product']['price'];?>">$<?php echo $value1['Product']['price'];
+                 if(!empty($value1['Cart']['discount'])){
+                   
+                     echo '<br /><br /><span>Discount '.$value1['User']['Coupon']['discount'].'% ($'.round($value1['Cart']['discount'],2).')</span>';
+
+                        }
+                     ?>
+                       
+
+                    </td>
                     <td><select class="form-control meal-unit">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
+                          <?php 
+                            for ($i=1;$i<=8;$i++){
+                                  if($i==$value1['Cart']['quantity']){
+                                    echo '<option value="'.$i.'" selected>'.$i.'</option>';
+                                  }else{
+                                    echo '<option value="'.$i.'" >'.$i.'</option>';
+                                  }
+                            }
+  
+                          ?>
+                           
                         </select></td>
-                    <td class="total-price">$<?php echo $value1['Product']['price'];?></td>				
+                    <td class="total-price">
+                    $<?php 
+                    $total_price=$value1['Product']['price'] *$value1['Cart']['quantity'];
+                    if(!empty($value1['Cart']['discount'])){
+                      echo $total_price=$total_price-$value1['Cart']['discount'];
+                    }else{
+                        echo $total_price;
+                    }
+                    $totalItem=$totalItem+$value1['Cart']['quantity'];
+                    $subTotal=$subTotal+$total_price;
+
+                
+                     ?>
+                    </td>				
                 </tr>
 				<?php } ?>
 
@@ -79,25 +115,29 @@
             </tr>
             <tr>
                 <td width="70%">Total items</td>
-                <td width="30%" id="meal-items"></td>
+                <td width="30%" id="meal-items"><?php echo $totalItem;?></td>
             </tr>
             <tr>
                 <td width="70%">Subtotal</td>
-                <td width="30%" id="meal-subtotal"></td>
+                <td width="30%" id="meal-subtotal">$<?php echo $subTotal;?></td>
             </tr>
             <tr>
                 <td class="meal-hst" data-hst="<?php echo $setting['Setting']['hst'];?>">HST (<?php echo $setting['Setting']['hst'];?>%)</td>
-                <td class="hst-val"></td>
+                <td class="hst-val">$<?php 
+                 $hst=($subTotal*$setting['Setting']['hst'])/100;
+                 echo round($hst,2);
+                 ?>
+      </td>
             </tr>
             <tr>
                 <td><b>Total</b></td>
-                <td id="meal-total" data-total="" ><b></b></td>
+                <td id="meal-total" data-total="" ><b>$<?php echo round($hst+$subTotal,2);?></b></td>
             </tr>
             <tr>
                 <td class="text-center" colspan="2">
                 <?php 
-                echo $this->Form->create('Product',array('url'=>array('action'=>'paypal','controller'=>'users')));
-                echo $this->Form->input('items',array('type'=>'hidden','value'=>''));
+                echo $this->Form->create('Product',array('url'=>array('action'=>'order_confirm','controller'=>'users')));
+                echo $this->Form->input('items',array('type'=>'hidden','value'=>@$totalItem));
                 echo $this->Form->input('productId',array('type'=>'hidden','value'=>''));
 
                 ?>
@@ -117,3 +157,6 @@
 
 
 <div class="text-center">All sales are final upon checkout</div>
+<!--td>
+<span class="comment" data-value="<?php echo !empty($value1['comment'])?$value1['comment']:'No comment'; ?>" data-pk="<?php echo $value1['cart_id']; ?>"><?php echo !empty($value1['comment'])?$value1['comment']:'No comment'; ?></span>
+</td-->

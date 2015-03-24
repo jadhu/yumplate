@@ -17,20 +17,21 @@
         <th><?php echo $this->Paginator->sort('shipping_country'); ?></th>
         <th><?php echo $this->Paginator->sort('weight'); ?></th-->
         <th><?php echo $this->Paginator->sort('subtotal','Hst'); ?></t>
-        <th><?php echo $this->Paginator->sort('tax'); ?></th>
-        <th><?php echo $this->Paginator->sort('shipping'); ?></th>
+        <!--th><?php echo $this->Paginator->sort('tax'); ?></th>
+        <th><?php echo $this->Paginator->sort('shipping'); ?></th-->
         <th><?php echo $this->Paginator->sort('discount'); ?>
         <th><?php echo $this->Paginator->sort('total'); ?></th>
         <th><?php echo $this->Paginator->sort('status'); ?></th>
-        <th><?php echo $this->Paginator->sort('created'); ?></th>
+        <th><?php echo $this->Paginator->sort('order_status'); ?></th>
+        <th><?php echo $this->Paginator->sort('created','Order Date'); ?></th>
         <th>Actions</th>
     </tr>
     <?php if(!empty($orders)){foreach ($orders as $order): ?>
     <tr>
         <td><?php echo h($order['Order']['first_name']); ?></td>
         <!--td><?php echo h($order['Order']['last_name']); ?></td-->
-        <td><?php echo h($order['Order']['email']); ?></td>
-        <td><?php echo h($order['Order']['phone']); ?></td>
+        <td><?php echo h($order['OrderInfo']['email']); ?></td>
+        <td><?php echo h($order['OrderInfo']['phone']); ?></td>
         <td><?php echo  h($order['Order']['billing_city']).' '.h($order['Order']['billing_state']).' '.h($order['Order']['billing_country']).' '.h($order['Order']['billing_zip']); ?></td>
         <!--td><?php echo h($order['Order']['billing_zip']); ?></td>
         <td><?php echo h($order['Order']['billing_state']); ?></td>
@@ -40,24 +41,27 @@
         <td><?php echo h($order['Order']['shipping_state']); ?></td>
         <td><?php echo h($order['Order']['shipping_country']); ?></td>
         <td><?php echo h($order['Order']['weight']); ?></td-->
-        <td><?php echo h($order['Order']['subtotal']); ?></td>
-        <td><?php echo h($order['Order']['tax']); ?></td>
-        <td><?php echo h($order['Order']['shipping']); ?></td>
+        <td><?php echo '$'.h($order['Order']['subtotal']); ?></td>
+        <!--td><?php echo h($order['Order']['tax']); ?></td>
+        <td><?php echo h($order['Order']['shipping']); ?></td-->
          <td>
          <?php 
-         $discount=json_decode($order['Order']['discount']); 
-         $dis=0;
-         foreach ($discount as $key => $value) {
-            $dis=$dis+$value->discount;
+        if(!empty($order['Order']['discount'])){
+            echo '$'.$order['Order']['discount'];
+         }else{
+            echo '';
          }
-        echo $dis;
          ?></td>
-        <td><?php echo h($order['Order']['total']); ?></td>
+        <td><?php echo '$'.h($order['Order']['total']); ?></td>
         <td><?php echo h($order['Order']['authorization']); ?></td>
+
+        <td><?php  if($order['Order']['order_status']==1){echo "Delivered"; $od_status=0;}else{echo "Not delivered";$od_status=1;}; ?></td>
+
         <td><?php echo h($order['Order']['created']); ?></td>
         <td class="actions">
             <?php echo $this->Html->link('View', array('action' => 'view', $order['Order']['id']), array('class' => 'btn btn-default btn-xs')); ?>
             <?php echo $this->Html->link('Edit', array('action' => 'edit', $order['Order']['id']), array('class' => 'btn btn-default btn-xs')); ?>
+            <?php echo $this->Html->link('Change order status', array('action' => 'change_order_status/'.$order['Order']['id'].'/'.$od_status), array('class' => 'btn btn-default btn-xs')); ?>
             <?php echo $this->Form->postLink('Delete', array('action' => 'delete', $order['Order']['id']), array('class' => 'btn btn-default btn-danger btn-xs'), __('Are you sure you want to delete # %s?', $order['Order']['id'])); ?>
 
         </td>

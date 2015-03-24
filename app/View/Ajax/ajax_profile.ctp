@@ -21,12 +21,12 @@ echo $day_data;
 
                             </figure>
                             <article>
-				          <button class="pull-right btn become-btn add_meal_cart" data-meal-id="<?php echo $value['Product']['id'] ; ?>" >
+				          <div class="profile-btn-main"><button class="pull-right btn become-btn add_meal_cart" data-meal-id="<?php echo $value['Product']['id'] ; ?>" data-order-day="<?php echo strtolower($day);?>"  >
                                     + Add to Cart
                                 </button>
                             <?php 
                             echo $this->Html->link('Add your review',array('controller'=>'products','action'=>'view','slug'=>$value['Product']['slug']),array('class'=>'pull-right btn become-btn add-review'));
-                            ?>
+                            ?></div>
                                 
                                <?php if(!empty($value['Product']['rating'])) { ?>
                                 <div class="rating-wrap">
@@ -39,7 +39,7 @@ echo $day_data;
                                      ?>
                                     
                                      </div>
-                                    (<?php echo count($value['Review']); ?>  reviews)
+                                    (<?php echo count($value['Review']); ?>  <span data-product-id="<?php echo $value['Product']['id']; ?>" class="review-comment" style="cursor:pointer;">reviews</span>)
                                     </div>
                                     <?php }else{?>
                                      <div class="ratings">

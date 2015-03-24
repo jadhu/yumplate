@@ -5,13 +5,21 @@ class User extends AppModel {
 
 ////////////////////////////////////////////////////////////
     public $hasMany=array('Product','Review'=>array('foreignKey'=>'cook_id'));
+    public $hasOne=array('Coupon');
     public $validate = array(
-        'name' => array(
+        'first_name' => array(
             'rule1' => array(
                 'rule' => array('notempty'),
-                'message' => 'mame is required',
+                'message' => 'First name is required',
                 //'allowEmpty' => false,
                 //'required' => false,
+            ),
+        ),
+        'last_name' => array(
+            'rule1' => array(
+                'rule' => array('notempty'),
+                'message' => 'Last name is required',
+               
             ),
         ),
         'username' => array(
@@ -19,13 +27,25 @@ class User extends AppModel {
                 'rule' => array('between', 3, 60),
                 'message' => 'username is required',
                 'allowEmpty' => false,
-                'required' => false,
+                
             ),
             'rule2' => array(
                 'rule' => array('isUnique'),
                 'message' => 'username already exists',
                 'allowEmpty' => false,
-                'required' => false,
+               
+            ),
+        ),
+        'email' => array(
+           'rule1' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Email already exists',
+                
+            ),
+           'rule2' => array(
+                'rule' => array('notempty'),
+                'message' => 'Email field should not be empty',
+                
             ),
         ),
         'oldpassword' => array(
@@ -91,12 +111,12 @@ class User extends AppModel {
 
     public function SendRegisterMail($userData){
         $email = new CakeEmail('smtp');
-        $email->from(array('me@example.com' => 'My Site'));
+        $email->from(array('support@yumplate.com' => 'YUMplate Support'));
         $email->sender('contact@yumadmin.com');
         $email->to($userData['User']['email']);
         $email->emailFormat('html');
         $email->subject('Registration mail');
-        $body="Registration process is succcess";
+        $body="Registration is success.Thanks for registering with YUMplate.";
 
         try{
             $result = $email->send($body);
@@ -110,9 +130,9 @@ class User extends AppModel {
 
     public function SendAdminMail($userData){
         $email = new CakeEmail('smtp');
-        $email->from(array('me@example.com' => 'Query from User'));
+        $email->from(array('support@yumplate.com' => 'YUMplate Support'));
         $email->sender($userData['email']);
-        $email->to('pravendra.kumar@webenturetech.com');
+        $email->to(Configure::read('Settings.SUPPORT_EMAIL'));
         $email->emailFormat('html');
         $email->subject('Query mail');
         $body ="Query from User :".$userData['name'].'<br/>'.' email:'.$userData['email'].'<br/> query:'.$userData['message'];
@@ -126,23 +146,29 @@ class User extends AppModel {
          return true;
     }
     
-    public function sendForgetPassMail($useremail,$userName,$userId,$fullName,$pass){
+    public function sendForgetPassMail($useremail,$userName,$userId,$fullName){
 
         $email = new CakeEmail('smtp');
-        $email->sender('admin@yumplate.com');
+        $email->from(array('support@yumplate.com' => 'YUMplate Support'));
+       // $email->sender('support@yumplate.com');
         $email->to($useremail);
         $email->emailFormat('html');
         $email->subject('Forget Password Mail');
         $body =" ";
-
-        $body .=" Full Name : ".$fullName.'<br/>'.' Email : '.$userName.'<br/> Password : '.$pass.'<br />';
-
-        $body .="Please Click on  following link to login <br />";
-        $body .='<a href="http://projects.udaantechnologies.com/yumplate/">Login link</a>';
+        
+        $body .=" Full Name : ".$fullName.'<br/>'.' Email : '.$useremail.'<br/><br />';
+        $current_time=date('Y-m-d h:i:s');
+        $token=base64_encode($useremail);
+        $body .="Please Click on  following link to update Password.This link will be expired after 1 hour ! <br />";
+        $body .='<a href="http://projects.udaantechnologies.com/yumplate/updatePassword/'.$token.'?t='.base64_encode($current_time).'">Change Password</a>';
 
         try{
             $result = $email->send($body);
+            
+            $this->id=$userId;
+            $this->saveField('forget_link_time',$current_time);
         } catch (Exception $ex){
+           // pr($ex);die;
             // we could not send the email, ignore it
            return false;
         }

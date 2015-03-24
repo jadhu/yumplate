@@ -11,7 +11,7 @@ echo $this->Html->css(array('jquery-ui'),array('inline'=>false));
                     foreach ($products as $key => $value) {
                  
                     ?>
-                <div class="col-md-4">
+                <div class="col-md-4 feature-yum">
                         <div class="pro-box user-profile" data-user-id="<?php echo $value['User']['username'];?>" style="cursor:pointer">
                          <?php echo $this->Html->image('/images/small/'.$value['Product']['image'], array('alt' => ''));?>
                           
@@ -45,3 +45,16 @@ echo $this->Html->css(array('jquery-ui'),array('inline'=>false));
 <input type="hidden" id="user_address" value="">
 
                 </div>
+<script>
+
+$(function(){
+
+$('#order_now').click(function(){
+//alert('call');
+$('html, body').animate({ scrollTop: $('.feature-yum').offset().top - 100 }, 'slow');
+});
+
+});
+
+
+</script>

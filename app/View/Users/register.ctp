@@ -41,8 +41,10 @@
       
         <?php echo $this->Form->input('cpassword', array('class' => 'form-control', 'placeholder' => 'Confirm Password' ,'type'=>'password','div'=>false,'label'=>false)); ?>
         </div>
-         <?php echo $this->Form->input('term', array('type'=>'checkbox','required' => true,'label'=>false,'div'=>false ));?>
-		 <a href="<?php echo $this->Html->url('/products/term_and_conditions',true);?>" class="forget-link">By creating an account you confirm that you accept our Terms and Conditions</a>
+		<div class="term-and-condition">
+         <div class="check-box"><?php echo $this->Form->input('term', array('type'=>'checkbox','required' => true,'label'=>false,'div'=>false ));?></div>
+		 <div class="check-box-text"><a href="<?php echo $this->Html->url('/products/term_and_conditions',true);?>" class="forget-link">By creating an account you confirm that you accept our Terms and Conditions</a></div>
+		 </div>
          <br />
 		<h4 class="text-center"> 
         <?php echo $this->Form->button('Sign Up', array('class' => 'btn become-btn')); ?>

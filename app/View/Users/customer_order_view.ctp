@@ -10,7 +10,8 @@ function goBack() {
 <br/>
 <h3>Order Items</h3>
 <?php if (!empty($order['OrderItem'])): ?>
-<table class="table-striped table-bordered table-condensed table-hover">
+<div class="table-responsive tables-order">
+<table class=" table table-striped table-bordered table-condensed table-hover">
     <tr>
         <th>Id</th>
         <th>Order Id</th>
@@ -18,11 +19,14 @@ function goBack() {
         <th>Chef Name</th>
         <th>Name</th>
         <th>Quantity</th>
-        <th>Weight</th>
+        <!--th>Weight</th-->
         <th>Price</th>
         <th>Subtotal</th>
+        <th>Discount</th>
+        <th>Pickup Time</th>
+        <th>Pickup Date</th>
         <th>Created</th>
-        <th>Modified</th>
+        
         <!--th>Actions</th-->
     </tr>
     <?php foreach ($order['OrderItem'] as $orderItem): ?>
@@ -33,11 +37,14 @@ function goBack() {
         <td><?php echo !empty($orderItem['cook_name'])?$orderItem['cook_name']:''; ?></td>
         <td><?php echo $orderItem['name']; ?></td>
         <td><?php echo $orderItem['quantity']; ?></td>
-        <td><?php echo $orderItem['weight']; ?></td>
-        <td><?php echo $orderItem['price']; ?></td>
-        <td><?php echo $orderItem['subtotal']; ?></td>
+        <!--td><?php echo $orderItem['weight']; ?></td-->
+        <td><?php echo '$'.$orderItem['price']; ?></td>
+        <td><?php echo '$'.$orderItem['subtotal']; ?></td>
+        <td><?php echo !empty($orderItem['discount'])?'$'.$orderItem['discount']:''; ?></td>
+        <td><?php  if(!empty($orderItem['pick_time_from'])){echo date('h:i A', strtotime($orderItem['pick_time_from'])).'-'.date('h:i A', strtotime($orderItem['pick_time_to']));}?></td>
+        <td><?php echo $orderItem['order_date']; ?></td>
         <td><?php echo $orderItem['created']; ?></td>
-        <td><?php echo $orderItem['modified']; ?></td>
+        
         <!--td>
             <?php echo $this->Html->link('View', array('controller' => 'order_items', 'action' => 'view', $orderItem['id']), array('class' => 'btn btn-default btn-xs')); ?>
             <?php echo $this->Html->link('Edit', array('controller' => 'order_items', 'action' => 'edit', $orderItem['id']), array('class' => 'btn btn-default btn-xs')); ?>
@@ -46,9 +53,32 @@ function goBack() {
     </tr>
     <?php endforeach; ?>
 </table>
+</div>
 <?php endif; ?>
 
 
+<h4>User Contact Info</h4>
+<?php if (!empty($order['OrderInfo'])){?>
+<div class="table-responsive table-order">
+<table class="table table-striped table-bordered table-condensed table-hover">
+    <tr>
+        <th>S.N</th>
+        <th>Phone</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td><?php echo $order['OrderInfo']['phone']; ?></td>
+        <td><?php echo $order['OrderInfo']['email']; ?></td>
+    
+    </tr>
+   </table>
+</div>
+<?php }else{
+    echo "<p>No Contact Info</p>";
+    } ?>
+
+<div class="table-responsive tables-order">
 <table class="table-striped table-bordered table-condensed table-hover table">
     <tr>
         <td>Id</td>
@@ -128,7 +158,7 @@ function goBack() {
     </tr>
     <tr>
         <td>Hst</td>
-        <td><?php echo h($order['Order']['subtotal']); ?></td>
+        <td><?php echo '$'.h($order['Order']['subtotal']); ?></td>
     </tr>
     <tr>
         <td>Tax</td>
@@ -140,7 +170,7 @@ function goBack() {
     </tr>
     <tr>
         <td>Total</td>
-        <td><?php echo h($order['Order']['total']); ?></td>
+        <td><?php echo '$'.h($order['Order']['total']); ?></td>
     </tr>
     <tr>
         <td>Order Type</td>
@@ -171,7 +201,7 @@ function goBack() {
         <td><?php echo h($order['Order']['modified']); ?></td>
     </tr>
 </table>
-
+</div>
 <br />
 
 <!--h3>Actions</h3>

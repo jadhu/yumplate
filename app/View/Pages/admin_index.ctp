@@ -80,6 +80,8 @@ $msg1 = $this->Session->flash();
 						 filebrowserWindowWidth : '500',
 						 filebrowserWindowHeight : '700'}
 					);
+					
+					CKEDITOR.instances.page_content.config.allowedContent=true;
 				</script>
 			   <?php } ?>   
 			   

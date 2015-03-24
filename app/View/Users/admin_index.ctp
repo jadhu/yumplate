@@ -1,4 +1,20 @@
 <h2>Users</h2>
+<br/>
+<br/>
+<div class="row">
+
+    <?php echo $this->Form->create('User', array('action'=>'admin_searchRedirect')); ?>
+    <?php echo $this->Form->hidden('search', array('value' => 1)); ?>
+
+    <div class="col-lg-2 col-sm-3">
+        <?php echo $this->Form->input('type', array('label' => false, 'class' => 'form-control', 'empty' => 'All Users', 'options' => array('admin' => 'Admin','customer' => 'User', 'cook' => 'Chef'),'selected'=>isset($this->params->params['named']['type'])?$this->params->params['named']['type']:'')); ?>
+    </div>
+    <?php echo $this->Form->end(); ?>
+
+</div>
+
+<br />
+
 <div class="table-responsive tables-user">
 <table class="table  table-bordered">
     <tr>
@@ -38,7 +54,7 @@
             <?php echo $this->Html->link('View', array('action' => 'view', $user['User']['id']), array('class' => 'btn btn-default btn-xs')); ?>
             <?php echo $this->Html->link('Change Password', array('action' => 'password', $user['User']['id']), array('class' => 'btn btn-default btn-xs')); ?>
             <?php echo $this->Html->link('Edit', array('action' => 'edit', $user['User']['id']), array('class' => 'btn btn-default btn-xs')); ?>
-            <?php echo $this->Form->postLink('Delete User', array('action' => 'delete', $user['User']['id']), array('class' => 'btn btn-danger btn-xs'), __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
+            <?php echo $this->Form->postLink('Delete User', array('action' => 'delete', $user['User']['id']), array('class' => 'btn btn-danger btn-xs'), __('Are you sure you want to delete  %s?', $user['User']['username'])); ?>
         </td>
     </tr>
     <?php endforeach; ?>
@@ -52,3 +68,13 @@
 
 <br />
 <br />
+<script >
+    $(document).ready(function(){
+
+    $('#UserType').change(function(){
+        $('#UserAdminSearchRedirectForm').submit();
+    });
+
+    });
+
+</script>

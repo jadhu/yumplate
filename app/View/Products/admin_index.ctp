@@ -170,7 +170,7 @@ $(document).ready(function() {
         </td>
     </tr>
     <?php }}else{
-         echo '<tr><td class="text:center;">There is no results </td></tr>';
+         echo '<tr><td class="text:center;" colspan=13>There is no results </td></tr>';
         } ?>
 </table>
 </div>

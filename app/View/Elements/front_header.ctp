@@ -60,6 +60,21 @@
 </div>
 
 
+<div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">YUMPLATE REVIEWS</h4>
+      </div>
+     
+      <div class="modal-body" id="comment_section">
+       
+      </div>
+     </div>
+  </div>
+</div>
+
 <div class="navbar-header">
 <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
 <span class="sr-only">Toggle navigation</span>
@@ -77,17 +92,46 @@ echo $this->Html->link(
 ?>
 
 </div>
-<div class="navbar-collapse collapse" id="navbar">                            
-<ul class="nav navbar-nav navbar-right">
-    <?php 
+
+ <?php 
    $userLogin=$this->Session->read('Auth.User');
 
    $style='';
    if(!empty($userLogin)){
        $style='style="display:none;"';
    }
-    ?>
-    
+
+$controller=array('products','users');
+$action=array('profile','index','ExploreYum','view');
+if(in_array($this->params->params['controller'],$controller) && in_array($this->params->params['action'],$action)) { ?>
+<div class="yumplate-cart">
+<ul>
+
+<li class="order" >
+<?php 
+
+if(!empty($userLogin)){
+  echo $this->Html->link(
+$count,
+'/carts',
+array('class'=>'cart-btn')
+);
+}
+?>
+
+</li>
+</ul>
+</div>
+<?php } ?>
+<div class="navbar-collapse collapse" id="navbar">                            
+<ul class="nav navbar-nav navbar-right">
+ 
+<?php if($this->params->params['controller']=='products' && $this->params->params['action']=='index') { ?>  
+<li>
+<a id="order_now" href="javascript:void(0)">Order Now</a>
+</li>
+<?php } ?>
+
     <li <?php echo $style;?>>
 
 <?php 
@@ -135,15 +179,8 @@ echo $this->Html->link(
 $controller=array('products','users');
 $action=array('profile','index','ExploreYum','view');
 if(in_array($this->params->params['controller'],$controller) && in_array($this->params->params['action'],$action)) { ?>
-<li class="order" >
+<li class="order desktop-cart" >
 
-<div class="pop-up">
-    <div class="col-sm-12">
-        <div id="message" >
-            
-        </div>
-    </div>
-</div>
 <?php 
 
 if(!empty($userLogin)){
@@ -167,7 +204,7 @@ array('class'=>'cart-btn')
           <span class="caret"></span>
         </button>
         <?php if($this->Session->read('Auth.User.role')!='admin'){
-            echo '<ul class="dropdown-menu" role="menu"><h4 class="myprofile-text">My Profile</h4>';
+            echo '<ul class="dropdown-menu" role="menu">';
             echo "<li>";
 
             echo $this->Html->link(
@@ -221,7 +258,7 @@ array('class'=>'cart-btn')
               'action' => 'logout',
               'full_base' => true
           ),
-          array('class'=>'text-center logout-btn')
+          array('class'=>'text-center')
         );
         echo '</li></ul>';
       }
@@ -234,5 +271,6 @@ array('class'=>'cart-btn')
   </div>
 </li>
 </ul>
+
 </div>
 <!--/.nav-collapse -->

@@ -42,7 +42,8 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                         <ul>
                             <li>
                             <i class="loaction-icon"></i><strong>Location :</strong> 
-                            <?php echo !empty($product['User']['city'])?$product['User']['city']:'No City';?>,<?php echo !empty($product['User']['country'])?$product['User']['country']:'No City';?></li>
+                            <?php echo !empty($product['User']['city'])?$product['User']['city']:'No City';?>,<?php echo !empty($product['User']['country'])?$product['User']['country']:'No City';?>
+                            </li>
                             <li><i class="delivery-icon"></i><strong>Delivery :</strong> <span class="uppercase">No</span></li>
                             <li><i class="avrage-icon"></i><strong>Average rating:</strong> 
 
@@ -54,7 +55,10 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                                     }
                                   ?>
                                  </div>
-                                (<?php echo !empty($product['Review'][0]['Review'][0]['count'])?$product['Review'][0]['Review'][0]['count'].' Reviews':'No Reviews';?>)</li>
+								 <span class="profile-top-review" >
+                                (<?php echo !empty($product['Review'][0]['Review'][0]['count'])?$product['Review'][0]['Review'][0]['count'].' <a id="review_section" style="cursor:pointer;" href="javascript:void(0)">Reviews</a>':'No Reviews';?>)</span></li><br />
+
+                     
                         </ul>
                     </article>
                 </div>
@@ -119,7 +123,7 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                             <ul class="logistiecs">
                                 <li>
                                     <i class="loaction-icon"></i>
-                                    Location.................................................
+                                    Location................
                                     <span class="text-right1"><?php echo !empty($product['User']['city'])?$product['User']['city']:'No City';?>,<?php echo !empty($product['User']['country'])?$product['User']['country']:'No country';?> </span>
                                     <figure class="map text-right">
                                      <div id="map_canvas" style="width:500px;height:220px;"></div>                      
@@ -130,15 +134,16 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                                 </li>
                                 <li>
                                     <i class="home-icon"></i>
-                                Address Type...........................................................  <span class="text-right1">
+                                Address Type...................  <span class="text-right1">
                                 <?php echo !empty($product['User']['address_type'])?$product['User']['address_type']:'No address type';?></span>
                                 </li>
                                 <li>
-                                    <i class="parking-icon"></i>Parking......................................................... <span class="text-right1 "><?php echo !empty($product['User']['parking'])?$product['User']['parking']:'Not Assigned';?></span>
+                                    <i class="parking-icon"></i> 
+									Parking........................ <span class="text-right1 "><?php echo !empty($product['User']['parking'])?ucfirst($product['User']['parking']):'Not Assigned';?></span>
                                 </li>
                                 <li>
                                     <i class="delivery-icon"></i>
-                                    Delivery............................................................. <span class="text-right1 "><?php echo !empty($product['User']['delivery'])?$product['User']['delivery']:'Not Assigned';?></span>
+                                    Delivery........................ <span class="text-right1 "><?php echo !empty($product['User']['delivery'])?ucfirst($product['User']['delivery']):'Not Assigned';?></span>
                                 </li>
                             </ul>
                         </div>  
@@ -208,7 +213,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 
+$(function(){
 
+ $('#review_section').click(function(){
+     //alert('call');
+    $('html, body').animate({ scrollTop: $('.reviewLine').offset().top - 100 }, 'slow');
+  });
+  
+});
                    
 
     </script>

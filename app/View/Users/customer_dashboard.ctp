@@ -2,8 +2,8 @@
 
 
 <h2>Orders</h2>
-
-<table class="table  table-bordered ">
+<div class="table-responsive tables-order">
+<table class="table-bordered table ">
     <tr>
         <th><?php echo $this->Paginator->sort('first_name','Name'); ?></th>
         <!--th><?php echo $this->Paginator->sort('last_name'); ?></th-->
@@ -25,7 +25,8 @@
         <th><?php echo $this->Paginator->sort('discount'); ?>
         <th><?php echo $this->Paginator->sort('total'); ?></th>
         <th><?php echo $this->Paginator->sort('status'); ?></th>
-        <th><?php echo $this->Paginator->sort('created'); ?></th>
+        <th><?php echo $this->Paginator->sort('order_status'); ?></th>
+        <th><?php echo $this->Paginator->sort('created','Order Date'); ?></th>
         <th>Action</th>
        
     </tr>
@@ -50,15 +51,16 @@
          <td><?php echo h($order['Order']['subtotal']); ?></td>
          <td>
          <?php 
-         $discount=json_decode($order['Order']['discount']); 
-         $dis=0;
-         foreach ($discount as $key => $value) {
-            $dis=$dis+$value->discount;
+         if(!empty($order['Order']['discount'])){
+            echo '$'.$order['Order']['discount'];
+         }else{
+            echo 0;
          }
-        echo $dis;
+       
          ?></td>
         <td><?php echo h($order['Order']['total']); ?></td>
         <td><?php echo h($order['Order']['authorization']); ?></td>
+        <td><?php  if($order['Order']['order_status']==1){echo "Delivered"; $od_status=0;}else{echo "Not delivered";$od_status=1;}; ?></td>
         <td><?php echo h($order['Order']['created']); ?></td>
         <td class="actions">
             <?php echo $this->Html->link('View', array('action' => 'order_view', $order['Order']['id']), array('class' => 'btn btn-default btn-xs')); ?>
@@ -67,6 +69,7 @@
     </tr>
     <?php endforeach; }?>
 </table>
+</div>
 <?php if(empty($orders)) {?>
 <p class="yum-meals">Our YumPlate chefs are anxiously waiting for you to try their food. Don't be shy, it only takes 3 easy steps to enjoy lovely homemade meals!</p>
 <?php } ?>

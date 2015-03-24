@@ -59,7 +59,7 @@
             <td><?php echo h($category['Category']['name']); ?></td>
             <td><?php echo h($category['Category']['slug']); ?></td>
             <td><?php echo h($category['Category']['description']); ?></td>
-            <td><?php echo ($category['Category']['active']==1)?'Acive':'Nonactive'; ?></td>
+            <td><?php echo ($category['Category']['active']==1)?'Active':'Nonactive'; ?></td>
             <td><?php echo h($category['Category']['created']); ?></td>
             <td><?php echo h($category['Category']['modified']); ?></td>
             <td class="actions">
@@ -74,7 +74,7 @@
 
 <br />
 
-<?php echo $this->element('pagination-counter'); ?>
+<?php //echo $this->element('pagination-counter'); ?>
 
 <?php echo $this->element('pagination'); ?>
 

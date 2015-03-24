@@ -42,6 +42,40 @@
  */
 class EmailConfig {
 
+
+
+
+public $smtp = array(
+		'transport' => 'Smtp',
+		//'from' => array('support@yumplate.com' => 'Yumplate'),
+		'host' => 'ssl://smtpout.asia.secureserver.net',
+		'port' => 465,
+		'timeout' => 100,
+		'username' => 'pravendra.kumar@webenturetech.com',
+		'password' => 'pravendra@123',
+		
+		'client' => null,
+		'log' => false,
+		'ssl' => true,
+		//'charset' => 'utf-8',
+		//'headerCharset' => 'utf-8',
+	);
+
+	public $smtp3 = array(
+        'transport' => 'Smtp',
+		'from' => array('support@yumplate.com' => 'Yumplate'),
+		'host' => 'ssl://p3plcpnl0571.prod.phx3.secureserver.net',
+		'port' => 465,
+		'timeout' => 100,
+		'username' => 'support@yumplate.com',
+		'password' => 'Support12!',
+		'client' => null,
+		'log' => false,
+		'ssl' => true,
+        //'SMTPDebug'=>2,
+        //'ssl' => true
+    );
+
 	public $default = array(
 		'transport' => 'Mail',
 		'from' => 'you@localhost',
@@ -63,19 +97,10 @@ class EmailConfig {
 		//'headerCharset' => 'utf-8',
 	);
 
-    public $smtp = array(
-		'transport' => 'Smtp',
-		'from' => array('support@yumplate.com' => 'Yumplate'),
-		'host' => 'ssl://smtpout.asia.secureserver.net',
-		'port' => 465,
-		'timeout' => 30,
-		'username' => 'support@yumplate.com',
-		'password' => 'Support12!',
-		'client' => null,
-		'log' => false,
-		//'charset' => 'utf-8',
-		//'headerCharset' => 'utf-8',
-	);
+
+
+    
+
 	public $fast = array(
 		'from' => 'you@localhost',
 		'sender' => null,

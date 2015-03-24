@@ -16,6 +16,10 @@ class ProductsController extends AppController {
         $this->loadModel('Cart');
         $this->Auth->allow(array('ExploreYum','RedirectUrl','admin_searchRedirect'));
         $this->set('count',$this->Cart->find('count',array('conditions'=>array('Cart.user_id'=>$this->Session->read('Auth.User.id')))));
+    
+        $this->loadModel('MetaSetting');
+        $meta_settings=$this->MetaSetting->find('first');
+        $this->set(compact('meta_settings'));
     }
 
 ////////////////////////////////////////////////////////////
@@ -31,7 +35,7 @@ class ProductsController extends AppController {
             'conditions' => array(
                 'Product.active' => 1,
                 'Product.featured' => 1,
-                'Product.day'=>strtolower(date("l"))
+                'MATCH(Product.day) AGAINST(? IN BOOLEAN MODE)'=>strtolower(date("l"))
             ),
             'order' => array(
                 'Product.views' => 'ASC'
@@ -50,7 +54,7 @@ class ProductsController extends AppController {
                 'Story.created' => 'ASC'
             )
         ));
-       // pr($products);
+        //pr($products);
         $this->set(compact('products'));
         $this->set(compact('stories'));
         
@@ -95,19 +99,19 @@ class ProductsController extends AppController {
               if($this->Session->read('Auth.User.role')!='admin'){
                $this->layout='front';
               }
-			 $product = $this->Product->find('first', array(
-            'recursive' => -1,
-            'contain' => array(
+            $product = $this->Product->find('first', array(
+                'recursive' => -1,
+                'contain' => array(
                 'Category',
-               // 'Brand'
-            ),
-            'conditions' => array(
+                // 'Brand'
+                ),
+                'conditions' => array(
                 //'Brand.active' => 1,
                 'Product.active' => 1,
                 'Product.slug' => $id
-            )
-        ));
-   
+                )
+            ));
+        
         if (empty($product)) {
             return $this->redirect(array('action' => 'index'), 301);
         }
@@ -120,7 +124,27 @@ class ProductsController extends AppController {
         //$this->set('productmodshtml', $productmods['productmodshtml']);
 
         $this->set('title_for_layout', $product['Product']['name'] . ' ' . Configure::read('Settings.SHOP_TITLE'));
+        $product_day=explode(',',$product['Product']['day']);
+       if(count($product_day)>1){
+            $today=date('Y-m-d');
+            if(in_array($today,explode(',',$product['Product']['day']))){
 
+            $this->set('meal_day',$today);
+            }else{
+            for($i=1;$i<=6;$i++){
+            $closest_day=strtolower(date('l', strtotime('+'.$i.' day', strtotime(date('Y-m-d')))));
+
+            if(in_array($closest_day,explode(',',$product['Product']['day']))){
+            $date=$this->Cart->closestDate($closest_day);
+            $close_day=date('l',strtotime($date));
+
+            break;
+            }
+            }
+            $this->set('meal_day',strtolower($close_day));
+            }
+        }
+       
     }
 
 ////////////////////////////////////////////////////////////
@@ -253,15 +277,15 @@ class ProductsController extends AppController {
     */
         public function admin_searchRedirect(){
             if($this->request->is('post')){
-              
+              //pr($this->request->data);die;
             $this->redirect(
                 array(
                 'controller'=>'products',
                 'action'=>'index',
-                'status'=>!empty($this->request->data['Product']['active'])?$this->request->data['Product']['active']:'',
+                'status'=>isset($this->request->data['Product']['active'])?$this->request->data['Product']['active']:'',
                 'recipe'=>!empty($this->request->data['Product']['recipe_name'])?$this->request->data['Product']['recipe_name']:'',
                 'cook'=>!empty($this->request->data['Product']['cook_name'])?$this->request->data['Product']['cook_name']:'',
-                'location'=>!empty($this->request->data['Product']['cook_name'])?$this->request->data['Product']['location']:'',
+                'location'=>!empty($this->request->data['Product']['location'])?$this->request->data['Product']['location']:'',
                 'admin'=>true
                ));
            }
@@ -305,7 +329,7 @@ class ProductsController extends AppController {
                              );
               }
 
-             if(!empty($this->params->params['named']['cook'])){
+             if(!empty($this->params->params['named']['cook']) || !empty($this->params->params['named']['location'])){
                 $joins[]=array(
                         'table' => 'users',
                         'alias' => 'UserJoin',
@@ -316,7 +340,7 @@ class ProductsController extends AppController {
                     );
                 
             }
-
+           
             if(!empty($joins)){
                   $this->Paginator->settings = array(
                     'Product' => array(
@@ -417,7 +441,7 @@ class ProductsController extends AppController {
 
     public function admin_view($id = null) {
 
-        
+        $this->loadModel('Cart');
          
         if (!$this->Product->exists($id)) {
             throw new NotFoundException('Invalid product');
@@ -434,6 +458,7 @@ class ProductsController extends AppController {
                 'Product.id' => $id
             )
         ));
+
         $this->set(compact('product'));
     }
 
@@ -443,8 +468,8 @@ class ProductsController extends AppController {
         
         
         
-        if (($this->request->is('post') || $this->request->is('put')) && !empty($this->request->data['Product']['image']['name'])) {
-            // pr($this->request->data);die;
+        if (($this->request->is('post') || $this->request->is('put')) /*&& !empty($this->request->data['Product']['image']['name'])*/) {
+           
 
             list($width, $height) = getimagesize($this->request->data['Product']['image']['tmp_name']);
             // pr($width);die;
@@ -482,7 +507,10 @@ class ProductsController extends AppController {
             $this->request->data['Product']['pick_time_from']=date("H:i", strtotime($this->request->data['Product']['pick_time_from']));
             $this->request->data['Product']['pick_time_to']=date("H:i", strtotime($this->request->data['Product']['pick_time_to']));
             $this->request->data['Product']['order_time']=date("H:i", strtotime($this->request->data['Product']['order_time']));
-
+            
+            if(!empty($this->request->data['Product']['avail_multiple_day'])){
+            $this->request->data['Product']['day']=implode(",", $this->request->data['Product']['day']);
+            }
             if ($this->Product->save($this->request->data)) {
                $this->Session->setFlash('Recipe has been added successfully.','default',array('class'=>'alert alert-success'));
                 //return $this->redirect($this->referer());
@@ -517,7 +545,7 @@ class ProductsController extends AppController {
         
         if ($this->request->is('post') || $this->request->is('put')) {
             
-          
+         // pr($this->request->data);die;
             App::import('Vendor', 'ResizeImage', array('file' => 'thumbnail' . DS . 'ThumbLib.inc.php'));
             $this->Img = $this->Components->load('Img');
             $targetdir = WWW_ROOT . 'images/original';
@@ -567,6 +595,11 @@ class ProductsController extends AppController {
               $this->request->data['Product']['pick_time_from']=date("H:i", strtotime($this->request->data['Product']['pick_time_from']));
               $this->request->data['Product']['pick_time_to']=date("H:i", strtotime($this->request->data['Product']['pick_time_to']));
               $this->request->data['Product']['order_time']=date("H:i", strtotime($this->request->data['Product']['order_time']));
+            
+              if(!empty($this->request->data['Product']['avail_multiple_day'])){
+               $this->request->data['Product']['day']=implode(",", $this->request->data['Product']['day']);
+               }
+              //pr($this->request->data);die;
             if ($this->Product->save($this->request->data)) {
                $this->Session->setFlash('The Recipe updated successfully.','default',array('class'=>'alert alert-success'));
                 return $this->redirect(array('controller'=>'products','action'=>'index','admin'=>true));
@@ -582,6 +615,10 @@ class ProductsController extends AppController {
                     'Product.id' => $id
                 )
             ));
+            //pr($product);
+             if(!empty($this->request->data['Product']['avail_multiple_day'])){
+             $product['Product']['day']=explode(',', $product['Product']['day']);
+            }
             $this->request->data = $product;
         }
 
@@ -790,15 +827,59 @@ public function RedirectUrl(){
 */
 public function ExploreYum() {
     $this->layout='front';
+    $this->Paginator = $this->Components->load('Paginator');
     $search=!empty($this->params->query['keywords'])?$this->params->query['keywords']:'';
     
-        $products=$this->Product->find('all',array('conditions'=>array('OR'=>array(
-                          'Product.name LIKE ' => '%'.$search.'%',
-                          'Product.slug LIKE ' => '%'.$search.'%'
-                      )),
-        'contain'=>array('User'=>array('fields'=>array('city','country','first_name','username','last_name')))
-         ));
-        //pr($products);
+    if(!empty($this->params->query['keywords'])){
+            $search=$this->params->query['keywords'];
+            $this->Paginator->settings = array(
+                    'Product' => array(
+                        'contain'=>array(
+                           'User'=>array('fields'=>array('city','country','first_name','username','last_name'))
+                        ),
+                        'recursive' => -1,
+                        'limit' => 10,
+                        'conditions'=>array(
+                            'OR'=>array(
+                                'Product.name LIKE ' => '%'.$search.'%',
+                                'Product.slug LIKE ' => '%'.$search.'%',
+                                'Product.tags LIKE ' => '%'.$search.'%',
+                                'UserJoin.first_name LIKE ' => '%'.$search.'%',
+                                'UserJoin.last_name LIKE ' => '%'.$search.'%',
+                                'UserJoin.username LIKE ' => '%'.$search.'%'
+                            )
+                        ),
+                        'joins'=>array(array(
+                            'table' => 'users',
+                            'alias' => 'UserJoin',
+                            //'type' => 'INNER',
+                            'conditions' => array(
+                            'UserJoin.id = Product.user_id'
+                            ))
+                        ),
+                        'order' => array(
+                            'Product.modified' => 'DESC'
+                        ),
+                       
+                     )
+               );
+
+    }else{
+       $this->Paginator->settings = array(
+                    'Product' => array(
+                        'contain'=>array(
+                           'User'=>array('fields'=>array('city','country','first_name','username','last_name'))
+                        ),
+                        'recursive' => -1,
+                        'limit' => 10,
+                        'order' => array(
+                            'Product.modified' => 'DESC'
+                        ),
+                       
+                    )
+       );
+    }
+        $products = $this->Paginator->paginate();
         $this->set(compact('products'));
      
 

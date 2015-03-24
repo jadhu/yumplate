@@ -1,5 +1,5 @@
 <?php 
-//pr($product);
+//pr($meal_day);
  //echo $this->Html->script(array('addtocart.js'), array('inline' => false)); 
  //echo $this->Html->css(array('toolitup-jrate',), array('inline' => false));
 ?>
@@ -36,7 +36,7 @@ function goBack() {
 <div class="row">
 
     <div class="landing-page-img col-sm-4">  
-    <?php echo $this->Html->Image('/images/large/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'landing-img img-thumbnail img-responsive')); ?>
+    <?php echo $this->Html->Image('/images/original/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'landing-img img-thumbnail img-responsive')); ?>
     </div>
 
     <div class="col col-sm-8 view-product">
@@ -94,7 +94,7 @@ function goBack() {
        
 	  <div class="add-section">
       <!--textarea placeholder="Special comment for meal" class="special_comment" ></textarea--> 
-      <button class="pull-right btn become-btn add_meal_cart">
+      <button class="pull-right btn become-btn add_meal_cart" data-order-day="<?php echo !empty($meal_day)?$meal_day:$product['Product']['day'];?>"  >
         + Add to Cart
         </button> 
     </div>

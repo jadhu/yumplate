@@ -23,7 +23,7 @@
 
                                 </figure>
                                 <div class="community-text">
-                                <?php echo substr(strip_tags($value['Story']['story']),3,100).'...';?>
+                                <?php echo substr(strip_tags($value['Story']['story']),0,100).'...';?>
                                 </div>
                              
                                 </div>

@@ -103,9 +103,13 @@ $('#ProductOrderTime').timepicker();
         
 		
 		<div class="col-sm-3">
-         <?php echo $this->Form->input('day', array('label'=>'Select Day','class' => 'form-control', 'options' => array('sunday' => 'sunday', 'monday'=>'monday','tuesday' => 'tuesday','wednesday' => 'wednesday','thursday' => 'thursday','friday' => 'friday','saturday' => 'saturday'))); ?>
+         <?php echo $this->Form->input('day', array('label'=>'Select Day','class' => 'form-control', 'options' => array('sunday' => 'sunday', 'monday'=>'monday','tuesday' => 'tuesday','wednesday' => 'wednesday','thursday' => 'thursday','friday' => 'friday','saturday' => 'saturday'),'multiple'=>!empty($this->request->data['Product']['avail_multiple_day'])?true:false)); ?>
 		 </div>
+         <div class="col-sm-3">
+         <?php echo $this->Form->input('avail_multiple_day', array('type' => 'checkbox','label'=>'Available multiple days')); ?>
+         </div>
 		 </div>
+         
          <br />
         <?php echo $this->Form->button('Submit', array('class' => 'btn btn-primary')); ?>
         <?php echo $this->Form->end(); ?>
@@ -122,7 +126,7 @@ $('#ProductOrderTime').timepicker();
 
     var basePath = "<?php echo Router::url('/'); ?>";
 
-    CKEDITOR.replace('ProductDescription', {
+    CKEDITOR.replace('ProductStory', {
         filebrowserBrowseUrl : basePath + 'js/kcfinder/browse.php?type=files',
         filebrowserImageBrowseUrl : basePath + 'js/kcfinder/browse.php?type=images',
         filebrowserFlashBrowseUrl : basePath + 'js/kcfinder/browse.php?type=flash',
@@ -132,6 +136,17 @@ $('#ProductOrderTime').timepicker();
     });
 
 
+$(document).ready(function(){
+  $('#ProductAvailMultipleDay').click(function(){
+        if($(this).is(':checked')){
+          $('#ProductDay').attr('multiple',true);
+          $('#ProductDay').attr('name','data[Product][day][]');
+        }else{
+          $('#ProductDay').attr('multiple',false);
+          $('#ProductDay').attr('name','data[Product][day]');
+        }
+  });
+});
 
 </script>
 

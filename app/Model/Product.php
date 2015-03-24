@@ -181,4 +181,29 @@ class Product extends AppModel {
 
 ////////////////////////////////////////////////////////////
 
+     public function canAddCart($mealId,$time){
+            $product=$this->findById($mealId);
+            $order_time=strtotime($product['Product']['order_time']);
+            $current_time=strtotime($time);
+           
+            if($current_time<=$order_time){
+             return true;
+            }else{
+                return false;
+            }
+     }
+///////////////////////////////////////////////////////////////
+
+function isAvailable($prductId,$day){
+
+    $day = ucfirst($day);
+    if(date('l', time()) == $day)
+        return date("Y-m-d", time());
+    else if(abs(time()-strtotime('next '.$day)) < abs(time()-strtotime('last '.$day)))
+        return date("Y-m-d", strtotime('next '.$day));
+    else
+        return date("Y-m-d", strtotime('last '.$day));
+
+}
+
 }

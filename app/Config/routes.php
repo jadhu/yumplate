@@ -32,11 +32,11 @@
     
 	Router::connect('/sitemap.xml', array('controller' => 'products', 'action' => 'sitemap'));
 
-	Router::connect('/admin', array('controller' => 'users', 'action' => 'dashboard', 'admin' => true));
+	Router::connect('/admin', array('controller' => 'orders', 'action' => 'index', 'admin' => true));
 	Router::connect('/customer', array('controller' => 'users', 'action' => 'dashboard', 'customer' => true));
 
 	//Router::connect('/products/term_and_conditions', array('controller' => 'products', 'action' => 'term', 'admin' => false));
-
+    Router::connect('/updatePassword/*', array('controller' => 'users', 'action' => 'updatePassword'));
 	Router::connect('/register', array('controller' => 'users', 'action' => 'register'));
 	Router::connect('/howitworks', array('controller' => 'products', 'action' => 'howitworks'));
 	Router::connect('/instruction', array('controller' => 'products', 'action' => 'instruction'));
