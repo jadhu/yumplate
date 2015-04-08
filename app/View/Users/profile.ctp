@@ -33,14 +33,14 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
       echo $city.' , '.$country;
 ?>">
 <div class="firstInfo"  >
-                    <figure>
+                    <figure class="yum-go-profile" style="cursor:pointer;">
                     <?php echo $this->Html->image('/images/UserImg/'.$product['User']['image'], array('alt' => '','height'=>'65px','width'=>'65px'));?>
                        
                     </figure>
                     <article>
-                        <h4>By <?php echo $product['User']['first_name'];?></h4>
+                        <h4 class="yum-go-profile" style="cursor:pointer;">By <?php echo $product['User']['first_name'];?></h4>
                         <ul>
-                            <li>
+                            <li class="yum-go-profile" style="cursor:pointer;">
                             <i class="loaction-icon"></i><strong>Location :</strong> 
                             <?php echo !empty($product['User']['city'])?$product['User']['city']:'No City';?>,<?php echo !empty($product['User']['country'])?$product['User']['country']:'No City';?>
                             </li>
@@ -215,10 +215,17 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 $(function(){
 
- $('#review_section').click(function(){
-     //alert('call');
-    $('html, body').animate({ scrollTop: $('.reviewLine').offset().top - 100 }, 'slow');
-  });
+$('#review_section').click(function(){
+//alert('call');
+$('html, body').animate({ scrollTop: $('.reviewLine').offset().top - 100 }, 'slow');
+});
+
+//for image ,name ,location to link lower profile
+
+$('.yum-go-profile').click(function(){
+//alert('call');
+$('html, body').animate({ scrollTop: $('.yamplate-review').offset().top - 100 }, 'slow');
+});
   
 });
                    

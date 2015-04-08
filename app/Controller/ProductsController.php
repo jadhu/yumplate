@@ -17,9 +17,7 @@ class ProductsController extends AppController {
         $this->Auth->allow(array('ExploreYum','RedirectUrl','admin_searchRedirect'));
         $this->set('count',$this->Cart->find('count',array('conditions'=>array('Cart.user_id'=>$this->Session->read('Auth.User.id')))));
     
-        $this->loadModel('MetaSetting');
-        $meta_settings=$this->MetaSetting->find('first');
-        $this->set(compact('meta_settings'));
+       
     }
 
 ////////////////////////////////////////////////////////////
@@ -579,7 +577,7 @@ class ProductsController extends AppController {
                     //$this->Img->resampleGD($targetdir . DS . $origFile, WWW_ROOT . 'images/large/', $origFile, 368, 328, 1, 0);
                    // $this->Img->resampleGD($targetdir . DS . $origFile, WWW_ROOT . 'images/small/', $origFile, 295, 295, 1, 0);
                     $resize = new ResizeImage($targetdir . DS . $origFile);
-                    $resize->resizeTo(304, 285, 'maxWidth');
+                    $resize->resizeTo(304, 209, 'maxWidth');
                     $resize->saveImage(WWW_ROOT . 'images/small/'.$origFile);
 
                     $resize->resizeTo(368, 328, 'exact');
@@ -616,7 +614,8 @@ class ProductsController extends AppController {
                 )
             ));
             //pr($product);
-             if(!empty($this->request->data['Product']['avail_multiple_day'])){
+             if(!empty($product['Product']['avail_multiple_day'])){
+
              $product['Product']['day']=explode(',', $product['Product']['day']);
             }
             $this->request->data = $product;
@@ -641,7 +640,7 @@ class ProductsController extends AppController {
                       'conditions'=>array('User.role'=>'cook'),
                       'fields'=>array('id','first_name')
                       ));
-        //pr($users);
+        
         $this->set(compact('users'));
 
     }

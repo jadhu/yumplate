@@ -470,7 +470,9 @@ public function order_confirm() {
 
 	public function paypal(){
          $this->layout='front';
+         $this->autoRender=false;
          if($this->request->is('post')){
+            
               $userId = $this->Auth->user('id');
               if(!$userId){
                 $this->Session->setFlash('Please login again !','default',array('class'=>'alert alert-danger'));
@@ -490,10 +492,10 @@ public function order_confirm() {
                                         )
                                    ));
               // return $this->redirect('/');
-             // pr($Data);die;
+             
               $paymentAmount =$this->priceGet($Data);
             
-			
+			  
 			if(!$paymentAmount) {
 			 return $this->redirect('/');
 			}
@@ -533,6 +535,7 @@ public function order_confirm() {
 				$orderData[$key]['price']=$value['Product']['price'];
 				$orderData[$key]['quantity']=$value['Cart']['quantity'];
 				$orderData[$key]['discount']=$value['Cart']['discount'];
+                $orderData[$key]['comment']=$value['Cart']['comment'];
 				$orderData[$key]['product_id']=$value['Product']['id'];
                 $orderData[$key]['pick_time_to']=$value['Product']['pick_time_to'];
                 $orderData[$key]['pick_time_from']=$value['Product']['pick_time_from'];
@@ -645,7 +648,7 @@ public function order_confirm() {
 
                     $email->from(Configure::read('Settings.SUPPORT_EMAIL'))
                             ->cc(Configure::read('Settings.SUPPORT_EMAIL'))
-                            ->to($chef_email)
+                            ->to($this->Auth->user('email'))
                             ->subject('YUMplate Order information')
                             ->template('order')
                             ->emailFormat('html')
@@ -887,7 +890,7 @@ public function order_confirm() {
          
           $email = new CakeEmail('smtp');
           $email->from($this->request->data['email']);
-          $email->to(Configure::read('Settings.SUPPORT_EMAIL'));
+          $email->to('pravendra.kumar@webenturetech.com');
           //$email->to('pravendra.kumar@webenturetech.com');
           $email->emailFormat('html');
           if($this->request->data['type']=='contact'){

@@ -145,7 +145,7 @@ echo $this->Html->link(
 <li <?php echo $style;?>>
 <a href="javascript:void(0);" id="user_login" class="">
 Login
-</a
+</a>
 <?php 
 /*echo $this->Html->link(
     'Login',
@@ -168,7 +168,7 @@ echo $this->Html->link(
 <li>
 <?php 
 echo $this->Html->link(
-  'Become a YumCook!',
+  'Become a YUMCook!',
    '/instruction',
    array('class'=>'become-btn')
 );
@@ -200,10 +200,11 @@ array('class'=>'cart-btn')
      <?php 
         if(!empty($userLogin)){ ?>
     <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <?php echo 'Hello '.$this->Session->read('Auth.User.first_name'); }  ?>
+          <?php echo 'Hello '.$this->Session->read('Auth.User.first_name');  ?>
           <span class="caret"></span>
-        </button>
-        <?php if($this->Session->read('Auth.User.role')!='admin'){
+      </button>
+        <?php 
+      } if($this->Session->read('Auth.User.role')!='admin'){
             echo '<ul class="dropdown-menu" role="menu">';
             echo "<li>";
 
@@ -263,10 +264,6 @@ array('class'=>'cart-btn')
         echo '</li></ul>';
       }
         ?>
-          <?php 
-        ?>
-
-
         
   </div>
 </li>

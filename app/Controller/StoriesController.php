@@ -19,6 +19,10 @@ class StoriesController extends AppController {
         parent::beforeFilter();
         $this->layout='admin';
         $this->Auth->allow(array('ExploreYum','RedirectUrl','view','admin_makestatus'));
+
+        $this->loadModel('MetaSetting');
+        $meta_settings=$this->MetaSetting->find('first');
+        $this->set(compact('meta_settings'));
     }
 
     public function admin_stories() {

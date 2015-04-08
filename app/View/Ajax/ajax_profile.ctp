@@ -59,30 +59,31 @@ echo $day_data;
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
-                            <a href="#story_<?php echo $value['Product']['id']; ?>" aria-controls="story" role="tab" data-toggle="tab">Story</a>
+                            <?php $contentId=$value['Product']['id'].'_'.time();?>
+                            <a href="#story_<?php echo $contentId; ?>" aria-controls="story" role="tab" data-toggle="tab">Story</a>
                             </li>
                             <li role="presentation">
-                            <a href="#ingredients_<?php echo $value['Product']['id']; ?>" aria-controls="ingredients" role="tab" data-toggle="tab">Ingredients</a>
+                            <a href="#ingredients_<?php echo $contentId; ?>" aria-controls="ingredients" role="tab" data-toggle="tab">Ingredients</a>
                             </li>
                             <li role="presentation">
-                            <a href="#contains_<?php echo $value['Product']['id']; ?>" aria-controls="contains" role="tab" data-toggle="tab">Recommended for</a>
+                            <a href="#contains_<?php echo $contentId; ?>" aria-controls="contains" role="tab" data-toggle="tab">Recommended for</a>
                             </li>
                             <li role="presentation">
-                            <a href="#serving_<?php echo $value['Product']['id']; ?>" aria-controls="serving" role="tab" data-toggle="tab">Serving</a></li>
+                            <a href="#serving_<?php echo $contentId; ?>" aria-controls="serving" role="tab" data-toggle="tab">Serving</a></li>
                             </ul>
 
                             <!-- Tab panes -->
                             <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="story_<?php echo $value['Product']['id']; ?>">
-                            <?php echo $value['Product']['story'];?></div>
-                            <div role="tabpanel" class="tab-pane" id="ingredients_<?php echo $value['Product']['id']; ?>">
-                             <?php echo $value['Product']['ingredients'];?>
+                            <div role="tabpanel" class="tab-pane active" id="story_<?php echo $contentId; ?>">
+                            <?php echo strip_tags($value['Product']['story']);?></div>
+                            <div role="tabpanel" class="tab-pane" id="ingredients_<?php echo $contentId; ?>">
+                             <?php echo strip_tags($value['Product']['ingredients']);?>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="contains_<?php echo $value['Product']['id']; ?>">
-                            <?php echo $value['Product']['contains'];?>
+                            <div role="tabpanel" class="tab-pane" id="contains_<?php echo $contentId;?>">
+                            <?php echo strip_tags($value['Product']['contains']);?>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="serving_<?php echo $value['Product']['id']; ?>">
-                            <?php echo $value['Product']['serving'];?>
+                            <div role="tabpanel" class="tab-pane" id="serving_<?php echo $contentId; ?>">
+                            <?php echo strip_tags($value['Product']['serving']);?>
                             </div>
                            </div>
                        </article>

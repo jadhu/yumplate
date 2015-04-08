@@ -1,6 +1,6 @@
 <?php echo $this->Html->css(array('bootstrap-editable.css', '/select2/select2.css'), 'stylesheet', array('inline' => false)); ?>
 <?php echo $this->Html->script(array('bootstrap-editable.js', '/select2/select2.js'), array('inline' => false)); ?>
-<h2>Meta  Settings </h2>
+<h2>Story Meta  Settings </h2>
 <script>
 
 $(document).ready(function() {

@@ -62,7 +62,7 @@
 </div>
 <br />
 
-<?php echo $this->element('pagination-counter'); ?>
+<?php //echo $this->element('pagination-counter'); ?>
 
 <?php echo $this->element('pagination'); ?>
 

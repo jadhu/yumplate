@@ -41,7 +41,7 @@
             <table class="table table-bordered order-table">
                 <tr>
                     <th colspan="2">Meal</th>
-                    <!--th width="16%">comment</th-->
+                    <th width="16%">comment</th>
                     <th width="16%">Price</th>
                     <th width="16%">Unit</th>
                     <th width="16%">Total</th>
@@ -61,6 +61,7 @@
                     <br/>
                         <a href="javascript:void(0);" class="remove-add-cart" data-cart-id="<?php echo $value1['Cart']['id'];?>">Remove</a>
                     </td>
+                    <td style="width: 243px;" class="comment" data-value="<?php echo $value1['Cart']['comment']; ?>" data-pk="<?php echo $value1['Cart']['id']; ?>" ><?php echo $value1['Cart']['comment'];?></td>
                  <td class="meal-price" data-price="<?php echo $value1['Product']['price'];?>">$<?php echo $value1['Product']['price'];
                  if(!empty($value1['Cart']['discount'])){
                    

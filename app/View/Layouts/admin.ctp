@@ -4,13 +4,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><?php echo $title_for_layout; ?></title>
     <?php
-//echo $this->Html->meta('viewport','width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1');
+
 if($this->params->params['controller']=='products' && $this->params->params['action']=='view' ){ ?>
 <meta name="description" content="<?php echo !empty($product['Product']['story'])?strip_tags($product['Product']['story']):'';?>">
 <!--meta name="keywords" content="HTML,CSS,XML,JavaScript"-->
 <meta name="meal" content="<?php echo $product['Product']['name'];?>">
 
 <?php } ?>
+
+
+<!--- Meta tags for stories profile-->
+
+<?php
+if($this->params->params['controller']=='stories' && $this->params->params['action']=='view' ){ ?>
+
+<meta name="description" content="<?php echo !empty($meta_settings['MetaSetting']['description'])?$meta_settings['MetaSetting']['description']:'';?>">
+<meta name="keywords" content="<?php echo $meta_settings['MetaSetting']['keywords'];?>">
+<meta name="name" content="<?php echo $meta_settings['MetaSetting']['name'];?>">
+<?php } ?>
+ <!--- Meta tags for stories ends here-->
+
 
     <?php 
     echo $this->Html->meta('icon');
@@ -77,6 +90,16 @@ if($this->params->params['controller']=='products' && $this->params->params['act
         <?php echo $this->element('sql_dump'); ?>
     </div>
 <script type="text/javascript">
+ //for google analytics    
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61437605-1', 'auto');
+  ga('send', 'pageview');
+
+
     $(document).ready(function(){
         $('.insert-anchor').wrap('<li>');
     });

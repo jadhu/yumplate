@@ -38,6 +38,7 @@
   <th style="text-align: left; border: 1px solid #eee;" scope="col">Pickup Time</th>
   <th style="text-align: left; border: 1px solid #eee;" scope="col">Pickup Date</th>
   <th style="text-align: left; border: 1px solid #eee;" scope="col">Chef Name</th>
+  <th style="text-align: left; border: 1px solid #eee;" scope="col">Special comment </th>
   <th style="text-align: left; border: 1px solid #eee;" scope="col">Chef Rating</th>
 
   <th style="text-align: left; border: 1px solid #eee;" scope="col">Discount</th>
@@ -62,9 +63,12 @@
    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><span class="name">
  <?php echo $orderitem['cook_name']; ?>	</span>
    </td> 
+    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><span class="name">
+    <?php echo $orderitem['comment']; ?> </span>
+   </td> 
    <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang">
-   <a href="http://projects.udaantechnologies.com/yumplate/u/<?php echo $orderitem['username']; ?>" target="_blank">
-   <img src="http://projects.udaantechnologies.com/yumplate/img/ReviewStar/<?php echo ($orderitem['cook_rating']>5)?5:$orderitem['cook_rating']; ?>_star.png"/></a>
+   <a href="http://beta.yumplate.com/u/<?php echo $orderitem['username']; ?>" target="_blank">
+   <img src="http://beta.yumplate.com/img/ReviewStar/<?php echo ($orderitem['cook_rating']>5)?5:$orderitem['cook_rating']; ?>_star.png"/></a>
    </td>
     <td style="text-align: left; vertical-align: middle; border: 1px solid #eee;" xml="lang"><span class="amount">
    <?php echo !empty($orderitem['discount'])?'$'.$orderitem['discount']:''; ?></span>
@@ -89,7 +93,7 @@
     </tr> 
     </tfoot> 
     </table> 
-    <p><strong>Order Date:</strong><?php echo date('Y-m-d',strtotime($shop['Order']['created']));?></p> 
+    <p><strong> Order Date: </strong> <?php echo date('Y-m-d',strtotime($shop['Order']['created']));?></p> 
    
      
     <!--h2 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Customer details</h2> 
@@ -129,7 +133,7 @@
      <td align="center" valign="top" xml="lang"> 
      <table cellspacing="0" cellpadding="10" border="0" id="template_footer" style="border-top: 0px none; width: 600px;"> <tbody> <tr> <td valign="top" xml="lang"> 
      <table cellspacing="0" cellpadding="10" border="0" style="width: 100%;"> <tbody> <tr> <td valign="middle" id="credit" style="border: 0; color: #99b1c7; font-family: Arial; font-size: 12px; line-height: 125%; text-align: center;" xml="lang" colspan="2"> 
-     <p>Yumplate</p> </td> </tr> 
+     <p>YUMplate</p> </td> </tr> 
      </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> 
      </table> </div>
 

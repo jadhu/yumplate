@@ -20,9 +20,10 @@
        <div class="email-errors">
         </div>
         <br />
-       
+        <p><span class="admin-contact-check"><input type="checkbox" name="order" required ></span>
+		<span class="admin-contact-text">By hitting Submit I acknowledge I have read and agree to the Terms and Conditions of YUMplate</span></p>
         <h4 class="text-center"><?php echo $this->Form->button('Submit', array('class' => 'btn become-btn')); ?></h4>
-
+        
         <?php echo $this->Form->end(); ?>
         <br />
          

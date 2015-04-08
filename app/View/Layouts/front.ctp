@@ -33,8 +33,20 @@ if($this->params->params['controller']=='products' && $this->params->params['act
 
 <?php } ?>
 
+<!--- Meta tags for stories profile-->
+
 <?php
-//echo $this->Html->meta('viewport','width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1');
+if($this->params->params['controller']=='stories' && $this->params->params['action']=='view' ){ ?>
+
+<meta name="description" content="<?php echo !empty($meta_settings['MetaSetting']['description'])?$meta_settings['MetaSetting']['description']:'';?>">
+<meta name="keywords" content="<?php echo $meta_settings['MetaSetting']['keywords'];?>">
+<meta name="name" content="<?php echo $meta_settings['MetaSetting']['name'];?>">
+<?php } ?>
+ <!--- Meta tags for stories ends here-->
+
+
+<?php
+
 if($this->params->params['controller']=='users' && $this->params->params['action']=='profile' ){ ?>
 <!--- Meta tags for cooks profile-->
 <meta name="description" content="<?php echo !empty($product['User']['description'])?$product['User']['description']:'';?>">
@@ -63,11 +75,8 @@ if($this->params->params['controller']=='users' && $this->params->params['action
 
 	<?php
 		echo $this->Html->meta('icon');
-    //echo $this->Html->meta('og:description','The Turducken of Cookies');
-    //echo $this->Html->meta('description','Flat, Clean, Responsive, application admin template built with bootstrap 3');
-		
 		echo $this->Html->css(array('bootstrap','fonts','style','animate.min','responsive','toolitup-jrate'));
-  	echo $this->Html->script(array('jquery-1.11.2.min','bootstrap','oauth','modernizr','polyfiller','yumplate'));
+  	echo $this->Html->script(array('jquery-1.11.2.min','jquery-validation','bootstrap','oauth','modernizr','polyfiller','yumplate'));
     
 
 		echo $this->fetch('meta');
@@ -76,7 +85,7 @@ if($this->params->params['controller']=='users' && $this->params->params['action
 		
 	?>
 <script type="text/javascript">
-var SITE_URL = '<?php echo SITE_URL.'yumplate/'; ?>';
+var SITE_URL = '<?php echo SITE_URL; ?>';
 </script>
 </head>
 <body>
@@ -148,8 +157,22 @@ var SITE_URL = '<?php echo SITE_URL.'yumplate/'; ?>';
 
        ?>
 		</div>
-	</div>
+
   <script>
+  //google analytics 
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61437605-1', 'auto');
+  ga('send', 'pageview');
+
+
+
+
+
   $(document).ready(function(){
     
     webshims.setOptions({
