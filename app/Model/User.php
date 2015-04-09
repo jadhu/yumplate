@@ -150,16 +150,16 @@ class User extends AppModel {
   <table cellspacing="0" cellpadding="20" border="0" style="width: 100%;"> 
   <tbody> 
  <tr> 
-      <p style="font-size:16px">Hi $fName $lName, </p>
+      <p style="font-size:14px">Hi $fName $lName, </p>
 
       <p style="font-size:14px">Thank you for registering with YUMplate.com  and welcome!</p>
 
       <p style="font-size:14px">You are just the adventurous YUMplater we have been looking for. As a member of the YUMplate community, we invite you to sample any one of our amazing meals from our various featured cooks.</p>
 
       <p style="font-size:14px">Please help us spread the word about YUMplate and help us grow! </p> 
-      <a style="font-size:14px" target="_blank" href="https://www.facebook.com/pages/Yumplate/346586222196988">Like us on Facebook</a> <br/>  
-      <a style="font-size:14px" target="_blank" href="https://instagram.com/yumplate">Instagram</a> <br/>  
-      <a style="font-size:14px" target="_blank" href="https://twitter.com/yum_plate">follow us on Twitter</a>
+      <span style="font-size:14px"> Like us on Facebook</span> <a style="font-size:14px" target="_blank" href="https://www.facebook.com/pages/Yumplate/346586222196988"><img src="http://beta.yumplate.com/images/fb_color.png" style="width:20px;" /></a> &nbsp;&nbsp;  and
+      <span style="font-size:14px">Instagram</span> <a style="font-size:14px" target="_blank" href="https://instagram.com/yumplate"><img src="http://beta.yumplate.com/images/insta_color.png" style="width:20px;"/></a> &nbsp; &nbsp;  and
+      <span style="font-size:14px">follow us on Twitter</span> <a style="font-size:14px" target="_blank" href="https://twitter.com/yum_plate"><img src="http://beta.yumplate.com/images/twitter_color.png" style="width:20px;"/></a>
       
 
       <p style="font-size:14px">Happy eating!</p> 

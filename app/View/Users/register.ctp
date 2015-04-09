@@ -8,7 +8,7 @@
 <?php  //echo $this->Html->script(array('oauth'));?>
 
 <div class="signup-main">
-<h3 class="text-center">Sign up <a href="#" class="sign-up close-btn pull-right">X</a></h3>
+<h3 class="text-center">Sign up <a href="javascript:void(0);" class="sign-up close-btn pull-right">X</a></h3>
 <h5 class="text-center">Already a YUMplater? Sign in</h5>
 <div id="socialConnect" >
 	<div class="sign-social">
@@ -64,6 +64,13 @@
             $('#registerForm').removeClass('likePopup');
             $(this).hide();
          });
+
+
+        $('#forget_pass').click(function(){
+         $('#registerForm').removeClass('likePopup');
+         $("#ForgetPassModal").modal('show');
+        });
+
      });
     </script>
 	</div>

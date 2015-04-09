@@ -142,6 +142,7 @@ $(document).on('click','.add_meal_cart',function(){
             'dataType': "json",
             'success':function(data){
                $('#message').show(); 
+               console.log('call');
                 if(data.type=='success'){
 
                   $('.cart-btn').text(data.count);
@@ -277,16 +278,6 @@ if($('#cook_id').length!=0){
 
  });
  //AddComment();
-}
-
-
-// for forget pass-word
-
-
-if($('#forget_pass').length!=0){
-  $('#forget_pass').click(function(){
-   $("#ForgetPassModal").modal('show');
-  });
 }
 
 
