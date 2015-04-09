@@ -313,7 +313,7 @@ width: 133px;}
 .meals-para {margin-top: 5px;
     /* padding: 0 15px; */
 	}
-.main {margin:20px 0 25px;  min-height: 400px; }
+.main {margin:20px 0 25px;  min-height: 440px; }
 
 label {
     display: inline-block;
@@ -611,9 +611,9 @@ html, body, #load { height: auto; width: 100%; }
 #map_canvas .gm-style-iw {text-align: left;} 
 .main-order h4 {font-family: "muliregular";}
 .main-order #meal-total {font-weight:bold !important;}
-.forget-link {color:#ff5a00;}
+.forget-link {color:#343434;}
 /**/
-.yum-meals{ color: #ff5a00; }
+.yum-meals{ color: #343434; }
 .story-yum { cursor: pointer !important; }
 #forget_pass.forget-link { /*  color: #989898;*/ text-transform: capitalize!important; }
 .special_comment{
@@ -886,3 +886,20 @@ html, body, #load { height: auto; width: 100%; }
     margin: 0;
     padding: 5px 0;}
 /*-----Comming Soon End----*/
+
+.likePopup{ position: fixed; background: rgba(0,0,0,0.5); top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; padding-top: 78px; overflow-y: scroll; padding-bottom:20px;}
+.likePopup .close-btn {background: none repeat scroll 0 0 #dddddd;
+    border-radius: 5px;
+    color: #000000;
+    font-size: 15px;
+    padding: 6px 10px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+	}
+.likePopup .close-btn:hover {background: none repeat scroll 0 0 #cacaca;
+    color: #C72127;
+    
+	}
+
+.likePopup .signup-main{ background: #fff;  }

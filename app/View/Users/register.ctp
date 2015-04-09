@@ -1,11 +1,14 @@
-<div class="main">
-<h2>Registration</h2>
+<style type="text/css">
+	body{overflow:hidden !important;}
+</style> 
 
-<br />
+<div class="main">
+<div class="likePopup " id="registerForm">
+<div class="container">
 <?php  //echo $this->Html->script(array('oauth'));?>
 
 <div class="signup-main">
-<h3 class="text-center">Sign up</h3>
+<h3 class="text-center">Sign up <a href="#" class="sign-up close-btn pull-right">X</a></h3>
 <h5 class="text-center">Already a YUMplater? Sign in</h5>
 <div id="socialConnect" >
 	<div class="sign-social">
@@ -43,7 +46,7 @@
         </div>
 		<div class="term-and-condition">
          <div class="check-box"><?php echo $this->Form->input('term', array('type'=>'checkbox','required' => true,'label'=>false,'div'=>false ));?></div>
-		 <div class="check-box-text"><a href="<?php echo $this->Html->url('/products/term_and_conditions',true);?>" class="forget-link">By creating an account you confirm that you accept our Terms and Conditions</a></div>
+		 <div class="check-box-text"><a href="<?php echo $this->Html->url('/term_and_conditions',true);?>" class="forget-link">By creating an account you confirm that you accept our Terms and Conditions</a></div>
 		 </div>
          <br />
 		<h4 class="text-center"> 
@@ -55,6 +58,14 @@
     </div>
 
 	</div>
+    <script>
+     $(document).ready(function () {
+         $('.sign-up').click(function(){
+            $('#registerForm').removeClass('likePopup');
+            $(this).hide();
+         });
+     });
+    </script>
 	</div>
-	
+	</div>
 	
