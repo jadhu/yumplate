@@ -86,7 +86,7 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                                  <?php echo $this->Html->image('/images/UserImg/'.$product['User']['image'], array('alt' => ''));?>
                                 </figure>
                                 <div class="less">
-                                <?php echo substr($product['User']['description'],0,50)?>... <br/> <br/> 
+                                <?php echo substr($product['User']['description'],0,300)?>... <br/> <br/> 
                                 <a class="readMore" href="javascript:void(0)"> more</a>
                                 </div>
                                 <div class="more" style="display:none;">
@@ -99,18 +99,18 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                                          
 
                                         <a href="https://www.pinterest.com/pin/create/button/
-                                        ?url=<?php echo SITE_URL; ?>/yumplate/u/<?php echo $product['User']['username'];?>"
+                                        ?url=<?php echo SITE_URL; ?>u/<?php echo $product['User']['username'];?>"
                                         data-pin-do="buttonPin"
                                         data-pin-config="above">
                                         <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
                                         </a>
                                         </li>
                                         <li>
-                                            <a href="https://twitter.com/share" style="margin-top:0px !important;" class="twitter-share-button"   data-url="<?php echo SITE_URL; ?>yumplate/u/<?php echo $product['User']['username'];?>">Tweet</a>
+                                            <a href="https://twitter.com/share" style="margin-top:0px !important;" class="twitter-share-button"   data-url="<?php echo SITE_URL; ?>u/<?php echo $product['User']['username'];?>">Tweet</a>
                                         </li>
                                         
                                         <li>
-                                        <div class="fb-share-button" title="Share" data-href="<?php echo SITE_URL; ?>/yumplate/u/<?php echo $product['User']['username'];?>"  data-layout="button_count"></div>
+                                        <div class="fb-share-button" title="Share" data-href="<?php echo SITE_URL; ?>u/<?php echo $product['User']['username'];?>"  data-layout="button_count"></div>
 
                                          
                                         </li>

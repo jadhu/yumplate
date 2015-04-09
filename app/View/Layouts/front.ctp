@@ -58,9 +58,9 @@ if($this->params->params['controller']=='users' && $this->params->params['action
  
 <!-- Open Graph data -->
 <meta property="og:title" content="Yumplate" />
-<meta property="og:type" content="food" />
-<meta property="og:url" content="<?php echo SITE_URL;?>yumplate/u/<?php echo $product['User']['username'];?>" />
-<meta property="og:image" content="http://projects.udaantechnologies.com/yumplate/images/UserImg/<?php echo !empty($product['User']['image'])?$product['User']['image']:''?>" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="<?php echo SITE_URL.'u/'.$product['User']['username'];?>" />
+<meta property="og:image" content="<?php echo SITE_URL;?>images/UserImg/<?php echo !empty($product['User']['image'])?$product['User']['image']:''?>" />
 <meta property="og:description" content="<?php echo !empty($product['User']['description'])?$product['User']['description']:'';?>" />
 
 
@@ -69,7 +69,7 @@ if($this->params->params['controller']=='users' && $this->params->params['action
 <meta name="twitter:title" content="Yumplate">
 <meta name="twitter:description" content="<?php echo !empty($product['User']['description'])?$product['User']['description']:'';?>">
 <!-- Twitter summary card with large image must be at least 280x150px -->
-<meta name="twitter:image" content="http://projects.udaantechnologies.com/yumplate/images/UserImg/<?php echo !empty($product['User']['image'])?$product['User']['image']:''?>"> 
+<meta name="twitter:image" content="<?php echo Router::url('/');?>images/UserImg/<?php echo !empty($product['User']['image'])?$product['User']['image']:''?>"> 
 
  <?php } ?>
 
