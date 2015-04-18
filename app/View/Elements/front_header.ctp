@@ -65,7 +65,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">YUMPLATE REVIEWS</h4>
+        <h4 class="modal-title" id="exampleModalLabel">YumPlate REVIEWS</h4>
       </div>
      
       <div class="modal-body" id="comment_section">
@@ -168,7 +168,7 @@ echo $this->Html->link(
 <li>
 <?php 
 echo $this->Html->link(
-  'Become a YUMCook!',
+  'Become a YumCook!',
    '/instruction',
    array('class'=>'become-btn')
 );

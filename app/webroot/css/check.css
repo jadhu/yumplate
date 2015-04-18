@@ -1,0 +1,51 @@
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, dl, dt, dd, ul, li,button,fieldset, form, label, legend,blockquote { margin:0; padding:0; border:0; outline:0; vertical-align: baseline; background: transparent; list-style: none;}
+img {border:none; }
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+:focus{ outline:0;}
+a { text-decoration:none; cursor:pointer;}
+a:hover{ text-decoration:none;}
+.clearfix:after{ content: ".";display: block;clear:both;visibility:hidden;line-height: 0; height: 0;}
+body{ background:url(../images/indian.jpg) center top no-repeat; background-size:cover; font-family: 'Open Sans', sans-serif; line-height:1;}
+.outer{ overflow:hidden;}
+.layout{max-width:1140px; margin:0 auto;}
+.header{padding-top:72px; overflow:hidden;}
+.logo,.social-icon li{float:left;}
+.social-icon{float:right;}
+.social-icon li a{display:block; margin-left:8px; width:40px; height:40px; border:1px solid #4674cc; border-radius:40px; position:relative;}
+.social-icon li.facebook a{background:url(../images/facebook.png) center top no-repeat;}
+.social-icon li.facebook a.active{background:#55bd88 url(../images/facebook.png) center top no-repeat;}
+.social-icon li.gplus a{background:url(../images/gplus.png) center top no-repeat;}
+.social-icon li.gplus:hover  a{background:#55bd88 url(../images/gplus.png) center top no-repeat;}
+.social-icon li.twiter a{background:url(../images/twiter.png) center top no-repeat;}
+.social-icon li.twiter:hover a{background:#55bd88 url(../images/twiter.png) center top no-repeat;}
+.early-access{max-width:553px; margin:0 auto; padding-top:155px; padding-bottom:100px; text-align:center;}
+.early-access h1{font-weight:bold;  line-height:42px; margin-bottom:31px;}
+.early-access h1,.early-access h1 span{font-size:40px;}
+.early-access h1 span{font-weight:normal; display:inline;}
+.early-access span,.early-access h1{color:#fff;}
+.early-access span{font-size:22px; font-weight:300; margin-bottom:30px; line-height:18px; display:block;}
+.code-txt{width:97%; margin-bottom:15px; color:#afaaa6; padding:0px 0px 0px 15px; background:#fff; border:0px;}
+.code-txt,.early-access button{border-radius:4px; height:48px; font-size:16px;}
+.early-access button{width:100%; display:block;  background:#3779b6; text-align:center; font-weight:600; color:#fff; border-left:2px solid #fff; border-top:2px solid #fff; border-right:2px solid #90817a; border-bottom:2px solid #90817a; line-height:46px; cursor:pointer;}
+
+/* for Responsive styling */
+
+@media only screen and (max-width:992px){
+body{  background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../images/indian.jpg");
+    background-origin: padding-box;
+    background-position: center top;
+    background-repeat: no-repeat; background-size:auto;}
+    
+}
+
+
+
+
+
+
+
+
+

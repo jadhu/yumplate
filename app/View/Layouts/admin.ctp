@@ -66,6 +66,7 @@ if($this->params->params['controller']=='stories' && $this->params->params['acti
                     <ul class="dropdown-menu">
                         <li><?php echo $this->Html->link('Users', array('controller' => 'users', 'action' => 'index', 'admin' => true)); ?></li>
                         <li><?php echo $this->Html->link('User Add', array('controller' => 'users', 'action' => 'add', 'admin' => true)); ?></li>
+                        <li><?php echo $this->Html->link('Review Settings', array('controller' => 'users', 'action' => 'admin_review_setting', 'admin' => true)); ?></li>
                         <li><?php //echo $this->Html->link('Products CSV Export', array('controller' => 'products', 'action' => 'csv', 'admin' => true)); ?></li>
                     </ul>
                 </li>
@@ -82,7 +83,12 @@ if($this->params->params['controller']=='stories' && $this->params->params['acti
     </div>
 
     <div class="footer">
-    
+         <?php 
+      if($this->params->params['controller']=='products' && $this->params->params['action']=='view' ){
+        echo $this->element('front_footer');
+        echo $this->Form->input('page_url',array('type'=>'hidden','value'=>$this->Html->url('/',true)));
+        }
+       ?>
         <!--p>&copy; <?php echo date('Y'); ?> <?php echo env('HTTP_HOST'); ?></p-->
     </div>
 

@@ -99,7 +99,7 @@ function goBack() {
         </button> 
     </div>
 	<div class="frst-comnt-usr-box" id="content"> 
-         <h3>Add Review and Comments </h3>
+         <h3 class="heading-mini-sm">Add Review and Comments </h3>
          <div class="msgbox">
          </div>
 
@@ -179,9 +179,9 @@ function goBack() {
         <input type="hidden" value="<?php echo $product['Product']['id']; ?>" id="product_id">
         <input type="hidden" value="<?php echo $product['Product']['user_id']; ?>" id="cook_id">
         <input type="hidden" value="<?php echo $this->Session->read('Auth.User.id'); ?>" id="loggeduserId">
-        <textarea class="form-control comment_sec" rows="4"></textarea>
+        <!--textarea class="form-control comment_sec" rows="4"></textarea>
 		<br/>
-        <input type="button" value="Submit" id="sub_comment" class="btn btn-danger pull-right" data-loading-text="Wait...">
+        <input type="button" value="Submit" id="sub_comment" class="btn btn-danger pull-right" data-loading-text="Wait..." -->
         </div>
         </div>   
     </div>
@@ -238,13 +238,13 @@ $("input[name=easyfind_rating][value=1]").attr('checked', 'checked');
     return false;
     }
 
-    if(comment=='' || comment==null){
+    /*if(comment=='' || comment==null){
             $('.msgbox').html('');
             $('.msgbox').show();
             $('.msgbox').html('<div class="alert alert-danger">Please write comment</div>').fadeOut( 3000);
         return false;
-    }
-
+    }*/
+  comment=''
  $.ajax({
       'url':pageUrl+'ajax/addReview',
       'type':'POST',

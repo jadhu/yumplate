@@ -1,4 +1,5 @@
 <?php 
+//echo $this->request->data['Product']['order_duration'];
   echo $this->Html->script(array('jquery-timepicker','bootstrap-datepicker'),array('inline'=>false));
   echo $this->Html->css(array('jquery-timepicker','bootstrap-datepicker'),array('inline'=>false));
 ?>
@@ -87,7 +88,11 @@ $('#ProductOrderTime').timepicker();
 				<label for="Pick Time to">Pick Time to:</label>
 				<?php echo $this->Form->input('pick_time_to', array('class' => 'form-control','type'=>'text','autocomplete'=>'off','label'=>false,'div'=>false)); ?>
 			</div>
+      <div class="col-sm-3">
+                <?php echo $this->Form->input('order_duration', array('class' => 'form-control','empty'=>'Select Day','class' => 'form-control', 'options' => array('1' => '1 day', '2'=>'2 days','3' => '3 days'))); ?>
+            </div>
 			<div class="col-sm-3">
+
 				<?php echo $this->Form->input('order_time', array('type'=>'text','class' => 'form-control')); ?>
 			</div>
 		</div>

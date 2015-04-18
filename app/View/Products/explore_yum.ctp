@@ -35,6 +35,6 @@
 	
 		<?php }
        echo $this->element('pagination'); 
-	}else{  echo '<p class="note-msg"> Your search returns no results. <br /><br /><br /><a href="http://projects.udaantechnologies.com/yumplate/products/ExploreYum/keywords=" class="btn btn-primary">May be suggust</a> </p>';
+	}else{  echo '<p class="note-msg"> Your search returns no results. <br /><br /><br /><a href="http://beta.yumplate.com/products/ExploreYum/keywords=" class="btn btn-primary">May be suggust</a> </p>';
 			}?>
 </div>

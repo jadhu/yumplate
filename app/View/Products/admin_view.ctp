@@ -67,6 +67,10 @@ function goBack() {
         <td><?php echo h($product['Product']['day']); ?></td>
     </tr>
     <tr>
+        <td>Order Duration</td>
+        <td><?php echo ($product['Product']['order_duration']!=1)? $product['Product']['order_duration'].' days':$product['Product']['order_duration'].' day'; ?></td>
+    </tr>
+    <tr>
         <td>Created</td>
         <td><?php echo h($product['Product']['created']); ?></td>
     </tr>

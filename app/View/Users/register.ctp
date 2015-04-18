@@ -9,7 +9,7 @@
 
 <div class="signup-main">
 <h3 class="text-center">Sign up <a href="javascript:void(0);" class="sign-up close-btn pull-right">X</a></h3>
-<h5 class="text-center">Already a YUMplater? Sign in</h5>
+<h5 class="text-center">Already a YumPlater? Sign in</h5>
 <div id="socialConnect" >
 	<div class="sign-social">
 		<div class="row social-container signup">			

@@ -7,7 +7,7 @@ class UsersController extends AppController {
 	public $components=array('Paypal');
 
     public function beforeFilter() {
-
+        //echo "call";die;
         parent::beforeFilter();
         $this->Auth->allow(array('emailTest','login','profile','SocialRegister','contact','admin_stories','forgetPassword','paypal','review','updatePassword'));
 
@@ -63,9 +63,9 @@ class UsersController extends AppController {
 
             if($this->Auth->login()) {
                
-                 $this->User->id = $this->Auth->user('id');
-                // $data['last_login']=date('Y-m-d H:i:s');
-                 //$data['ip_address']=$this->get_client_ip();
+                    $this->User->id = $this->Auth->user('id');
+                    // $data['last_login']=date('Y-m-d H:i:s');
+                    //$data['ip_address']=$this->get_client_ip();
                     $this->User->saveField('last_login',date('Y-m-d H:i:s'));
                     $this->User->saveField('ip_address',$this->get_client_ip());
                //  $this->User->save($data);
@@ -105,6 +105,7 @@ class UsersController extends AppController {
         $this->Session->setFlash('Successfully logout','default',array('class'=>'alert alert-success'));
         $_SESSION['KCEDITOR']['disabled'] = true;
         unset($_SESSION['KCEDITOR']);
+        $this->Session->delete('authorized');
         return $this->redirect($this->Auth->logout());
     }
 
@@ -649,7 +650,7 @@ public function order_confirm() {
                     $email->from(Configure::read('Settings.SUPPORT_EMAIL'))
                             ->cc(Configure::read('Settings.SUPPORT_EMAIL'))
                             ->to($this->Auth->user('email'))
-                            ->subject('YUMplate Order information')
+                            ->subject('YumPlate Order information')
                             ->template('order')
                             ->emailFormat('html')
                             ->viewVars(array('shop' => $shop))
@@ -714,6 +715,9 @@ public function order_confirm() {
                 if($this->User->save($this->request->data)){
                 $last = $this->User->findById($this->User->id);
                 $this->User->SendRegisterMail($last);
+                $this->User->id = $last['User']['id'];
+                $this->User->saveField('last_login',date('Y-m-d H:i:s'));
+                $this->User->saveField('ip_address',$this->get_client_ip());
                 $this->Session->write('Auth',$last); 
                 $this->Session->setFlash('Sucessfully Registered','default',array('class'=>'alert alert-success')); 
                 $this->redirect(array('controller'=>'products','action'=>'index'));
@@ -726,25 +730,29 @@ public function order_confirm() {
     }
     
     public function SocialRegister(){
+         
         $this->autoRender=false;
         if($this->request->is('post')){
-         
+        
           $data=array();
-          $data['User']['first_name']=$this->request->data['name'];
+          $data['User']['first_name']=$this->request->data['first_name'];
           $data['User']['last_name']=$this->request->data['last_name'];
-          $data['User']['email']=$this->request->data['email'];
+          $data['User']['email']=base64_decode($this->request->data['email']);
           $data['User']['social_login']=1;
           $data['User']['role']='customer';
            $data['User']['image_link']='http://graph.facebook.com/'.$this->request->data['id'].'/picture?type=large';
-          $data['User']['username']=$this->request->data['name'];
+          $data['User']['username']=base64_decode($this->request->data['email']);
            
          //if($this->User->SendSocialRegisterMail($data)){
-          $userData=$this->User->find('first',array('conditions'=>array('User.email'=>$this->request->data['email'])));
+          $userData=$this->User->find('first',array('conditions'=>array('User.email'=>base64_decode($this->request->data['email']))));
           if(empty($userData)){
             $this->User->validator()->remove('oldpassword');
-                if($this->User->save($data)){
-                    $this->User->SendSocialRegisterMail($data);
-                    $this->Session->write('Auth',$data);
+                if($savedData=$this->User->save($data)){
+                    $this->User->SendSocialRegisterMail($savedData);
+                    $this->Session->write('Auth',$savedData);
+                    $this->User->id = $savedData['User']['id'];
+                    $this->User->saveField('last_login',date('Y-m-d H:i:s'));
+                    $this->User->saveField('ip_address',$this->get_client_ip());
                     echo json_encode(array('type'=>'success'));die;
                 }else{
                     echo json_encode(array('type'=>'error','msg'=>'Does Not saved'));die;
@@ -753,6 +761,7 @@ public function order_confirm() {
                 $this->User->id = $userData['User']['id'];
                 $data['last_login']=date('Y-m-d H:i:s');
                 $this->User->saveField('last_login', $data['last_login'], false);
+                $this->User->saveField('ip_address',$this->get_client_ip());
                   if(empty($userData['User']['image_link'])){
                     $user_data['image_link']=$data['User']['image_link'];
                     $this->User->id=$userData['User']['id'];
@@ -1036,4 +1045,50 @@ public function admin_meta_setting_editable(){
 }
 ///////////////////////////////////////////////funtcions for Meta keywords, description ,name ends here/////////////////////////////////
 
+///////////////////////////////////////////////funtcions for Reviews setting/////////////////////////////////
+
+
+public function admin_review_setting(){
+    $this->loadModel('Review');
+    $this->Paginator = $this->Components->load('Paginator');
+    $this->Paginator->settings = array(
+                    'User' => array(
+                        'recursive' => -1,
+                        'contain' => array(
+                        ),
+                        'conditions' => array(
+                        ),
+                        'order' => array(
+                            'Review.created' => 'DESC'
+                        ),
+                        'limit' => 20,
+                        'paramType' => 'querystring',
+                    )
+                 );
+     $reviews = $this->Paginator->paginate('Review');
+    // pr($reviews);
+     $this->set(compact('reviews'));
+
+}
+
+///////////////////////////////////////////////////////////
+
+public function admin_review_delete($id = null){
+        $this->loadModel('Review');
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        $this->Review->id = $id;
+        if (!$this->Review->exists()) {
+            throw new NotFoundException('Invalid Review');
+        }
+        if ($this->Review->delete()) {
+            $this->Session->setFlash('Review successfully deleted','default',array('class'=>'alert alert-success'));
+            return $this->redirect(array('action'=>'review_setting'));
+        }
+        $this->Session->setFlash('Review was not deleted','default',array('class'=>'alert alert-danger'));
+        return $this->redirect(array('action' => 'review_setting'));
+
+}
+///////////////////////////////////////////////funtcions for  Reviews setting ends here/////////////////////////////////
 }

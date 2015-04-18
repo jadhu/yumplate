@@ -19,5 +19,5 @@
                                     </article>
                                 </li>
                                  
-                                <?php }}else{echo "<li>No more comment</li>";}?>
+                                <?php }}else{echo "<li>No more comments</li>";}?>
                                

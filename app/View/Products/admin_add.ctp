@@ -31,7 +31,7 @@ $('#ProductOrderTime').timepicker();
         <?php echo $this->Form->input('category_id', array('class' => 'form-control')); ?>
     </div>
     <div class="col-sm-4">
-        <?php echo $this->Form->input('user_id',array('class' => 'form-control','label'=>'Cook Name','empty'=>'Select Cook')); ?>
+        <?php echo $this->Form->input('user_id',array('class' => 'form-control','label'=>'Cook Name','empty'=>'Select Cook','required'=>true)); ?>
     </div>
     <div class="col-sm-4">
         <?php echo $this->Form->input('name', array('class' => 'form-control','label'=>'Recipe Name')); ?>
@@ -71,11 +71,13 @@ $('#ProductOrderTime').timepicker();
             </div>
     </div>
     <div class="col-sm-4">
+             <div class="input number required">
+                <?php echo $this->Form->input('order_duration', array('class' => 'form-control','empty'=>'Select Day','class' => 'form-control', 'options' => array('1' => '1 day', '2'=>'2 days','3' => '3 days'))); ?>
+            </div>
             <div class="input number required">
                 <?php echo $this->Form->input('order_time', array('type'=>'text','class' => 'form-control')); ?>
             </div>
       
-        <?php //echo $this->Form->input('weight', array('class' => 'form-control')); ?>
     </div>
     <div class="col-sm-2">
         <?php echo $this->Form->input('active', array('type' => 'checkbox')); ?>

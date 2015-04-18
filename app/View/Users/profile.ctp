@@ -74,7 +74,7 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                         <div class="yamplate-review mr15 feedback-review">
                           
                         </div> 
-                               <a href="javascript:void(0)" class="user-comment" id="addcoment" data-limit="" > read more comment</a>
+                               <a href="javascript:void(0)" class="user-comment" id="addcoment" data-limit="" > Read more comments</a>
                                    
                     </div>
                     <div class="col-sm-6">
@@ -87,11 +87,11 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                                 </figure>
                                 <div class="less">
                                 <?php echo substr($product['User']['description'],0,300)?>... <br/> <br/> 
-                                <a class="readMore" href="javascript:void(0)"> more</a>
+                                <a class="readMore" href="javascript:void(0)"> More</a>
                                 </div>
                                 <div class="more" style="display:none;">
                                <?php echo $product['User']['description'];?> 
-                                <a class="readless" href="javascript:void(0)"> less</a></div>
+                                <a class="readless" href="javascript:void(0)"> Less</a></div>
                                 <br/> <br/> 
                                 <div class="social-icons social-tab">
                                     <ul>

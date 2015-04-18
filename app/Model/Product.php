@@ -181,15 +181,23 @@ class Product extends AppModel {
 
 ////////////////////////////////////////////////////////////
 
-     public function canAddCart($mealId,$time){
+     public function canAddCart($mealId,$time,$pdate){
             $product=$this->findById($mealId);
-            $order_time=strtotime($product['Product']['order_time']);
+            if(!empty($product['Product']['order_duration'])){
+             $timeString=date('Y-m-d',strtotime('-'.$product['Product']['order_duration'].' day', strtotime($pdate)));  
+            }else{
+
+             $timeString=$pdate;
+            }
+           
+            $pdateTimeString=strtotime($timeString.' '.$product['Product']['order_time']);
+           
             $current_time=strtotime($time);
            
-            if($current_time<=$order_time){
+            if($current_time<=$pdateTimeString){
              return true;
             }else{
-                return false;
+             return false;
             }
      }
 ///////////////////////////////////////////////////////////////

@@ -9,11 +9,20 @@ echo $day_data;
 </div>
  <div class="row meals-para">
  <?php if(!empty($product)) {foreach ($product as $key => $value) {
+    $order_day='';
+    if(!empty($value['Product']['order_duration'])){
+         $pdate=$this->Date->getDate($day);
+       // echo($value['Product']['order_duration']).$value['Product']['name'];
+    $order_day=date('l', strtotime('-'.$value['Product']['order_duration'].' day', strtotime($pdate)));
+    }else{
+      $order_day=$day;  
+    }
+    
            ?>
               <div class="col-sm-6">
                         <div class="mealThumb mr15" >
                             <h5><?php echo $value['Product']['name'] ; ?> <span class="pull-right">$ <?php echo $value['Product']['price'] ; ?></span></h5>
-							<h5 class="product-details"><b>PICKUP BY : </b><?php echo $day;?>,<?php  echo date('h:i A', strtotime($value['Product']['pick_time_from'])).'-'.date('h:i A', strtotime($value['Product']['pick_time_to']));?> <span class="pull-right"><b>ORDER BY : </b><?php echo $day;?>,<?php  echo date('h:i A', strtotime($value['Product']['order_time']));?></span></h5>
+							<h5 class="product-details"><b>PICKUP BY : </b><?php echo $day;?>,<?php  echo date('h:i A', strtotime($value['Product']['pick_time_from'])).'-'.date('h:i A', strtotime($value['Product']['pick_time_to']));?> <span class="pull-right"><b>ORDER BY : </b><?php echo $order_day;?>,<?php  echo date('h:i A', strtotime($value['Product']['order_time']));?></span></h5>
                             <figure>
                             <?php 
                             echo $this->Html->image('/images/original/'.$value['Product']['image'], array('alt' => ''));

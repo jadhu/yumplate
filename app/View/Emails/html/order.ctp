@@ -27,7 +27,7 @@
   <tbody> 
   <tr> 
   <td valign="top" xml="lang"> <div style="color: #737373; font-family: Arial; font-size: 14px; line-height: 150%; text-align: left;"> 
-  <p> Dear <?php echo $shop['Order']['first_name'].' '.$shop['Order']['last_name'];?>, Your order has been received and is now being processed. Your order details are shown below for your reference.One of our YUMplate staff will be contacting you shortly:</p> 
+  <p> Dear <?php echo $shop['Order']['first_name'].' '.$shop['Order']['last_name'];?>, Your order has been received and is now being processed. Your order details are shown below for your reference.One of our YumPlate staff will be contacting you shortly:</p> 
   <h2 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Order: #<?php echo $shop['Order']['id'];?></h2> 
 
   <table cellspacing="0" cellpadding="6" border="1" style="width: 100%; border: 1px solid #eee;"> <thead> 
@@ -133,7 +133,7 @@
      <td align="center" valign="top" xml="lang"> 
      <table cellspacing="0" cellpadding="10" border="0" id="template_footer" style="border-top: 0px none; width: 600px;"> <tbody> <tr> <td valign="top" xml="lang"> 
      <table cellspacing="0" cellpadding="10" border="0" style="width: 100%;"> <tbody> <tr> <td valign="middle" id="credit" style="border: 0; color: #99b1c7; font-family: Arial; font-size: 12px; line-height: 125%; text-align: center;" xml="lang" colspan="2"> 
-     <p>YUMplate</p> </td> </tr> 
+     <p>YumPlate</p> </td> </tr> 
      </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> 
      </table> </div>
 

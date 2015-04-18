@@ -1,7 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 class AjaxController extends AppController {
-   
+    public $helpers = array('Date');
      public function ajax_profile() {
        
       $this->layout = 'ajax';
@@ -11,6 +11,7 @@ class AjaxController extends AppController {
       $id=$this->params->query['userId'];
 
       $day='';
+
       $day=($counter==0)?date("l"):date('l', strtotime('+'.$counter.' day', strtotime(date('Y-m-d'))));
       $date=($counter==0)?date("Y-m-d"):date("Y-m-d", strtotime('+'.$counter.' day', strtotime(date('Y-m-d'))));
        //pr($date);die;
@@ -25,8 +26,8 @@ class AjaxController extends AppController {
       'MATCH(Product.day) AGAINST(? IN BOOLEAN MODE)' => $day
       )
       ));
-      //pr($product);die;
-
+      
+      
       $this->set(compact('product'));
       $this->set('day',$day);
       $this->set('date',$date);
@@ -70,14 +71,14 @@ class AjaxController extends AppController {
     if($this->request->is('post') && $this->request->is('ajax')){
       //for current day check to order time is passed or not
        $today=strtolower(date("l"));
-       $current_time=date('h:i:s a', strtotime(date('Y-m-d H:i:s')));
-     //pr($current_time);die;
-       if($today==$this->request->data['day']){
-         if(!$this->Product->canAddCart($this->request->data['mealId'],$current_time)){
-          echo json_encode(array('type'=>'failure','msg'=>'Sorry! The order cutoff time has passed. Please add a different meal'));die;
-         }
-       }
-      //
+       $current_time=date('Y-m-d h:i:s a', strtotime(date('Y-m-d H:i:s')));
+       $prdouct_date=$this->Product->isAvailable($this->request->data['mealId'],$this->request->data['day']);
+      
+      if(!$this->Product->canAddCart($this->request->data['mealId'],$current_time,$prdouct_date)){
+      echo json_encode(array('type'=>'failure','msg'=>'Sorry! The order cutoff time has passed. Please add a different meal'));die;
+      }
+   
+    
       $count=$this->Cart->find('count',array(
                                 'conditions'=>array(
                                   'Cart.user_id'=>$this->request->data['userId'],

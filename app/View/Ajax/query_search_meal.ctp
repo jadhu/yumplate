@@ -12,7 +12,7 @@ echo "This meal available on ".$day=$product['Product']['day'];
               <div class="col-sm-6">
                         <div class="mealThumb mr15" data-meal-id="<?php echo $product['Product']['id'] ; ?>">
                             <h5><?php echo $product['Product']['name'] ; ?> <span class="pull-right">$ <?php echo $product['Product']['price'] ; ?></span></h5>
-							<h5 class="product-details">PICKUD BY :<?php echo $day;?>,<?php  echo date('h:i A', strtotime($product['Product']['pick_time_from'])).'-'.date('h:i A', strtotime($product['Product']['pick_time_to']));?> <span class="pull-right">ORDER BY : <?php echo $day;?>,<?php  echo date('h:i A', strtotime($product['Product']['order_time']));?></span></h5>
+							<h5 class="product-details">PICKUD BY :<?php echo $day;?>,<?php  echo date('h:i A', strtotime($product['Product']['pick_time_from'])).'-'.date('h:i A', strtotime($product['Product']['pick_time_to']));?><br/> <span class="">ORDER BY : <?php echo $day;?>,<?php  echo date('h:i A', strtotime($product['Product']['order_time']));?></span></h5>
                             <figure>
                             <?php 
                             echo $this->Html->image('/images/original/'.$product['Product']['image'], array('alt' => ''));
