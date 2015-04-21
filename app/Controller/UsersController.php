@@ -56,11 +56,11 @@ class UsersController extends AppController {
 }
 //////////////////////////////////////////
     public function login() {
-
-    //echo $_SERVER['REMOTE_ADDR'] ;//AuthComponent::password('kumar@123');
+         // $this->layout='front';
+    //echo AuthComponent::password('admin@12345');die;
 
         if ($this->request->is('post')) {
-
+            
             if($this->Auth->login()) {
                
                     $this->User->id = $this->Auth->user('id');
@@ -70,9 +70,9 @@ class UsersController extends AppController {
                     $this->User->saveField('ip_address',$this->get_client_ip());
                //  $this->User->save($data);
               
-                if ($this->Auth->user('role') == 'customer') {
+                if ($this->Auth->user('role') == 'customer' || $this->Auth->user('role') == 'cook' ) {
                       //echo $this->Auth->user('role');die;
-                            if($this->referer()=='http://projects.udaantechnologies.com/yumplate/users/login'){
+                            if($this->referer()==SITE_URL.'users/login'){
                                 $this->redirect('/');
                             }else{
                                 return $this->redirect($this->referer());
@@ -102,7 +102,7 @@ class UsersController extends AppController {
 ////////////////////////////////////////////////////////////
 
     public function logout() {
-        $this->Session->setFlash('Successfully logout','default',array('class'=>'alert alert-success'));
+        $this->Session->setFlash('You have successfully logged out','default',array('class'=>'alert alert-success'));
         $_SESSION['KCEDITOR']['disabled'] = true;
         unset($_SESSION['KCEDITOR']);
         $this->Session->delete('authorized');

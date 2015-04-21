@@ -347,7 +347,7 @@ class ProductsController extends AppController {
                             'User'=>array('fields'=>array('User.first_name','User.last_name','User.city','User.country'))
                          ),
                         'recursive' => -1,
-                        'limit' => 20,
+                        'limit' => 15,
                         'conditions' => $condition,
                         'joins'=>$joins,
                         'order' => array(
@@ -364,7 +364,7 @@ class ProductsController extends AppController {
                             'User'=>array('fields'=>array('User.first_name','User.last_name','User.city','User.country'))
                          ),
                         'recursive' => -1,
-                        'limit' => 20,
+                        'limit' => 15,
                         'conditions' => $condition,
                         'order' => array(
                            'Product.modified' => 'DESC'
@@ -383,7 +383,7 @@ class ProductsController extends AppController {
                             'User'=>array('fields'=>array('User.first_name','User.last_name','User.city','User.country'))
                          ),
                 'recursive' => -1,
-                'limit' => 20,
+                'limit' => 15,
                 'order' => array(
                     'Product.modified' => 'DESC'
                 ),
@@ -640,7 +640,7 @@ class ProductsController extends AppController {
                       'conditions'=>array('User.role'=>'cook'),
                       'fields'=>array('id','first_name')
                       ));
-        
+        //pr($users);
         $this->set(compact('users'));
 
     }

@@ -11,7 +11,7 @@ public function beforeFilter() {
         //parent::beforeFilter();
         $this->Auth->allow();
         $this->layout='check';
-       session_start();
+        $this->Session->renew();
 }
 
 public function index(){
@@ -23,7 +23,7 @@ public function index(){
  	if($this->request->data['password']==$password){
  		
       $this->Session->write('authorized','success');
-
+      $this->Session->setFlash('Thank you for being a Beta user. We appreciate your feedback','default',array('class'=>'alert alert-success'));
       $this->redirect(array('controller'=>'products'));
  	}else{
  	  $this->Session->setFlash('You are not authorized !','default',array('class'=>'alert alert-danger'));

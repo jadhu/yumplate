@@ -46,7 +46,7 @@ class AppController extends Controller {
 ////////////////////////////////////////////////////////////
 
     public function beforeFilter() {
-        session_start();
+        //session_start();
        if($this->Session->read('authorized')!='success'){
            $this->Session->delete('authorized');
            $this->redirect(array('controller'=>'checks'));

@@ -66,11 +66,6 @@
          });
 
 
-        $('#forget_pass').click(function(){
-         $('#registerForm').removeClass('likePopup');
-         $("#ForgetPassModal").modal('show');
-        });
-
      });
     </script>
 	</div>

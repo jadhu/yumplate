@@ -7,7 +7,15 @@ if($('#flashMessage').length==1){
    $('#flashMessage').fadeOut( 5000 );
 }
 
+// for fotgot password
+$('#forget_pass').click(function(){
+  
+if($('#registerForm').length==1){
+$('#registerForm').removeClass('likePopup'); 
+}
 
+$("#ForgetPassModal").modal('show');
+});
 
 if($('.com-thumb').length){
 

@@ -44,7 +44,7 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                             <i class="loaction-icon"></i><strong>Location :</strong> 
                             <?php echo !empty($product['User']['city'])?$product['User']['city']:'No City';?>,<?php echo !empty($product['User']['country'])?$product['User']['country']:'No City';?>
                             </li>
-                            <li><i class="delivery-icon"></i><strong>Delivery :</strong> <span class="uppercase">No</span></li>
+                            <li><i class="delivery-icon"></i><strong>Delivery :</strong> <span class=""><?php echo !empty($product['User']['delivery'])?ucfirst($product['User']['delivery']):'Not Assigned';?></span></li>
                             <li><i class="avrage-icon"></i><strong>Average rating:</strong> 
 
                                <?php //echo $product[0]['sum'];
