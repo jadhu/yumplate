@@ -14,7 +14,7 @@ class ProductsController extends AppController {
         parent::beforeFilter();
         $this->layout='admin';
         $this->loadModel('Cart');
-        $this->Auth->allow(array('ExploreYum','RedirectUrl','admin_searchRedirect'));
+        $this->Auth->allow(array('twitter_upload','ExploreYum','image_upload','RedirectUrl','admin_searchRedirect'));
         $this->set('count',$this->Cart->find('count',array('conditions'=>array('Cart.user_id'=>$this->Session->read('Auth.User.id')))));
     
        
@@ -101,7 +101,7 @@ class ProductsController extends AppController {
                 'recursive' => -1,
                 'contain' => array(
                 'Category',
-                // 'Brand'
+                 'User'
                 ),
                 'conditions' => array(
                 //'Brand.active' => 1,
@@ -882,6 +882,90 @@ public function ExploreYum() {
         $this->set(compact('products'));
      
 
+}
+
+
+public  function image_upload(){    
+    $this->autoRender=false;
+
+    define( 'YOUR_CONSUMER_KEY' , 'wFSwIc9Mx5XJjDbAJN7iNHmGo');
+    define( 'YOUR_CONSUMER_SECRET' , '0XcpY5qXZyOy6MU7AQ34Cj72aYVdp9uV2cg4tunbl6GqrUzMtQ');
+    
+    define( 'YOUR_OAUTH_TOKEN' , '2981608278-krlLsFNXpNN6tlf64WQU6ZKTaqJPZo7KGvb2KgA');
+    define( 'YOUR_OAUTH_TOKEN_SECRET' , 'HIliaQ1Ux1XkX91fFb5t7To9xytuNSbCrcIJHhrtJNiXk');
+
+    App::import('Vendor', 'tmhOAuth-master/tmhOAuth');
+    App::import('Vendor', 'tmhOAuth-master/tmhUtilities');
+    //require ('twitt/tmhOAuth.php');
+    //require ('twitt/tmhUtilities.php');
+
+    /*$tmhOAuth = new tmhOAuth(array(
+             'consumer_key'    => "wFSwIc9Mx5XJjDbAJN7iNHmGo",
+             'consumer_secret' => "0XcpY5qXZyOy6MU7AQ34Cj72aYVdp9uV2cg4tunbl6GqrUzMtQ",
+             'user_token'      => "2981608278-krlLsFNXpNN6tlf64WQU6ZKTaqJPZo7KGvb2KgA",
+             'user_secret'     => "HIliaQ1Ux1XkX91fFb5t7To9xytuNSbCrcIJHhrtJNiXk",
+    ));*/
+
+$tmhOAuth = new tmhOAuth(
+    array( 'consumer_key' =>"wFSwIc9Mx5XJjDbAJN7iNHmGo", 
+        'consumer_secret' =>"0XcpY5qXZyOy6MU7AQ34Cj72aYVdp9uV2cg4tunbl6GqrUzMtQ", 
+        'curl_ssl_verifypeer' => false 
+        )); 
+$tmhOAuth->request('POST', $tmhOAuth->url('oauth/request_token', '')); 
+$response = $tmhOAuth->extract_params($tmhOAuth->response["response"]);
+$img = $this->data['Product']['imageUrl']; 
+$txt = $this->data['Product']['tweetText'];
+$name = $this->data['Product']['image_name'];
+$redirect_Url=$this->referer();
+
+$temp_token = $response['oauth_token']; 
+$temp_secret = $response['oauth_token_secret']; 
+$time = $_SERVER['REQUEST_TIME']; 
+setcookie("Temp_Token", $temp_token, $time + 3600 * 30, '/'); 
+setcookie("Temp_Secret", $temp_secret, $time + 3600 * 30, '/'); 
+setcookie("Tweet_Txt", $txt, $time + 3600 * 30, '/'); 
+setcookie("Img_name", $name, $time + 3600 * 30, '/');
+setcookie("redirect_Url", $redirect_Url, $time + 3600 * 30, '/');
+setcookie("Img_Url", $img, $time + 3600 * 30, '/'); //- See more at: http://www.stirring-interactive.com/blog/tweet-images-using-twitter-api/#sthash.hFU1okrh.dpuf
+
+$url = $tmhOAuth->url("oauth/authorize", "") . '?oauth_token=' . $temp_token; 
+header("Location:".$url); exit(); 
+
+}
+
+
+public  function twitter_upload(){
+    $this->autoRender=false;
+    App::import('Vendor', 'tmhOAuth-master/tmhOAuth');
+    App::import('Vendor', 'tmhOAuth-master/tmhUtilities');
+    
+    $token = $_COOKIE['Temp_Token']; 
+    $secret = $_COOKIE['Temp_Secret']; 
+    $Img_name = $_COOKIE['Img_name']; 
+    $img = $_COOKIE['Img_Url']; 
+    $redirect_Url = $_COOKIE['redirect_Url'];
+    $name=basename($img);
+   
+    $txt = $Img_name; 
+
+    $tmhOAuth = new tmhOAuth(array( 'consumer_key' => 'wFSwIc9Mx5XJjDbAJN7iNHmGo', 'consumer_secret' => '0XcpY5qXZyOy6MU7AQ34Cj72aYVdp9uV2cg4tunbl6GqrUzMtQ', 'user_token' => $token, 'user_secret' => $secret, 'curl_ssl_verifypeer' => false )); 
+    $tmhOAuth->request("POST", $tmhOAuth->url("oauth/access_token", ""), 
+    array( // pass the oauth_verifier received from Twitter 
+    'oauth_verifier' => $_GET["oauth_verifier"] )); 
+    $response = $tmhOAuth->extract_params($tmhOAuth->response["response"]); 
+    $tmhOAuth->config["user_token"] = $response['oauth_token']; 
+    $tmhOAuth->config["user_secret"] = $response['oauth_token_secret']; 
+
+
+$code = $tmhOAuth->request('POST', 'https://api.twitter.com/1.1/statuses/update_with_media.json', 
+array( 'media[]' => file_get_contents($img), 'status' => "$txt" ), true, // use auth 
+                                                     true // multipart 
+                                                     ); 
+   if ($code == 200){ 
+    $this->Session->setFlash('Your image tweet has been sent successfully','default',array('class'=>'alert alert-success'));
+    $this->redirect($redirect_Url); die;
+   }else{ 
+    tmhUtilities::pr($tmhOAuth->response['response']); } 
 }
 
 }

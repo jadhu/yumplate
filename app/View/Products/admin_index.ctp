@@ -138,7 +138,7 @@ $(document).ready(function() {
         <th><?php echo $this->Paginator->sort('views'); ?></th>
         <th><?php echo $this->Paginator->sort('cook_name'); ?></th>
         <th><?php echo $this->Paginator->sort('active'); ?></th>
-        <th><?php echo $this->Paginator->sort('featured'); ?></th>
+        <!--th><?php echo $this->Paginator->sort('featured'); ?></th-->
         <th><?php echo $this->Paginator->sort('available'); ?></th>
         <th><?php echo $this->Paginator->sort('created'); ?></th>
         <th><?php echo $this->Paginator->sort('modified'); ?></th>
@@ -158,7 +158,7 @@ $(document).ready(function() {
         <td><?php echo h($product['User']['first_name']).h($product['User']['last_name']); ?></td>
 
         <td><?php echo $this->Html->link($this->Html->image('icon_' . $product['Product']['active'] . '.png'), array('controller' => 'products', 'action' => 'switch', 'active', $product['Product']['id']), array('class' => 'status', 'escape' => false)); ?></td>
-        <td><?php echo $this->Html->image('icon_' . $product['Product']['featured'] . '.png'); ?></td>
+        <!--td><?php echo $this->Html->image('icon_' . $product['Product']['featured'] . '.png'); ?></td-->
         <td><?php echo h($product['Product']['day']); ?></td>
         <td><?php echo h($product['Product']['created']); ?></td>
         <td><?php echo h($product['Product']['modified']); ?></td>

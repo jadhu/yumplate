@@ -96,7 +96,7 @@ width: 133px;}
     -moz-background-size: cover;
     -webkit-background-size:cover;}
 .steps img{ line-height: 375px; text-align: center; display: inline-block;}
-.yumCommunity{ margin-bottom:200px; }
+.yumCommunity{ margin-bottom:66px; }
 .com-thumb{ border: 1px solid #777674; background: #d7d7d7; padding: 10px 10px 10px 10px; min-height: 160px;
     overflow: hidden;  margin-top: 10px; cursor: inherit!important; }
 .com-thumb h5{ font-size: 14px; font-weight: bold; text-align: justify; color: #343434; margin: 0 0 10px 0; letter-spacing: 2px;}
@@ -172,7 +172,7 @@ width: 133px;}
 .ml15{ margin-left: 0px!important;}
 .mealThumb{ background: #ffffff; border: 1px solid #000000; margin: 15px 0 30px;  min-height: 650px; }
 .mealThumb h5{ padding: 12px 10px 7px; margin: 0; background: #ececec; color: #343434; font-weight:normal; font-family: "muliregular";
-    font-size: 17px; text-transform: uppercase;  text-align: left;} 
+    font-size: 14px; text-transform: uppercase;  text-align: left;} 
 .mealThumb h5 span{ } 
 .mealThumb figure{}
 .mealThumb figure img{ max-width: 100%; /*width: 100%; max-height: 325px;*/ }
@@ -906,3 +906,5 @@ html, body, #load { height: auto; width: 100%; }
 	}
 
 .likePopup .signup-main{ background: #fff;  }
+.become-btn{float:right;}
+.adright{float: right; margin-right: 10px;}

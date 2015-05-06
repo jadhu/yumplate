@@ -1,8 +1,9 @@
 <?php 
 //pr($meal_day);
- //echo $this->Html->script(array('addtocart.js'), array('inline' => false)); 
+ //echo $this->Html->script(array('social_plus.gs'), array('inline' => false)); 
  //echo $this->Html->css(array('toolitup-jrate',), array('inline' => false));
 ?>
+
 
 <?php
 //$this->Html->addCrumb($product['Brand']['name'], array('controller' => 'brands', 'action' => 'view', 'slug' => $product['Brand']['slug']));
@@ -28,10 +29,13 @@ function goBack() {
     window.history.back()
 }
 </script>
+
+
+
 <button onclick="goBack()" class="btn btn-primary">Back</button>
 <br/>
 
-<h1><?php echo $product['Product']['name']; ?></h1>
+<h1 class="product_name"><?php echo $product['Product']['name']; ?></h1>
 
 <div class="row">
 
@@ -65,7 +69,7 @@ function goBack() {
         
          
 
-      <p>
+      <p class="product_story">
       <b>Story:</b>
       <?php echo !empty($product['Product']['story'])?$product['Product']['story']:'No story';?>
       </p>
@@ -91,12 +95,21 @@ function goBack() {
 		<p>
         <b>Category:</b> <?php echo $product['Category']['name'];//$this->Html->link($product['Category']['name'], array('controller' => 'categories', 'action' => 'view', 'slug' => $product['Category']['slug']), array('class' => 'categories-link')); ?>
 		</p>
-       
+       <input type="hidden" id="page_link" value="<?php echo SITE_URL.'u/'.$product['User']['username'];?>">
+         <input type="hidden" id="product_story" value="<?php echo strip_tags(@$product['Product']['story']);?>">
+         <input type="hidden" id="image_name" value="<?php echo @$product['Product']['image'];?>">
 	  <div class="add-section">
       <!--textarea placeholder="Special comment for meal" class="special_comment" ></textarea--> 
-      <button class="pull-right btn become-btn add_meal_cart" data-order-day="<?php echo !empty($meal_day)?$meal_day:$product['Product']['day'];?>"  >
+    <button class="pull-right btn become-btn add_meal_cart" data-order-day="<?php echo !empty($meal_day)?$meal_day:$product['Product']['day'];?>"  >
         + Add to Cart
         </button> 
+     <div class="adright">     
+      <a href="#" class="fb-share"><?php echo $this->Html->image('/images/fb_color.png',array('class'=>'icon1'));?></a>
+
+      <a href="#" class="tw-share"><?php echo $this->Html->image('/images/twitter_color.png',array('class'=>'icon1'));?></a></div>
+      <div id="fb-root"></div>
+
+      
     </div>
 	<div class="frst-comnt-usr-box" id="content"> 
          <h3 class="heading-mini-sm">Add Review and Comments </h3>
@@ -179,9 +192,9 @@ function goBack() {
         <input type="hidden" value="<?php echo $product['Product']['id']; ?>" id="product_id">
         <input type="hidden" value="<?php echo $product['Product']['user_id']; ?>" id="cook_id">
         <input type="hidden" value="<?php echo $this->Session->read('Auth.User.id'); ?>" id="loggeduserId">
-        <!--textarea class="form-control comment_sec" rows="4"></textarea>
+        <textarea class="form-control comment_sec" rows="4"></textarea>
 		<br/>
-        <input type="button" value="Submit" id="sub_comment" class="btn btn-danger pull-right" data-loading-text="Wait..." -->
+        <input type="button" value="Submit" id="sub_comment" class="btn btn-danger pull-right submit-btn" data-loading-text="Wait..." >
         </div>
         </div>   
     </div>
@@ -191,6 +204,13 @@ function goBack() {
 </div>
 <br />
 <br />
+<?php 
+echo $this->Form->create(null,array('action'=>''));
+echo $this->Form->input('imageUrl',array('type'=>'hidden','id'=>'image_url','value'=>''));
+echo $this->Form->input('image_name',array('type'=>'hidden','id'=>'image_nam','value'=>''));
+echo $this->Form->input('tweetText',array('type'=>'hidden','id'=>'tweet_text','value'=>''));
+echo $this->Form->end();
+?>
 <div class="text-center">All sales are final upon checkout</div>
 <script>
 
@@ -238,13 +258,13 @@ $("input[name=easyfind_rating][value=1]").attr('checked', 'checked');
     return false;
     }
 
-    /*if(comment=='' || comment==null){
+    if(comment=='' || comment==null){
             $('.msgbox').html('');
             $('.msgbox').show();
             $('.msgbox').html('<div class="alert alert-danger">Please write comment</div>').fadeOut( 3000);
         return false;
-    }*/
-  comment=''
+    }
+  //comment=''
  $.ajax({
       'url':pageUrl+'ajax/addReview',
       'type':'POST',
@@ -274,7 +294,66 @@ $("input[name=easyfind_rating][value=1]").attr('checked', 'checked');
 });
 
 
+//for facebook and twitter share 
 
 
+
+ window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '812553815506934',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+$(document).ready(function() {
+    var pageUrl=$('#page_url').val();
+    $('.fb-share').click(function() {
+     
+      var price='$ '+$('#productprice').text();
+      var name=$('.product_name').html();
+      var story=$('#product_story').val()+' <p> Price:</p>'+price;
+      
+      var image='http://beta.yumplate.com/images/original/<?php echo $product['Product']['image'];?>';
+
+        FB.ui({
+            method: 'feed',
+            name: name,
+            link: $('#page_link').val(),
+            picture: image,
+            description:story
+        });
+    });
+
+ $('.tw-share').click(function() {
+     
+      var price='$ '+$('#productprice').text();
+      var name=$('.product_name').html();
+      var story=$('#product_story').val()+'<p> Price:</p>'+price;
+
+      var imageUrl='http://beta.yumplate.com/images/original/'+$('#image_name').val();
+
+      var tweetText = story;
+      $('#image_url').val(imageUrl);
+      $('#image_nam').val(name);
+      $('#tweet_text').val(tweetText);
+      $('#ProductForm').attr('action',pageUrl+'products/image_upload')
+      $('#ProductForm').submit();
+
+      
+    });
+
+});
     
+
+
 </script>
