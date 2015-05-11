@@ -41,7 +41,7 @@ $('#ProductOrderTime').timepicker();
 		
         
 		<div class="col-sm-4">
-			<?php echo $this->Form->input('user_id',array('class' => 'form-control','label'=>'Cook Name')); ?>
+			<?php echo $this->Form->input('user_id',array('class' => 'form-control','label'=>'Chef Name','empty'=>'Select Chef')); ?>
 	   </div>
         
 		<div class="col-sm-4">
@@ -57,7 +57,7 @@ $('#ProductOrderTime').timepicker();
 				<?php echo $this->Form->input('ingredients', array('class' => 'form-control')); ?>
 			</div>
 			<div class="col-sm-4">
-				 <?php echo $this->Form->input('contains', array('class' => 'form-control')); ?>
+				 <?php echo $this->Form->input('contains', array('class' => 'form-control','label'=>'Recommended')); ?>
 			</div>
 			<div class="col-sm-4">	
 				 <?php echo $this->Form->input('serving', array('class' => 'form-control')); ?>

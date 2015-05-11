@@ -9,31 +9,36 @@ class UsersController extends AppController {
     public function beforeFilter() {
         //echo "call";die;
         parent::beforeFilter();
-        $this->Auth->allow(array('emailTest','login','profile','SocialRegister','contact','admin_stories','forgetPassword','paypal','review','updatePassword'));
+        $this->Auth->allow(array('sendQuery','login','profile','SocialRegister','contact','admin_stories','forgetPassword','paypal','review','updatePassword'));
 
     }
     
-   /* public function emailTest() {
-		$this->autoRender = false;
-		App::uses('CakeEmail', 'Network/Email');
-			try {
-				$User_Email = new CakeEmail('smtp3');
-				$User_Email->emailFormat('html');
-				$User_Email->from(array('support@yumplate.com' => 'Yumplate Support'));
-				$User_Email->to ('punit.singh@webenturetech.com');
-				$User_Email->subject("Test");
-				$user_data = "This is testing";
-				$User_Email->send($user_data);
+//////////////////////////////////////////////////////////////////////
 
-				print_r($User_Email);
+public function sendQuery(){
 
-			} catch (Exception $e) {
-				print_r($e);
-			}
-        
+  $this->layout=false;
+  $this->autoRender=false;
+  $this->loadModel('User');
+  $this->loadModel('Product');
+  if($this->request->is('post')){
+    $cookdata=$this->Product->find('first',array(
+                                   'conditions'=>array(
+                                     'Product.id'=>$this->request->data['productId']
+                                    ),
+                                   
+                                'contain'=>array('User'=>array('fields'=>array('email','first_name')))
+                                ));
+   
+    if($this->User->SendQueryMail($this->request->data,$cookdata)){
+      echo json_encode(array('type'=>'success','msg'=>'Thanks for your query.We will get back to you soon.'));die;
+    }else{
+      echo json_encode(array('type'=>'success','msg'=>'There is network problem .Please try After some time'));die;
+    }
 
-    }*/
-
+    
+  }
+}
 ////////////////////////////////////////////////////////////
 
     function get_client_ip() {
@@ -358,8 +363,8 @@ class UsersController extends AppController {
             
               $this->User->create();
               $this->User->validator()->remove('oldpassword');
-              $this->request->data['User']['city']=strtolower($this->request->data['User']['city']);
-              $this->request->data['User']['country']=strtolower($this->request->data['User']['country']);
+              //$this->request->data['User']['city']=strtolower($this->request->data['User']['city']);
+              //$this->request->data['User']['country']=strtolower($this->request->data['User']['country']);
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash('The user has been saved','default',array('class'=>'alert alert-success'));
                 return $this->redirect(array('action' => 'index'));
@@ -386,8 +391,8 @@ class UsersController extends AppController {
             }
            //pr($this->request->data);die;
              $this->User->validator()->remove('oldpassword');
-             $this->request->data['User']['city']=strtolower($this->request->data['User']['city']);
-             $this->request->data['User']['country']=strtolower($this->request->data['User']['country']);
+             //$this->request->data['User']['city']=strtolower($this->request->data['User']['city']);
+             //$this->request->data['User']['country']=strtolower($this->request->data['User']['country']);
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash('The user has been saved','default',array('class'=>'alert alert-success'));
                 return $this->redirect(array('action' => 'index'));
@@ -1075,13 +1080,19 @@ public function admin_review_setting(){
 
 public function admin_review_delete($id = null){
         $this->loadModel('Review');
+
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
+        unset($this->Review->actsAs['AggregateCache']);
+        unset($this->Review->actsAs['Containable']);
+        $this->Review->Behaviors->detach('AggregateCache');
+        //pr($this->Review);die;
         $this->Review->id = $id;
         if (!$this->Review->exists()) {
             throw new NotFoundException('Invalid Review');
         }
+       
         if ($this->Review->delete()) {
             $this->Session->setFlash('Review successfully deleted','default',array('class'=>'alert alert-success'));
             return $this->redirect(array('action'=>'review_setting'));

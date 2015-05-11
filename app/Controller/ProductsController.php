@@ -33,7 +33,7 @@ class ProductsController extends AppController {
             'conditions' => array(
                 'Product.active' => 1,
                 'Product.featured' => 1,
-                'MATCH(Product.day) AGAINST(? IN BOOLEAN MODE)'=>strtolower(date("l"))
+                //'MATCH(Product.day) AGAINST(? IN BOOLEAN MODE)'=>strtolower(date("l"))
             ),
             'order' => array(
                 'Product.views' => 'ASC'
@@ -52,7 +52,7 @@ class ProductsController extends AppController {
                 'Story.created' => 'ASC'
             )
         ));
-        //pr($products);
+        //pr(count($products));
         $this->set(compact('products'));
         $this->set(compact('stories'));
         
@@ -916,11 +916,15 @@ $response = $tmhOAuth->extract_params($tmhOAuth->response["response"]);
 $img = $this->data['Product']['imageUrl']; 
 $txt = $this->data['Product']['tweetText'];
 $name = $this->data['Product']['image_name'];
+$pageLink = $this->data['Product']['pageLink'];
+$price = $this->data['Product']['price'];
 $redirect_Url=$this->referer();
 
 $temp_token = $response['oauth_token']; 
 $temp_secret = $response['oauth_token_secret']; 
 $time = $_SERVER['REQUEST_TIME']; 
+setcookie("price", $price, $time + 3600 * 30, '/'); 
+setcookie("pageLink", $pageLink, $time + 3600 * 30, '/'); 
 setcookie("Temp_Token", $temp_token, $time + 3600 * 30, '/'); 
 setcookie("Temp_Secret", $temp_secret, $time + 3600 * 30, '/'); 
 setcookie("Tweet_Txt", $txt, $time + 3600 * 30, '/'); 
@@ -944,9 +948,11 @@ public  function twitter_upload(){
     $Img_name = $_COOKIE['Img_name']; 
     $img = $_COOKIE['Img_Url']; 
     $redirect_Url = $_COOKIE['redirect_Url'];
+    $price = $_COOKIE['price']; 
+    $pageLink = $_COOKIE['pageLink'];
     $name=basename($img);
    
-    $txt = $Img_name; 
+    $txt = $Img_name.' $'.$price .' link:'.$pageLink; 
 
     $tmhOAuth = new tmhOAuth(array( 'consumer_key' => 'wFSwIc9Mx5XJjDbAJN7iNHmGo', 'consumer_secret' => '0XcpY5qXZyOy6MU7AQ34Cj72aYVdp9uV2cg4tunbl6GqrUzMtQ', 'user_token' => $token, 'user_secret' => $secret, 'curl_ssl_verifypeer' => false )); 
     $tmhOAuth->request("POST", $tmhOAuth->url("oauth/access_token", ""), 

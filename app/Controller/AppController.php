@@ -49,7 +49,7 @@ class AppController extends Controller {
         //session_start();
        if($this->Session->read('authorized')!='success'){
            $this->Session->delete('authorized');
-           $this->redirect(array('controller'=>'checks'));
+           $this->redirect(array('controller'=>'checks','action'=>'index'));
          }
         $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login', 'admin' => false);
         $this->Auth->loginRedirect = array('controller' => 'orders', 'action' => 'index', 'admin' => true);
@@ -101,7 +101,8 @@ class AppController extends Controller {
         $meta_settings=$this->MetaSetting->find('first');
         $this->set(compact('meta_settings'));
     
-        
+		//setting the timezone for all dates using TimeHelper
+		//Configure::write('Config.timezone','America/New_York'); 
     }
 
 ////////////////////////////////////////////////////////////

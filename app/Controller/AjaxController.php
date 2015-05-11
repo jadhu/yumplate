@@ -65,15 +65,14 @@ class AjaxController extends AppController {
     $this->loadModel('Product');
    
    
-    //setting the timezone for all dates using TimeHelper
-    Configure::write('Config.timezone','America/New York');
+   
     $data=array();
     if($this->request->is('post') && $this->request->is('ajax')){
       //for current day check to order time is passed or not
        $today=strtolower(date("l"));
        $current_time=date('Y-m-d h:i:s a', strtotime(date('Y-m-d H:i:s')));
        $prdouct_date=$this->Product->isAvailable($this->request->data['mealId'],$this->request->data['day']);
-      
+       //pr($current_time);die;
       if(!$this->Product->canAddCart($this->request->data['mealId'],$current_time,$prdouct_date)){
       echo json_encode(array('type'=>'failure','msg'=>'Sorry! The order cutoff time has passed. Please add a different meal'));die;
       }
@@ -382,6 +381,9 @@ public function showComment(){
            $this->set(compact('product'));
         }
 }
+
+
+
 
 
 }

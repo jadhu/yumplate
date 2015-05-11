@@ -210,7 +210,7 @@ function isAvailable($prductId,$day){
     else if(abs(time()-strtotime('next '.$day)) < abs(time()-strtotime('last '.$day)))
         return date("Y-m-d", strtotime('next '.$day));
     else
-        return date("Y-m-d", strtotime('last '.$day));
+        return date("Y-m-d", strtotime('next '.$day));
 
 }
 

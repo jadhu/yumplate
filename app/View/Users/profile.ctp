@@ -21,15 +21,28 @@
 
 
 window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));
- /*!function(d,s,id){
- 
-  var js,fjs=d.getElementsByTagName(s)[0];
-  if(!d.getElementById(id)){
-    js=d.createElement(s);js.id=id;
-    js.src="//platform.twitter.com/widgets.js";
-    fjs.parentNode.insertBefore(js,fjs); alert('call');
-   }
- }(document,"script","twitter-wjs");*/
+
+$(document).ready(function() {
+    var pageUrl=$('#page_url').val();
+    $('.fb-share').click(function() {
+     
+      
+     var name="<?php echo $product['User']['first_name'];?>";
+      var story=$('.more').text().replace("Less", "").trim();
+      
+      
+      var link ="<?php echo SITE_URL; ?>u/<?php echo $product['User']['username'];?>"
+      var image="<?php echo SITE_URL; ?>images/UserImg/<?php echo $product['User']['image'];?>";
+
+        FB.ui({
+            method: 'feed',
+            name: name,
+            link: link,
+            picture: image,
+            description:story
+        });
+    });
+});
  </script>
 
 <div class="main">
@@ -119,9 +132,9 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
                                         </li>
                                         
                                         <li>
-                                        <div class="fb-share-button" title="Share" data-href="<?php echo SITE_URL; ?>u/<?php echo $product['User']['username'];?>"  data-layout="button_count"></div>
+                                        <!--div class="fb-share-button" title="Share" data-href="<?php //echo SITE_URL; ?>u/<?php //echo $product['User']['username'];?>"  data-layout="button_count"></div-->
 
-                                         
+                                         <a href="javascript:void(0)" class="fb-share"><?php echo $this->Html->image('/images/fb-share.gif',array('class'=>'icon1'));?></a> 
                                         </li>
                                     </ul>
                                 </div>

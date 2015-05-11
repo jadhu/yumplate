@@ -7,6 +7,58 @@ if($('#flashMessage').length==1){
    $('#flashMessage').fadeOut( 5000 );
 }
 
+//for ask query 
+
+$(document).on('click','.ask_query',function(){
+ $('.query_prodName').text($(this).attr('data-name'));
+ $('.query_price').text('Price: $ '+$(this).attr('data-price'));
+ $('.query_orderby').text($(this).attr('data-order'));
+ $('.query_pickupby').text($(this).attr('data-pick'));
+ $('#productId').val($(this).attr('data-product-id'));
+ 
+$("#askModel").modal('show');
+});
+
+//SUBMIT FORM
+  $('#askQueryform').on('submit',function(){
+     $("#askModel").modal('hide');
+    var page_url=$('#page_url').val();
+    var cook=$('.query_cookName').text();
+    var orderBy=$('.query_orderby').text();
+    var pickupBy=$('.query_pickupby').text();
+    var name=$('#user_name').val();
+    var phone=$('#user_phone').val();
+    var email=$('#user_email').val();
+    var queryfor=$('#user_queryfor').val();
+    var query=$('#user_query').val();
+    var product=$('.query_prodName').text();
+    var productId=$('#productId').val();
+    $.ajax({
+      'url':page_url+'users/sendQuery',
+      'type':'POST',
+      'data':{'orderBy':orderBy,'pickupBy':pickupBy,'product':product,'productId':productId,'email':Base64.encode(email),'name':name,'phone':phone,'queryfor':queryfor,'query':query},
+      'dataType': "json",
+      'success':function(data){
+              $('#message').show(); 
+              if(data.type=='success'){
+               
+                $('#message').html('<div class="alert alert-success">'+data.msg+'</div>').fadeOut( 10000 );
+              }else{
+                $('#message').html('<div class="alert alert-danger">'+data.msg+'</div>').fadeOut( 5000 );
+              }
+
+      } 
+    });
+  
+  $('#user_name').val('');
+  $('#user_phone').val('');
+  $('#user_email').val('');
+  $('#user_queryfor').val('');
+  $('#user_query').val('');
+  });
+
+
+
 // for fotgot password
 $('#forget_pass').click(function(){
   

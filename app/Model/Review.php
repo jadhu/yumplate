@@ -17,7 +17,7 @@ class Review extends AppModel {
      var $name='Review';
      var $foreignKey='cook_id';
      var $actsAs = array(
-       'AggregateCache'=>array(
+      'AggregateCache'=>array(
 			'val_rating'=>array('model'=>'User', 'avg'=>'reviews_avg_val_rating'),
        'ontime_rating'=>array('model'=>'User', 'avg'=>'reviews_avg_ontime_rating'),
 			'easyfind_rating'=>array('model'=>'User', 'avg'=>'reviews_avg_easyfind_rating'),

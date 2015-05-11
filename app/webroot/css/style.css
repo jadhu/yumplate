@@ -119,7 +119,7 @@ width: 133px;}
 .footerNav{}
 .social-icons{ text-align: center; }
 .social-icons li { display: inline-block; margin-right: 7px; }
-.social-icons li a{ height: 28px; width: 28px; display: inline-block; transition: all 0.6s ease-in-out 0s; }
+.social-icons li a{ height: 28px; width: 28px; /*display: inline-block;*/ transition: all 0.6s ease-in-out 0s; }
 
 .icon1{ background: url(../images/fb_grey.png) no-repeat 0 0; }
 .icon2{ background: url(../images/google_grey.png) no-repeat 0 0;  }
@@ -226,7 +226,8 @@ width: 133px;}
 }
 .social-tab img{
     background: #fff;
-    border-radius: 50%;
+    /*border-radius: 50%;
+    width:75px;  */
 }
 .social-tab a:hover{
     opacity: 0.7;
@@ -500,7 +501,7 @@ p {
     margin: 0 auto;
     padding: 15px 70px;
     position: relative;
-    width: 650px;}
+    max-width: 650px;}
 .signup-main h3 {font-family: "muliregular"; font-size:30px;}
 #UserRegisterForm input {margin-bottom:10px;}
 
@@ -645,7 +646,7 @@ html, body, #load { height: auto; width: 100%; }
   width: 110px;
 }
 .add-review { margin-right: 15px; }
-.social-icons.social-tab li:last-child { margin-top: -8px; }
+.social-icons.social-tab li:last-child { margin-top: -5px; }
 .chef-article > figure { margin-right: 10px; }
 .become-btn.add-review{
    background: #acacac;
@@ -908,3 +909,123 @@ html, body, #load { height: auto; width: 100%; }
 .likePopup .signup-main{ background: #fff;  }
 .become-btn{float:right;}
 .adright{float: right; margin-right: 10px;}
+.ask-k{background:url(../img/ask.jpg) center top no-repeat; background-size:70%; height:25px; float:right; width:50px; height:40px;}
+.yemcenter{text-align:center;}
+
+/*================== pop up styling ======================*/
+.outer{ overflow:hidden;}
+.layout{max-width:650px; margin:0 auto; border:2px solid #000; min-height:230px;}
+h2{font-size:12px; padding-left:5px; position:relative; color:#000; line-height:20px; border-bottom:2px solid #000;}
+.cross{display:block; width:15px; height:15px; position:absolute; right:10px; top:4px;
+ background:url(../images/cross.jpg) center top no-repeat;}
+.content{padding:35px 0px 10px 40px; overflow:hidden;}
+.content label{font-size:13px;width:80px; float:left;}
+.content ul li{margin-bottom:10px; overflow:hidden;}
+.txtname{width:100px;}
+.txtemail{width:150px;}
+.txtphone{width:175px;}
+.txtabout,.pic-time{width:185px;}
+.txtabout,.txtphone,.txtemail,.txtname,.pic-time,.pic-time{border:2px solid #000; height:20px;}
+.pic-time{height:25px;}
+.txtabout,.txtphone,.txtemail,.txtname,.pic-time,.txtarea,.content ul li strong{font-family: 'Open Sans', sans-serif; font-size:12px; line-height:15px;}
+.txtarea{width:435px; height:117px; padding-left:5px; resize:none; padding-top:5px;  height:116px; border:2px solid #000;}
+.sbmit{width:85px; font-family: 'Open Sans', sans-serif; font-size:12px; border:2px solid #000; float:right; cursor:pointer; display:block; margin-top:10px;}
+.content ul{width:446px; float:left;}
+.m-left{float:left; width:58%;}
+.m-right{float:right; width:38%; text-align:right;}
+.m-right strong,.m-right strong{display:inline-block;}
+
+.signup-main{text-align:center; padding:25px; overflow:hidden;}
+.signup-main h3,.signup-main h5{font-weight:normal;}
+.signup-main h3 { position:relative; font-size: 30px; line-height:35px; padding-bottom:10px;}
+.signup-main h5{font-size:15px; line-height:20px;}
+.facebook{display:inline-block; width:224px; height:46px; margin-top:20px; margin-bottom:20px;}
+.facebook img{width:100%;}
+.form-control {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 5px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+	box-sizing:border-box;
+	margin-bottom:10px;
+	font-family: 'Open Sans', sans-serif;
+}
+.term-and-condition .check-box {
+    float: left;
+    width: 20px;
+}
+.term-and-condition .check-box-text {
+    float: left;
+    width: 90%;
+}
+.forget-link {
+    display: block;
+    margin-left: 10px;
+    text-align: left;
+}
+.forget_pass,.forget-link{font-size: 14px; line-height:18px;  color: #343434;}
+.become-btn {
+    float: right;
+}
+.become-btn {
+    background: #ff5a00 none repeat scroll 0 0;
+    color: #ffffff !important;
+    height: 30px;
+	border-radius:8px;
+    margin-top:3px;
+	cursor:pointer;
+    padding: 5px 7px !important;
+    transition: all 0.7s ease 0s;
+}
+
+.forget_pass {
+    clear: both;
+    display: inline-block;
+    float: left;
+}
+.close-btn {
+    background: #dddddd none repeat scroll 0 0;
+    border-radius: 5px;
+    color: #000000;
+	line-height:15px;
+    font-size: 15px;
+    padding: 6px 10px;
+    position: absolute;
+    right:0px;
+    top: 20px;
+}
+.close-btn:hover {
+    background: #cacaca none repeat scroll 0 0;
+    color: #c72127;
+}
+.outer{background:rgba(0, 0, 0, 0.5);}
+.page3 .signup-main{background:#fff;}
+.page3{border:0px;}
+.page3 li{overflow:hidden;}
+.login lable{text-align:left; float:left;}
+.page3 li label{width:13%;float:left; font-weight:bold!important; font-size:12px; line-height:17px; text-align:left;}
+.page3 li .form-control{width:86%; margin:7px 5px 7px 0px; float:left;}
+.page3 .pic-time,.typearea{border:1px solid #ccc; float:left; color:#555}
+.typearea{width:86%; margin:7px 5px 7px 0px; box-sizing:border-box;  height:120px; resize:none; border-radius:4px; padding:5px 0px 0px 5px;}
+.typearea,.page3 .become-btn,.page3 li span{font-family: 'Open Sans', sans-serif; font-size:13px; color:#555;}
+.page3 .become-btn {float: right !important; width: auto !important;}
+.signup-main ul{padding-left:0px;}
+.page3 h3{text-align:left; font-size:18px;}
+.page3 .close-btn{top:0px;}
+.page3 li span{float:left; line-height:25px;}
+.page3 li .m-left label{width:20%!important;} 
+.page3 li .m-right span{float:right;}
+.form-control:focus,.typearea:focus{box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);}
+.add-section{overflow:hidden;}
+.add-section .adright{margin-top:5px;}
+
+

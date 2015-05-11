@@ -95,7 +95,7 @@ function goBack() {
 		<p>
         <b>Category:</b> <?php echo $product['Category']['name'];//$this->Html->link($product['Category']['name'], array('controller' => 'categories', 'action' => 'view', 'slug' => $product['Category']['slug']), array('class' => 'categories-link')); ?>
 		</p>
-       <input type="hidden" id="page_link" value="<?php echo SITE_URL.'u/'.$product['User']['username'];?>">
+       
          <input type="hidden" id="product_story" value="<?php echo strip_tags(@$product['Product']['story']);?>">
          <input type="hidden" id="image_name" value="<?php echo @$product['Product']['image'];?>">
 	  <div class="add-section">
@@ -104,10 +104,10 @@ function goBack() {
         + Add to Cart
         </button> 
      <div class="adright">     
-      <a href="#" class="fb-share"><?php echo $this->Html->image('/images/fb_color.png',array('class'=>'icon1'));?></a>
+      <a href="#" class="fb-share"><?php echo $this->Html->image('/images/imgoface1.jpg',array('class'=>'icon1'));?></a> 
 
-      <a href="#" class="tw-share"><?php echo $this->Html->image('/images/twitter_color.png',array('class'=>'icon1'));?></a></div>
-      <div id="fb-root"></div>
+      <a href="#" class="tw-share"><?php echo $this->Html->image('/images/imgotweet1.jpg',array('class'=>'icon1'));?></a></div>
+      <div id="fb-root"></div> 
 
       
     </div>
@@ -204,10 +204,14 @@ function goBack() {
 </div>
 <br />
 <br />
+
 <?php 
+
 echo $this->Form->create(null,array('action'=>''));
 echo $this->Form->input('imageUrl',array('type'=>'hidden','id'=>'image_url','value'=>''));
+echo $this->Form->input('pageLink',array('type'=>'hidden','id'=>'page_link','value'=>SITE_URL.'u/'.$product['User']['username']));
 echo $this->Form->input('image_name',array('type'=>'hidden','id'=>'image_nam','value'=>''));
+echo $this->Form->input('price',array('type'=>'hidden','id'=>'prod_price','value'=>''));
 echo $this->Form->input('tweetText',array('type'=>'hidden','id'=>'tweet_text','value'=>''));
 echo $this->Form->end();
 ?>
@@ -320,8 +324,8 @@ $(document).ready(function() {
     $('.fb-share').click(function() {
      
       var price='$ '+$('#productprice').text();
-      var name=$('.product_name').html();
-      var story=$('#product_story').val()+' <p> Price:</p>'+price;
+      var name=$('.product_name').html()+' Price: '+price;
+      var story=$('#product_story').val();
       
       var image='http://beta.yumplate.com/images/original/<?php echo $product['Product']['image'];?>';
 
@@ -336,7 +340,7 @@ $(document).ready(function() {
 
  $('.tw-share').click(function() {
      
-      var price='$ '+$('#productprice').text();
+      var price=$('#productprice').text();
       var name=$('.product_name').html();
       var story=$('#product_story').val()+'<p> Price:</p>'+price;
 
@@ -345,6 +349,7 @@ $(document).ready(function() {
       var tweetText = story;
       $('#image_url').val(imageUrl);
       $('#image_nam').val(name);
+      $('#prod_price').val(price);
       $('#tweet_text').val(tweetText);
       $('#ProductForm').attr('action',pageUrl+'products/image_upload')
       $('#ProductForm').submit();
