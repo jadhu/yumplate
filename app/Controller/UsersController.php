@@ -644,7 +644,7 @@ public function order_confirm() {
                 
                if(empty($this->Order->validationErrors)){
                 $chef_email=$this->Session->read('Shop.Order.user_Email');
-                array_push($chef_email,$this->Auth->user('email'));
+                array_push($chef_email,$this->Auth->user('email'),$shop['OrderInfo']['email']);
 
                 if($save) {
                     $shop['Order']['id']=$orderId;
@@ -654,7 +654,7 @@ public function order_confirm() {
 
                     $email->from(Configure::read('Settings.SUPPORT_EMAIL'))
                             ->cc(Configure::read('Settings.SUPPORT_EMAIL'))
-                            ->to($this->Auth->user('email'))
+                            ->to($chef_email)
                             ->subject('YumPlate Order information')
                             ->template('order')
                             ->emailFormat('html')

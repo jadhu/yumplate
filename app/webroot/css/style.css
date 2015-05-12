@@ -117,9 +117,9 @@ width: 133px;}
 .footerNav li a{ display: inline-block;  color: #343434; font-size: 14px; transition: all 0.7s ease 0s;}
 .footerNav li a:hover{color:#C61A1A ; }
 .footerNav{}
-.social-icons{ text-align: center; }
+.social-icons{ text-align: center; padding: 0; }
 .social-icons li { display: inline-block; margin-right: 7px; }
-.social-icons li a{ height: 28px; width: 28px; /*display: inline-block;*/ transition: all 0.6s ease-in-out 0s; }
+.social-icons li a{ height: 28px; width: 28px; display: inline-block; transition: all 0.6s ease-in-out 0s; }
 
 .icon1{ background: url(../images/fb_grey.png) no-repeat 0 0; }
 .icon2{ background: url(../images/google_grey.png) no-repeat 0 0;  }
@@ -226,6 +226,7 @@ width: 133px;}
 }
 .social-tab img{
     background: #fff;
+    margin-top: -8px;
     /*border-radius: 50%;
     width:75px;  */
 }

@@ -60,16 +60,114 @@
 </div>
 
 
-<div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="askModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">YumPlate REVIEWS</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Ask the Cook</h4>
       </div>
      
-      <div class="modal-body" id="comment_section">
-       
+      <div class="modal-body" >
+       <div class="outer">
+  <div class="layout page3">
+<!-- Start Header Here -->
+<form name="frm" method="post" onsubmit="return false;" id="askQueryform">
+  <div class="signup-main">
+<div class="frm-element">
+   <ul>
+   <li>
+   <label>Cook</label>
+   <span class="query_cookName"><?php echo @$product['User']['first_name'];?></span>
+   </li>
+   
+   <li><div class="">
+   <label>Meal:</label>
+   <span class="query_prodName">Strong Hopper Biriyani (10 portions)</span>
+    </div>
+   </li>
+   <li>
+   <div class="">
+   <label>Price:</label>
+   <span class="query_price">$135.00</span>
+   </li>
+   <li>
+   <label>Order by:</label>
+   <span class="query_orderby">Thusday 12.00pm</span>
+   </div></li>
+   
+   <li><label>Pickup by:</label>
+   <span class="query_pickupby">Saturday,12 PM-02.00PM</span>
+   </li>
+   
+   <li>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label for="exampleInputEmail1">Name <i style="color:red;">*</i> </label>
+				<input class="form-control" id="user_name" type="text" name="Name" placeholder="Name"  required/>
+			</div>
+		</div>
+	</div>
+   </li>
+    <li>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label>Email <i style="color:red;">*</i> </label>
+				<input class="form-control" id="user_email" type="email" name="email" placeholder="Email"  required/>
+			</div>
+		</div>
+	</div> 
+	</li>
+     <li>
+	 <div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label for="">Phone <i style="color:red;">*</i> </label>
+				<input class="form-control" id="user_phone" type="text" name="" placeholder="Phone" required/>
+			</div>
+		</div>
+	</div>
+	 </li>	
+   <li>
+   <div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label for="">About <i style="color:red;">*</i> </label>
+				<select class="pic-time form-control" id="user_queryfor" name="queryfor" required>
+				   <option value="">Select type</option>
+				   <option value="Pickup time">Pickup time</option>
+				   <option value="Order Size">Order Size</option>
+				   <option value="Customize">Customize</option>
+				   <option value="other">other</option>
+				</select>
+			</div>
+		</div>
+	</div>  
+   </li>
+   <li>
+   <div class="form-group">
+		<div class="row">
+			<div class="col-sm-12">
+				<label for="">&nbsp;</label>
+				<textarea class="typearea" id="user_query" name="query" placeholder="Type Your Question" required></textarea>
+			</div>
+		</div>
+	</div>  
+	</li>
+  <li><button type="submit" class="btn become-btn form-control query-submit">Submit</button> </li>	 
+	
+</ul>
+
+
+	
+   </div>
+   <input class="form-control" id="productId" type="hidden" name="Name" placeholder="Name" value="" required/>
+  </div>
+ </form>  
+  </div>
+ </div>
       </div>
      </div>
   </div>

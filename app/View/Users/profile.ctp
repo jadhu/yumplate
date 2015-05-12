@@ -115,7 +115,7 @@ $(document).ready(function() {
                                <?php echo $product['User']['description'];?> 
                                 <a class="readless" href="javascript:void(0)"> Less</a></div>
                                 <br/> <br/> 
-                                <div class="social-icons social-tab">
+                                <div class=" social-tab">
                                     <ul>
                                         <li>
                                          
