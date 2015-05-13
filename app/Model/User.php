@@ -153,7 +153,7 @@ public function SendQueryMail($userData,$productData){
         $email->sender('contact@yumadmin.com');
         $email->cc(Configure::read('Settings.SUPPORT_EMAIL'));
         $email->to($sendmail);
-        //$email->to('prvndrkumar55@gmail.com');
+        //$email->to('pravendra.kumar@webenturetech.com');
         $email->template('askmail');
         $email->emailFormat('html');
         $email->viewVars(array('sendArr' => $sendArr));
@@ -188,7 +188,7 @@ public function SendSocialRegisterMail($userData){
         
        
         try{
-            $result = $email->send($message);
+            $result = $email->send();
         } catch (Exception $ex){
             // we could not send the email, ignore it
            return false;

@@ -23,7 +23,7 @@
                             <li>|</li>
                             <li>
                             <?php 
-                            echo $this->Html->link('Help','/help');
+                            echo $this->Html->link('FAQ','/faq');
                             ?>
                              </li>                            
                         </ul>
@@ -65,5 +65,7 @@
                             </li-->
                         </ul>
                     </div>
+                    
                 </div>
+				<div class="col-sm-12 yemcenter"><span>© 2015 YumPlate, Inc.</span> </div>
             </div>

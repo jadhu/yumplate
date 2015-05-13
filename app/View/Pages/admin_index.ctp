@@ -8,7 +8,7 @@ $msg1 = $this->Session->flash();
   echo $msg1;
 	 } ?>
 
-	
+	 <?php //pr($this->request);?>
 <div class="main">
  <div class="row">
  <div class="col-md-12">
@@ -43,7 +43,7 @@ $msg1 = $this->Session->flash();
 			<option value="">Select</option>
 			<option class="controls" value="howitworks"<?php if(@$page_title=="howitworks"){?>selected="selected"<?php } ?>>How It Works</option>
 			<option class="controls" value="contact"<?php if(@$page_title=="contact"){?>selected="selected"<?php } ?>>Contact</option>
-			<option class="controls" value="help"<?php if(@$page_title=="help"){?>selected="selected"<?php } ?>>Help</option>
+			<option class="controls" value="help"<?php if(@$page_title=="help"){?>selected="selected"<?php } ?>>FAQ</option>
 			<option class="controls" value="instruction"<?php if(@$page_title=="instruction"){?>selected="selected"<?php } ?>>Become a YumCook</option>
 			<option class="controls" value="term"<?php if(@$page_title=="term"){?>selected="selected"<?php } ?>>Term</option>
 			<option class="controls" value="ourstory"<?php if(@$page_title=="ourstory"){?>selected="selected"<?php } ?>>Our story</option>
@@ -76,7 +76,7 @@ $msg1 = $this->Session->flash();
 			   <script type="text/javascript">
 					var CustomHTML = CKEDITOR.replace('page_content',
 						{
-						filebrowserBrowseUrl :'/yumplate/js/kcfinder/browse.php',
+						 filebrowserBrowseUrl :'/js/kcfinder/browse.php',
 						 filebrowserWindowWidth : '500',
 						 filebrowserWindowHeight : '700'}
 					);
@@ -97,7 +97,8 @@ $msg1 = $this->Session->flash();
           </div>
       
       </div> 
-   <input type="hidden" id="page_url" value="/yumplate/admin/pages">
+     
+   <input type="hidden" id="page_url" value="<?php echo $this->Html->url('/',true);?>admin/pages">
       </div>
 	  </section>
 	  </div> 

@@ -20,9 +20,10 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
+      
 	Router::connect('/', array('controller' => 'products', 'action' => 'index'));
     Router::connect('/SocialRegister', array('controller' => 'users', 'action' => 'SocialRegister'));
+    //Router::connect('/SocialRegister', array('controller' => 'users', 'action' => 'SocialRegister'));
 	Router::connect('/u/:slug/*', array('controller' => 'users', 'action' => 'profile'), array('pass' => array('slug')));
 	Router::connect('/product/:slug', array('controller' => 'products', 'action' => 'view'), array('pass' => array('slug')));
 
@@ -44,7 +45,7 @@
 	Router::connect('/carts', array('controller' => 'orders', 'action' => 'carts'));
 	Router::connect('/ourstory', array('controller' => 'products', 'action' => 'ourstory'));
 	Router::connect('/contact', array('controller' => 'products', 'action' => 'contact'));
-	Router::connect('/help', array('controller' => 'products', 'action' => 'help'));
+	Router::connect('/faq', array('controller' => 'products', 'action' => 'help'));
 	Router::connect('/privacypolicy', array('controller' => 'products', 'action' => 'privacypolicy'));
 	Router::connect('/term_and_conditions', array('controller' => 'products', 'action' => 'term'));
 

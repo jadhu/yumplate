@@ -471,10 +471,8 @@ class ProductsController extends AppController {
 
             list($width, $height) = getimagesize($this->request->data['Product']['image']['tmp_name']);
             // pr($width);die;
-                if($width!='740' && $height!='510'){
-               $this->Session->setFlash('Image  size  should be 740x510','default',array('class'=>'alert alert-danger'));
-               $this->redirect($this->referer());
-             }
+           if($width=='740' && $height=='510'){
+              
             App::import('Vendor', 'ResizeImage', array('file' => 'thumbnail' . DS . 'ThumbLib.inc.php'));
             $this->Img = $this->Components->load('Img');
 
@@ -516,7 +514,11 @@ class ProductsController extends AppController {
             } else {
                 $this->Session->setFlash('The Product could not be saved. Please, try again.','default',array('class'=>'alert alert-danger'));
             }
-        }
+        }else{ 
+            $this->Session->setFlash('Image  size  should be 740x510','default',array('class'=>'alert alert-danger'));
+               
+             }
+    }
         
         $users = $this->Product->User->find('list',array('fields'=>array('id','first_name'),'conditions'=>array('role'=>'cook')));
        // pr($users);
@@ -754,8 +756,8 @@ public function ourstory() {
 
 */
 public function contact() {
-    $this->layout='front';
-    $this->loadModel('Page');
+$this->layout='front';
+$this->loadModel('Page');
 $this->set('Pagecontent',$this->Page->find('first',array('conditions'=>array('Page.page_name'=>@$this->params->params['action']))));	
 
 }
@@ -766,8 +768,9 @@ $this->set('Pagecontent',$this->Page->find('first',array('conditions'=>array('Pa
 public function help() {
     $this->layout='front';
     $this->loadModel('Page');
-  $this->set('Pagecontent',$this->Page->find('first',array('conditions'=>array('Page.page_name'=>@$this->params->params['action']))));	
-	
+   // pr($this->Page->find('first',array('conditions'=>array('Page.page_name'=>@$this->params->params['action']))));
+    $this->set('Pagecontent',$this->Page->find('first',array('conditions'=>array('Page.page_name'=>@$this->params->params['action']))));	
+
 
 }
 /*
