@@ -362,3 +362,19 @@ color: #ff0000 !important;
 
 .adright{float: right; margin-right: 10px;}
 .ask-k{background:url(../img/ask.jpg) center -1px no-repeat; background-size:70%; height:25px; float:right; width:50px; height:40px;}
+
+.fb-share-button.front {
+  background: none repeat scroll 0 0 #2a5e9a;
+  height: 29px;
+  vertical-align: top;
+  width: 150px;
+}
+.fb-share-button.front iframe {
+  left: 21px;
+  position: relative;
+  top: 4px;
+}
+
+.fb-share-button span{
+ height: 30px !important;
+}

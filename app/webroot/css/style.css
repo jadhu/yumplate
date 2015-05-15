@@ -1029,4 +1029,17 @@ h2{font-size:12px; padding-left:5px; position:relative; color:#000; line-height:
 .add-section{overflow:hidden;}
 .add-section .adright{margin-top:5px;}
 
-
+.fb-share-button.front {
+  background: none repeat scroll 0 0 #2a5e9a;
+  height: 29px;
+  vertical-align: top;
+  width: 150px;
+}
+.fb-share-button.front iframe {
+  left: 21px;
+  position: relative;
+  top: 4px;
+}
+.fb-share-button span{
+ height: 30px !important;
+}

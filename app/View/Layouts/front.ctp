@@ -27,9 +27,17 @@
 <?php
 //echo $this->Html->meta('viewport','width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1');
 if($this->params->params['controller']=='products' && $this->params->params['action']=='view' ){ ?>
-<meta name="description" content="<?php echo !empty($product['Product']['story'])?$product['Product']['story']:'';?>">
-<!--meta name="keywords" content="HTML,CSS,XML,JavaScript"-->
-<meta name="meal" content="<?php echo $product['Product']['name'];?>">
+
+
+<!-- Open Graph data -->
+<meta property="og:title" content="<?php echo $product['Product']['name'].' Price : $' . $product['Product']['price'];?>" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="<?php echo SITE_URL.'product/'.$product['Product']['slug'];?>" />
+<meta property="og:image" content="<?php echo SITE_URL;?>images/original/<?php echo $product['Product']['image'];?>" />
+<?php 
+      $desc=strip_tags($product['Product']['story']);
+    ?>
+<meta property="og:description" content="<?php echo $desc;?>" />
 
 <?php } ?>
 
@@ -45,9 +53,7 @@ if($this->params->params['controller']=='stories' && $this->params->params['acti
  <!--- Meta tags for stories ends here-->
 
 
-<?php
-
-if($this->params->params['controller']=='users' && $this->params->params['action']=='profile' ){ ?>
+<?php if($this->params->params['controller']=='users' && $this->params->params['action']=='profile' ){ ?>
 <!--- Meta tags for cooks profile-->
 <meta name="description" content="<?php echo !empty($product['User']['description'])?$product['User']['description']:'';?>">
 <!--meta name="keywords" content="HTML,CSS,XML,JavaScript"-->
@@ -57,7 +63,7 @@ if($this->params->params['controller']=='users' && $this->params->params['action
 
  
 <!-- Open Graph data -->
-<meta property="og:title" content="Yumplate" />
+<meta property="og:title" content="<?php echo $product['User']['first_name'];?>" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="<?php echo SITE_URL.'u/'.$product['User']['username'];?>" />
 <meta property="og:image" content="<?php echo SITE_URL;?>images/UserImg/<?php echo !empty($product['User']['image'])?$product['User']['image']:''?>" />
@@ -72,6 +78,18 @@ if($this->params->params['controller']=='users' && $this->params->params['action
 <meta name="twitter:image" content="<?php echo Router::url('/');?>images/UserImg/<?php echo !empty($product['User']['image'])?$product['User']['image']:''?>"> 
 
  <?php } ?>
+
+
+<!--tags for products sharing on facebook -->
+<?php
+if($this->params->params['controller']=='stories' && $this->params->params['action']=='view' ){ ?>
+
+<meta name="description" content="<?php echo !empty($meta_settings['MetaSetting']['description'])?$meta_settings['MetaSetting']['description']:'';?>">
+<meta name="keywords" content="<?php echo $meta_settings['MetaSetting']['keywords'];?>">
+<meta name="name" content="<?php echo $meta_settings['MetaSetting']['name'];?>">
+<?php } ?>
+ <!--- Meta tags for stories ends here-->
+
 
 	<?php
 		echo $this->Html->meta('icon');
@@ -145,7 +163,7 @@ var SITE_URL = '<?php echo SITE_URL; ?>';
 		</div>
 		 </section>
          <?php if($this->params->params['action']=='index'){ 
-            echo $this->element('community');
+            //echo $this->element('community');
            } ?>
         
             

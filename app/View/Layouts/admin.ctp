@@ -6,9 +6,27 @@
     <?php
 
 if($this->params->params['controller']=='products' && $this->params->params['action']=='view' ){ ?>
-<meta name="description" content="<?php echo !empty($product['Product']['story'])?strip_tags($product['Product']['story']):'';?>">
+
+<!--- Meta tags for cooks profile-->
+<meta name="description" content="<?php echo !empty($product['User']['description'])?$product['User']['description']:'';?>">
 <!--meta name="keywords" content="HTML,CSS,XML,JavaScript"-->
-<meta name="meal" content="<?php echo $product['Product']['name'];?>">
+<meta name="chef" content="<?php echo $product['User']['first_name'].' '.$product['User']['last_name'];?>">
+
+<!--- Meta tags for cooks profile ends here-->
+
+ 
+<!-- Open Graph data -->
+<meta property="og:title" content="<?php echo $product['Product']['name'].' Price:'.$product['Product']['price'] ;?>" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="<?php echo SITE_URL.'product/'.$product['Product']['slug'];?>" />
+<meta property="og:image" content="<?php echo SITE_URL;?>images/original/<?php echo !empty($product['Product']['image'])?$product['Product']['image']:''?>" />
+<?php 
+      $desc=@$product['Product']['story'];
+   ?>
+<meta property="og:description" content="<?php echo $desc;?>" />
+
+
+
 
 <?php } ?>
 
@@ -22,7 +40,6 @@ if($this->params->params['controller']=='stories' && $this->params->params['acti
 <meta name="keywords" content="<?php echo $meta_settings['MetaSetting']['keywords'];?>">
 <meta name="name" content="<?php echo $meta_settings['MetaSetting']['name'];?>">
 <?php } ?>
- <!--- Meta tags for stories ends here-->
 
 
     <?php 
