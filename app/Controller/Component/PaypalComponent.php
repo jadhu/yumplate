@@ -12,14 +12,27 @@ class PaypalComponent extends Component {
 
 ////////////////////////////////////////////////////////////
 
-    public $API_Endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
-    public $PAYPAL_URL = 'https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=';
+   // public $API_Endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
+    //public $PAYPAL_URL = 'https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=';
+    public $API_Endpoint;
+    public $PAYPAL_URL;
+    //public $API_Endpoint = 'https://api-3t.paypal.com/nvp';
+    //public $PAYPAL_URL = 'https://www.paypal.com/webscr?cmd=_express-checkout&token=';
 
+//public $PAYPAL_URL = 'https://api-3t.paypal.com/nvp';
 //////////////////////////////////////////////////
 
     public function __construct(ComponentCollection $collection, $settings = array()) {
         $this->controller = $collection->getController();
         parent::__construct($collection, array_merge($this->settings, (array)$settings));
+         if(TESTING=='true'){
+            $this->API_Endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
+            $this->PAYPAL_URL = 'https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=';
+        }else{
+            $this->API_Endpoint = 'https://api-3t.paypal.com/nvp';
+            $this->PAYPAL_URL = 'https://www.paypal.com/webscr?cmd=_express-checkout&token=';
+        }
+
     }
 
 ////////////////////////////////////////////////////////////
@@ -30,11 +43,11 @@ class PaypalComponent extends Component {
         $this->API_Password = Configure::read('Settings.PAYPAL_API_PASSWORD');
         $this->API_Signature = Configure::read('Settings.PAYPAL_API_SIGNATURE');
         $this->version = 64;
-        $this->SandboxFlag = true;
+        $this->SandboxFlag = false;
         $this->returnURL = Configure::read('Settings.WEBSITE') . '/users/step2';
         $this->cancelURL = Configure::read('Settings.WEBSITE') . '/orders/carts';
         $this->paymentType = 'Sale';
-        $this->currencyCodeType = 'USD';
+        $this->currencyCodeType = 'CAD';
         $this->sBNCode = 'PP-ECWizard';
     }
 
@@ -48,8 +61,9 @@ class PaypalComponent extends Component {
     public function step1($paymentAmount) {
           
         $resArray = $this->CallShortcutExpressCheckout($paymentAmount);
-
+        
         $ack = strtoupper($resArray['ACK']);
+       
         if($ack=='SUCCESS' || $ack=='SUCCESSWITHWARNING') {
             return $this->controller->redirect($this->PAYPAL_URL . $resArray['TOKEN']);
         }
@@ -64,7 +78,8 @@ class PaypalComponent extends Component {
         $nvpstr .='&L_PAYMENTREQUEST_0_AMT0='.$paymentAmount.
        // $nvpstr .='&L_PAYMENTREQUEST_0_QTY0='.$itemQty.
         //$nvpstr .='&PAYMENTREQUEST_0_AMT='.$ItemTotalPrice.   
-        $nvpstr .= '&RETURNURL=' . $this->returnURL;
+        $nvpstr .= 'SOLUTIONTYPE=SOLE&LANDINGPAGE=BILLING';
+         $nvpstr .= '&RETURNURL=' . $this->returnURL;
         $nvpstr .= '&CANCELURL=' . $this->cancelURL;
         $nvpstr .= '&PAYMENTREQUEST_0_CURRENCYCODE=' . $this->currencyCodeType;
        // pr($nvpstr);die;
