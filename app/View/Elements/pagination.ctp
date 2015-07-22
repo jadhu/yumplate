@@ -32,7 +32,7 @@ if($this->paginator->request->params['paging'][$model]['pageCount']>1){?>
 			'tag' => "li",'separator' => null,'currentClass' => 'active', 'currentTag' => 'a' ));
 			?>
 			<?php
-			echo $this->Paginator->next(__('next'), array(
+			echo $this->Paginator->next(__('Next'), array(
 			'tag' => 'li','label' => false,'class' => null), null, array( 'class' => 'disabled 	insert-anchor', 'tag' => 'a' ));
 			?>
 			</ul>

@@ -22,7 +22,7 @@ echo $this->Html->css(array('jquery-ui'),array('inline'=>false));
                                 </figure>
                                 <article>
                                 <?php 
-                                echo "<p>".$value['Product']['name']." by ".$value['User']['first_name']." <br/> ".$value['User']['city']. " , ".$value['User']['country']."</p>";?>
+                                echo "<p>".$value['Product']['name']." by ".$value['User']['first_name']." <br/> ".ucfirst($value['User']['city']). " , ".ucfirst($value['User']['country'])."</p>";?>
                                     <div class="ratings">
                                     <ul>
                                     <?php for($i=1;$i<=5;$i++) {
@@ -42,7 +42,9 @@ echo $this->Html->css(array('jquery-ui'),array('inline'=>false));
                         </div>
                     </div>
                 <?php } }?>
+
 <input type="hidden" id="user_address" value="">
+
 
                 </div>
 <script>

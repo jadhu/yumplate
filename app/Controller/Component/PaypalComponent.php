@@ -82,6 +82,7 @@ class PaypalComponent extends Component {
          $nvpstr .= '&RETURNURL=' . $this->returnURL;
         $nvpstr .= '&CANCELURL=' . $this->cancelURL;
         $nvpstr .= '&PAYMENTREQUEST_0_CURRENCYCODE=' . $this->currencyCodeType;
+         $nvpstr .= '&SOLUTIONTYPE=Sole';
        // pr($nvpstr);die;
         $this->Session->write('Shop.Paypal.currencyCodeType', $this->currencyCodeType);
         $this->Session->write('Shop.Paypal.PaymentType', $this->paymentType);

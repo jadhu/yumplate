@@ -14,7 +14,8 @@
     });
     });
 </script>
-<div class="main-order">
+<div class="main">
+<div class="main-order " style=" min-height: 433px;">
 
          <div class="chef-discount-data">
            <?php 
@@ -148,16 +149,17 @@
         </table>
 	</div>
     </div>
-     <?php }else{
-        echo "No Meal in Carts";
+      <?php }else{
+        echo '<div class="col-sm-12">No Meal in Carts</div>';
         }?>   
-
+        
     	
  </div>
 </div>
 
 
 <div class="text-center">All sales are final upon checkout</div>
+</div>
 <!--td>
 <span class="comment" data-value="<?php echo !empty($value1['comment'])?$value1['comment']:'No comment'; ?>" data-pk="<?php echo $value1['cart_id']; ?>"><?php echo !empty($value1['comment'])?$value1['comment']:'No comment'; ?></span>
 </td-->

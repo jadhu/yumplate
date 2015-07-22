@@ -8,8 +8,8 @@
         <table width="100%" align="center" cellspacing="0" cellpadding="0" >
             <tr>
                 <td valign="top" align="left" style=" padding-top:15px; padding-bottom:15px">
-                    <table width="100%" align="center" cellspacing="0" cellpadding="0" >
-                        <tr>                        
+                    <table width="600" align="center" cellspacing="0" cellpadding="0" >
+                        <tr>
                             <td valign="top" align="center" width="50%">
 							<a href="http://beta.yumplate.com/" target="_blank" style="color: #2ba6cb; text-decoration: none;">
 							<img  style="clear: both; display: block;  float: left;  width: 270px;  outline: medium none;  text-decoration: none; width: auto;" width="270;" height="104;" src="http://beta.yumplate.com/images/yumplate_logo2.jpg" />
@@ -22,43 +22,43 @@
             </tr>
             <tr>
                 <td valign="top" align="center">
-                    <table width="100%" align="center" cellspacing="0" cellpadding="0" >
+                    <table width="600" align="center" cellspacing="0" cellpadding="0" >
                         <tr>
                             <td valign="top" align="left" style="font-family: arial; color: #000; font-size: 28px; padding-bottom: 10px ;padding-top: 30px">
                                 Hi, <?php echo $sendArr['fName'];?>  <?php echo $sendArr['lName'];?>
                             </td>
-                            
+
                         </tr>
                     </table>
-                </td> 
+                </td>
             </tr>
             <tr>
                 <td valign="top" align="center">
-                    <table width="100%" align="center" cellspacing="0" cellpadding="0" >						
+                    <table width="600" align="center" cellspacing="0" cellpadding="0" >
                         <tr>
-						<td valign="top" align="left" style="font-family: arial; color: #000; font-size: 16px; line-height:20px; padding-bottom: 0px ;padding-top: 0px">						
-							Thank you for registering with YumPlate.com  and welcome!			
-						You are just the adventurous Yummer we have been looking for. As a member of the YumPlate community, we invite you to sample any one of our amazing meals from our various featured cooks.</td>						
+						<td valign="top" align="left" style="font-family: arial; color: #000; font-size: 16px; line-height:20px; padding-bottom: 0px ;padding-top: 0px">
+							Thank you for registering with YumPlate.com  and welcome!
+						You are just the adventurous Yummer we have been looking for. As a member of the YumPlate community, we invite you to sample any one of our amazing meals from our various featured cooks.</td>
                             </td>
                         </tr>
                         <tr>
 						<td valign="top" align="left" style="font-family: arial; color: #000; font-size: 14px; line-height:18px; padding-bottom: 20px ;padding-top: 0px">
-						
+
 						Please help us spread the word about YumPlate and help us grow! <br/>
 						Happy eating! <br/>
 						From your YumPlate team
-													
+
                             </td>
                         </tr>
                     </table>
-                </td> 
+                </td>
             </tr>
 
             <tr>
                 <td valign="top" align="left" >
                     <table width="600" align="center" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td  valign="top" align="left">                                
+                            <td  valign="top" align="left">
                                 <table width="100%" align="center" cellspacing="0" cellpadding="0" style="background: #EBEBEB; padding-top: 15px; padding-right: 15px; padding-left: 15px; padding-bottom: 15px;">
                                     <tr>
                                         <td valign="top" align="left" width="50%" style="font-family: arial; color: #000; font-size: 14px; padding-bottom: 10px ;padding-right: 10px">
@@ -101,17 +101,14 @@
                                 </table>
                             </td>
                         </tr>
-                    </table>                   
-                </td> 
-            </tr>            
+                    </table>
+                </td>
+            </tr>
             <tr>
                 <td align="center" valign="middle" style="padding-top:10px; padding-bottom:10px;">
-                    <a href="http://beta.yumplate.com/privacypolicy" style="font-size: 14px;  color: #2ba6cb; line-height: 19px; font-family: arial; color: #000; text-decoration: none;">Terms</a> | <a href="http://beta.yumplate.com/term_and_conditions" style=" color: #2ba6cb;font-size: 14px; line-height: 19px; font-family: arial; color: #000; text-decoration: none;">Privacy</a> 
+                    <a href="http://beta.yumplate.com/privacypolicy" style="font-size: 14px;  color: #2ba6cb; line-height: 19px; font-family: arial; color: #000; text-decoration: none;">Terms</a> | <a href="http://beta.yumplate.com/term_and_conditions" style=" color: #2ba6cb;font-size: 14px; line-height: 19px; font-family: arial; color: #000; text-decoration: none;">Privacy</a>
                 </td>
             </tr>
         </table>
     </body>
 </html>
-
-
-

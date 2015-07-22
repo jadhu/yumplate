@@ -23,15 +23,21 @@ $(document).ready(function() {
 
 });
 </script>
-<div class="main landing-page">
-<script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.3&appId=330457023826586";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+
 function goBack() {
     window.history.back()
 }
 </script>
-
-
-
+<div class="main landing-page">
 <button onclick="goBack()" class="btn btn-primary">Back</button>
 <br/>
 
@@ -103,11 +109,22 @@ function goBack() {
     <button class="pull-right btn become-btn add_meal_cart" data-order-day="<?php echo !empty($meal_day)?$meal_day:$product['Product']['day'];?>"  >
         + Add to Cart
         </button> 
-     <div class="adright">     
-      <a href="#" class="fb-share"><?php echo $this->Html->image('/images/imgoface1.jpg',array('class'=>'icon1'));?></a> 
+     <div class="adright"> 
 
-      <a href="#" class="tw-share"><?php echo $this->Html->image('/images/imgotweet1.jpg',array('class'=>'icon1'));?></a></div>
-      <div id="fb-root"></div> 
+      <?php  
+      $u_agent = $_SERVER['HTTP_USER_AGENT'];
+      if(preg_match('/MSIE/i',$u_agent))
+      { ?>
+      <fb:share-button type="button"  class="front" href="<?php echo SITE_URL; ?>product/<?php echo $product['Product']['slug'];?>"></fb:share-button>
+      <?php } else{ ?>
+     <div class="fb-share-button front" title="Share" data-href="<?php echo SITE_URL; ?>product/<?php echo $product['Product']['slug'];?>"  data-layout="button_count"></div>
+     <?php } ?>
+
+      <a href="#" class="tw-share"><?php echo $this->Html->image('/images/imgotweet1.jpg',array('class'=>'icon1'));?></a>
+      </div>
+       
+      <!--a href="#" class="fb-share"><?php echo $this->Html->image('/images/imgoface1.jpg',array('class'=>'icon1'));?></a--> 
+         
 
       
     </div>
@@ -216,6 +233,7 @@ echo $this->Form->input('tweetText',array('type'=>'hidden','id'=>'tweet_text','v
 echo $this->Form->end();
 ?>
 <div class="text-center">All sales are final upon checkout</div>
+
 <script>
 
 $(document).ready(function(){

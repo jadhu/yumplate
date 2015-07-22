@@ -19,12 +19,12 @@ function goBack() {
 <button onclick="goBack()" class="btn btn-primary">Back</button>
 <br />
 <br />
-<table class="table-striped table-bordered table-condensed table-hover">
+<table class="table-striped table-bordered table-condensed table-hover col-lg-5">
     <tr>
-        <td valign="top">
+        <td valign="top" class="col-lg-4">
             <?php echo $this->Html->Image('/images/small/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'image')); ?>
         </td>
-        <td valign="top">
+        <td valign="top" class="col-lg-2">
             Name: <?php echo h($product['Product']['name']); ?>
             <br />
             <br />

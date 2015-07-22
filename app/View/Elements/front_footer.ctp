@@ -4,41 +4,41 @@
                         <h4>Company</h4>
                         <ul class="footerNav">
                             <li>
-                            <?php 
+                            <?php
                             echo $this->Html->link('Our Story','/ourstory');
                             ?>
                             </li>
                             <li>|</li>
                             <li>
-                            <?php 
+                            <?php
                             echo $this->Html->link('How it Works','/howitworks');
                             ?></li>
                             <li>|</li>
                             <li>
-                            <?php 
+                            <?php
                             echo $this->Html->link('Contact Us','/contact');
                             ?>
-                              
+
                             </li>
                             <li>|</li>
                             <li>
-                            <?php 
+                            <?php
                             echo $this->Html->link('FAQ','/faq');
                             ?>
-                             </li>                            
+                             </li>
                         </ul>
                         <ul class="footerNav">
                             <li>
-                            <?php 
+                            <?php
                             echo $this->Html->link('Privacy Policy','/privacypolicy');
-                            ?>  
+                            ?>
                              </li>
                             <li>|</li>
                             <li>
-                            <?php 
+                            <?php
                             echo $this->Html->link('Term & Conditions','/term_and_conditions'
                             );
-                            ?>    
+                            ?>
                             </li>
                         </ul>
                     </div>
@@ -65,7 +65,7 @@
                             </li-->
                         </ul>
                     </div>
-                    
+
                 </div>
-				<div class="col-sm-12 yemcenter"><span>© 2015 YumPlate, Inc.</span> </div>
+				<div class="col-sm-12 yemcenter"><span>© 2015 YumPlate</span> </div>
             </div>

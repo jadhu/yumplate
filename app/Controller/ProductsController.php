@@ -23,8 +23,13 @@ class ProductsController extends AppController {
 ////////////////////////////////////////////////////////////
 
     public function index() {
-      $this->layout='front';
-      $this->loadModel('Story');
+
+        if($this->Session->read('authorized')!='success'){
+        $this->Session->delete('authorized');
+        $this->redirect(array('controller'=>'checks','action'=>'index'));
+        }
+        $this->layout='front';
+        $this->loadModel('Story');
         
         $products = $this->Product->find('all', array(
             'recursive' => -1,

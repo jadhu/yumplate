@@ -378,3 +378,10 @@ color: #ff0000 !important;
 .fb-share-button span{
  height: 30px !important;
 }
+
+.front.fb_iframe_widget {
+  background: none repeat scroll 0 0 #2a5e9a;
+  height: 29px;
+  vertical-align: top;
+  width: 150px;
+}

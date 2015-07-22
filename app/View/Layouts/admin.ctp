@@ -1,6 +1,6 @@
 <!doctype html>
-<html>
-<head>
+<html xmlns:fb="http://ogp.me/ns/fb#" lang="en">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><?php echo $title_for_layout; ?></title>
     <?php
@@ -42,6 +42,7 @@ if($this->params->params['controller']=='stories' && $this->params->params['acti
 <?php } ?>
 
 
+
     <?php 
     echo $this->Html->meta('icon');
     echo $this->Html->css(array('bootstrap', 'jquery-ui', 'admin')); ?>
@@ -51,6 +52,9 @@ if($this->params->params['controller']=='stories' && $this->params->params['acti
 
     <?php echo $this->fetch('css'); ?>
     <?php echo $this->fetch('script'); ?>
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 <body>
 

@@ -47,10 +47,7 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         //session_start();
-       if($this->Session->read('authorized')!='success'){
-           $this->Session->delete('authorized');
-           $this->redirect(array('controller'=>'checks','action'=>'index'));
-         }
+       
         $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login', 'admin' => false);
         $this->Auth->loginRedirect = array('controller' => 'orders', 'action' => 'index', 'admin' => true);
         $this->Auth->logoutRedirect = array('controller' => 'products', 'action' => 'index', 'admin' => false);

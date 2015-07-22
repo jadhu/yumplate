@@ -1,20 +1,23 @@
-<div class="outer">
+<div class="outer overlay">
   <div class="layout">
 <!-- Start Header Here -->
  <header class="header">
-   <a href="#" class="logo"><img src="/images/check_logo.png" alt="" /></a>
-   <ul class="social-icon">
-   <li class="facebook"><a href="#" class="active">&nbsp;</a></li>
-   <li class="gplus"><a href="#">&nbsp;</a></li>
-   <li class="twiter"><a href="#">&nbsp;</a></li>
-   </ul>
+   <img src="/images/yumplate-beta-password.png" alt="" />
+<!--start social-->
+<ul class="social text-center pull-right">
+          
+          <li><a href="https://www.facebook.com/pages/Yumplate/346586222196988" target="_blank"><i class="fa fa-facebook"></i></a></li>
+  <li><a href="https://instagram.com/yumplate" target="_blank"><i class="fa fa-instagram"></i></a></li>
+          <li><a href="https://twitter.com/yum_plate" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+<!--end social-->
  </header>
 
   <div class="content">
   <div class="early-access">
     <?php echo $this->Session->flash();?>
    <h1><span>Get</span> Early Access</h1>
-   <span>I am an early adopter</span>
+   <span>I am an early Yummer</span>
    <?php 
     echo $this->Form->create();
    echo $this->Form->input('password',array('label'=>false,'type'=>'text','class'=>'code-txt','placeholder'=>'Enter beta code','required'=>true));?>

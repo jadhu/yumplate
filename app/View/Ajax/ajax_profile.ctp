@@ -30,12 +30,18 @@ echo $day_data;
 
                             </figure>
                             <article>
-				          <div class="profile-btn-main"><button class="pull-right btn become-btn add_meal_cart" data-meal-id="<?php echo $value['Product']['id'] ; ?>" data-order-day="<?php echo strtolower($day);?>"  >
+				          <div class="profile-btn-main">
+						 
+						  <button class="pull-right btn become-btn add_meal_cart" data-meal-id="<?php echo $value['Product']['id'] ; ?>" data-order-day="<?php echo strtolower($day);?>"  >
                                     + Add to Cart
                                 </button>
+							
                             <?php 
                             echo $this->Html->link('Add your review',array('controller'=>'products','action'=>'view','slug'=>$value['Product']['slug']),array('class'=>'pull-right btn become-btn add-review'));
-                            ?></div>
+                            ?> 
+							<a href="javascript:void(0)"  class="ask-k ask_query" data-pick="<?php echo $day;?>,<?php  echo date('h:i A', strtotime($value['Product']['pick_time_from'])).'-'.date('h:i A', strtotime($value['Product']['pick_time_to']));?>" data-order="<?php echo $order_day;?>,<?php  echo date('h:i A', strtotime($value['Product']['order_time']));?>" data-name="<?php echo $value['Product']['name'] ; ?>" data-price="<?php echo $value['Product']['price'] ; ?>" data-product-id="<?php echo $value['Product']['id'] ; ?>">&nbsp;</a>
+							
+							</div>
                                 
                                <?php if(!empty($value['Product']['rating'])) { ?>
                                 <div class="rating-wrap">
@@ -68,7 +74,11 @@ echo $day_data;
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
-                            <?php $contentId=$value['Product']['id'].'_'.time();?>
+                            <?php 
+                            $min=1;
+                            $max=30;
+                            $contentId='';
+                            $contentId=$value['Product']['id'].'_'.mt_rand($min,$max).'_'.time();?>
                             <a href="#story_<?php echo $contentId; ?>" aria-controls="story" role="tab" data-toggle="tab">Story</a>
                             </li>
                             <li role="presentation">
@@ -84,7 +94,17 @@ echo $day_data;
                             <!-- Tab panes -->
                             <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="story_<?php echo $contentId; ?>">
-                            <?php echo strip_tags($value['Product']['story']);?></div>
+                            <?php 
+                             $story=strip_tags($value['Product']['story']);
+                             if(strlen($story)>597){
+                               echo substr($story, 0,580) .'....';
+                             }else{
+                               echo $story;
+                             }
+                           
+
+
+                            ?></div>
                             <div role="tabpanel" class="tab-pane" id="ingredients_<?php echo $contentId; ?>">
                              <?php echo strip_tags($value['Product']['ingredients']);?>
                             </div>

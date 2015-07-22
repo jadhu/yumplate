@@ -25,9 +25,8 @@ function goBack() {
         <th>Pickup Time</th>
         <th>Pickup Date</th>
         <th>Created</th>
-        
-        <!--th>Actions</th-->
     </tr>
+
     <?php foreach ($order['OrderItem'] as $orderItem): ?>
     <tr>
         <td><?php echo $orderItem['id']; ?></td>
@@ -35,14 +34,14 @@ function goBack() {
         <td><?php echo $orderItem['product_id']; ?></td>
         <td><?php echo !empty($orderItem['cook_name'])?$orderItem['cook_name']:''; ?></td>
         <td><?php echo $orderItem['name']; ?></td>
-        <td><?php echo @$orderItem['comment']; ?></td>
         <td><?php echo $orderItem['quantity']; ?></td>
         <td><?php echo '$'.$orderItem['price']; ?></td>
         <td><?php echo '$'.$orderItem['subtotal']; ?></td>
-        <td><?php echo !empty($orderItem['discount'])?'$'.$orderItem['discount']:''; ?></td>
+        <td><?php echo $orderItem['discount'];?></td>
         <td><?php  if(!empty($orderItem['pick_time_from'])){echo date('h:i A', strtotime($orderItem['pick_time_from'])).'-'.date('h:i A', strtotime($orderItem['pick_time_to']));}?></td>
         <td><?php echo $orderItem['order_date']; ?></td>
         <td><?php echo $orderItem['created']; ?></td>
+       
         
         <!--td>
             <?php //echo $this->Html->link('View', array('controller' => 'order_items', 'action' => 'view', $orderItem['id']), array('class' => 'btn btn-default btn-xs')); ?>

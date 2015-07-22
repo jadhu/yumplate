@@ -4953,11 +4953,19 @@ a.thumbnail.active {
 .alert-warning .alert-link {
   color: #66512c;
 }
-.alert-danger {
+/*.alert-danger {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
+}*/
+
+
+.alert-danger {
+  color: #ffffff;
+  background-color: #e23737;
+  border-color: #d12626;
 }
+
 .alert-danger hr {
   border-top-color: #e4b9c0;
 }

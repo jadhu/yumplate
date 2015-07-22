@@ -20,7 +20,7 @@ echo $this->Form->input('id',array('type'=>'hidden','value'=>$this->Session->rea
           </div>
            <div class="form-group">
             <label for="recipient-name" class="control-label">Confirm password:</label>
-            <?php echo $this->Form->input('cpassword',array('type'=>'password','placeholder'=>'Connfirm password','div'=>false,'label'=>false,'class'=>'form-control'));?>
+            <?php echo $this->Form->input('cpassword',array('type'=>'password','placeholder'=>'Confirm password','div'=>false,'label'=>false,'class'=>'form-control'));?>
            
           </div>
         </div>

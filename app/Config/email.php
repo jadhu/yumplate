@@ -45,7 +45,7 @@ class EmailConfig {
 
 
 
-public $smtp = array(
+public $smtp3 = array(
 		'transport' => 'Smtp',
 		//'from' => array('support@yumplate.com' => 'Yumplate'),
 		'host' => 'ssl://smtpout.asia.secureserver.net',
@@ -61,9 +61,9 @@ public $smtp = array(
 		//'headerCharset' => 'utf-8',
 	);
 
-	public $smtp3 = array(
+	public $smtp = array(
         'transport' => 'Smtp',
-		'from' => array('support@yumplate.com' => 'Yumplate'),
+		//'from' => array('support@yumplate.com' => 'Yumplate'),
 		'host' => 'ssl://p3plcpnl0571.prod.phx3.secureserver.net',
 		'port' => 465,
 		'timeout' => 100,

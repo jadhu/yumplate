@@ -32,7 +32,7 @@
 				<div class="col-sm-12">
 					<label for="inputEmail3" >Message <span class="red">*</span></label>
 					
-					  <textarea class="form-control" name="message" id="message" rows="4" placeholder="Message"></textarea>
+					  <textarea class="form-control" name="message" id="ins_message" rows="4" placeholder="Message"></textarea>
 					</div>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
             });
 
            
-            jQuery("#message").validate({
+            jQuery("#ins_message").validate({
                 expression: "if (VAL !='NULL' && VAL) return true; else return false;",
                 message: "Message not be empty *"
             });
@@ -93,12 +93,12 @@
                                 $('.submit-btn').button('reset');
                                 $("#username").val('');
                                 $("#email").val('');
-                                $("#message").val('');
+                                $("#ins_message").val('');
                                 $('.message_board').html('<div class="alert alert-success">Thanks for contacting us. We will get back to you shortly</div>');
                                 $('.message_board').fadeOut( 10000 );
                             } else {
                                 $('.submit-btn').button('reset');
-                                $("#message").val('');
+                                $("#ins_message").val('');
                                 $("#username").val('');
                                 $("#email").val('');
                                 $('.message_board').html('<div class="alert alert-danger">'+data.msg+'</div>');

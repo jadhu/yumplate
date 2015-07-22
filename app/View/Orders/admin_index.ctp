@@ -7,11 +7,8 @@
         <!--th><?php echo $this->Paginator->sort('last_name'); ?></th-->
         <th><?php echo $this->Paginator->sort('email'); ?></th>
         <th><?php echo $this->Paginator->sort('phone'); ?></th>
-        <th> Billing Address<?php //echo $this->Paginator->sort('billing_city'); ?></th>
-        <!--th><?php echo $this->Paginator->sort('billing_zip'); ?></th>
-        <th><?php echo $this->Paginator->sort('billing_state'); ?></th>
-        <th><?php echo $this->Paginator->sort('billing_country'); ?></th-->
-        <th>Shipping Address<?php //echo $this->Paginator->sort('shipping_city'); ?></th>
+        <th> Pickup Date And Time<?php //echo $this->Paginator->sort('billing_city'); ?></th>
+       
         <!--th><?php echo $this->Paginator->sort('shipping_zip'); ?></th>
         <th><?php echo $this->Paginator->sort('shipping_state'); ?></th>
         <th><?php echo $this->Paginator->sort('shipping_country'); ?></th>
@@ -32,26 +29,29 @@
         <!--td><?php echo h($order['Order']['last_name']); ?></td-->
         <td><?php echo h($order['OrderInfo']['email']); ?></td>
         <td><?php echo h($order['OrderInfo']['phone']); ?></td>
-        <td><?php echo  h($order['Order']['billing_city']).' '.h($order['Order']['billing_state']).' '.h($order['Order']['billing_country']).' '.h($order['Order']['billing_zip']); ?></td>
-        <!--td><?php echo h($order['Order']['billing_zip']); ?></td>
-        <td><?php echo h($order['Order']['billing_state']); ?></td>
-        <td><?php echo h($order['Order']['billing_country']); ?></td-->
-        <td><?php echo h($order['Order']['shipping_city']).' '.h($order['Order']['shipping_state']).' '.h($order['Order']['shipping_country']).' '.h($order['Order']['shipping_zip']); ?></td>
-        <!--td><?php echo h($order['Order']['shipping_zip']); ?></td>
-        <td><?php echo h($order['Order']['shipping_state']); ?></td>
-        <td><?php echo h($order['Order']['shipping_country']); ?></td>
-        <td><?php echo h($order['Order']['weight']); ?></td-->
+        <td style="padding:2px;">
+		<div class="order-table-scroll">
+        <?php 
+         $str='';
+        foreach ($order['OrderItem'] as $orderItem): 
+         
+       // $str =!empty($orderItem['cook_name'])?$orderItem['name']:'';
+        //$str='';
+        $str .='<p> Pickup Date : '.$orderItem['order_date'].'</p>';
+       
+        $str .='<p> Time: '. date('h:i A', strtotime($orderItem['pick_time_from'])).'-'.date('h:i A', strtotime($orderItem['pick_time_to']));
+        $str .='<p> ';
+        echo $str;
+        endforeach; 
+          ?>
+		</div>
+        </td>
         <td><?php echo '$'.h($order['Order']['subtotal']); ?></td>
         <!--td><?php echo h($order['Order']['tax']); ?></td>
         <td><?php echo h($order['Order']['shipping']); ?></td-->
          <td>
          <?php 
-        if(!empty($order['Order']['discount'])){
-            echo '$'.$order['Order']['discount'];
-         }else{
-            echo '';
-         }
-         ?></td>
+        echo $order['Order']['discount'];  ?></td>
         <td><?php echo '$'.h($order['Order']['total']); ?></td>
         <td><?php echo h($order['Order']['authorization']); ?></td>
 

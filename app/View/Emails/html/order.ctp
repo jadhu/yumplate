@@ -9,10 +9,21 @@
  <tbody> 
  <tr> 
  <td align="center" valign="top" xml="lang"> 
- <table cellspacing="0" cellpadding="0" border="0" bgcolor="#557da1" id="template_header" style="background-color: #557da1; color: #ffffff; border-top-left-radius: 6px ! important; border-top-right-radius: 6px ! important; border-bottom: 0px none; font-family: Arial; font-weight: bold; line-height: 100%; vertical-align: middle; width: 600px;"> 
+   <table width="600" align="center" cellspacing="0" cellpadding="0" >
+                        <tr>                        
+                            <td valign="top" align="center" width="50%">
+							<a href="http://beta.yumplate.com/" target="_blank" style="color: #2ba6cb; text-decoration: none;">
+							<img  style="clear: both; display: block;  float: left;  width: 270px;  outline: medium none;  text-decoration: none; width: auto;" width="270;" height="104;" src="http://beta.yumplate.com/images/yumplate_logo2.jpg" />
+							</a>
+                            </td>
+                            <td valign="middle" align="right" width="50%" style="font-family: arial; color: #000000; font-size: 15px;"></td>
+                        </tr>
+                    </table>
+ <table cellspacing="0" cellpadding="0" border="0" bgcolor="#557da1" id="template_header" style="background-color: #ffffff; color: #000000; border-top-left-radius: 6px ! important; border-top-right-radius: 6px ! important; border-bottom: 0px none; font-family: Arial; font-weight: bold; line-height: 100%; vertical-align: middle; width: 600px;"> 
  <tbody> 
- <tr> <td xml="lang" style="text-align:center;"> 
- <h1 style="color: #ffffff; margin: 0; padding: 28px 24px; text-shadow: 0 1px 0 #7797b4; display: block; font-family: Arial; font-size: 30px; font-weight: bold; text-align: center; line-height: 150%;">Thank you for your order</h1> </td> </tr> 
+ <tr> 
+ <td xml="lang" style="text-align:center;"> 
+ <h1 style="color: #000000; margin: 0; padding: 28px 24px; text-shadow: 0 1px 0 #7797b4; display: block; font-family: Arial; font-size: 30px; font-weight: bold; text-align: center; line-height: 150%;">Thank you for your order</h1> </td> </tr> 
  </tbody> 
  </table> 
  </td> 
@@ -108,13 +119,13 @@
      <td width="50%" valign="top" xml="lang"> <h3 style="color: #505050; display: block; font-family: Arial; font-size: 26px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Billing address</h3> 
 
      <p> <?php echo $shop['Order']['first_name'] .' '.$shop['Order']['last_name']; ?><br><?php echo $shop['Order']['billing_address'];?> ,<?php echo $shop['Order']['billing_city'];?>, <?php echo $shop['Order']['billing_state'];?> <?php echo $shop['Order']['billing_zip'];?> <br> </p> </td> 
-     <td width="50%" valign="top" xml="lang"> 
+     <!--<td width="50%" valign="top" xml="lang"> 
      <h3 style="color: #505050; display: block; font-family: Arial; font-size: 26px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Shipping address</h3> 
-     <p><?php echo $shop['Order']['first_name'] .' '.$shop['Order']['last_name']; ?><br><?php echo $shop['Order']['billing_address'];?> , <?php echo $shop['Order']['shipping_city'];?><br><?php echo $shop['Order']['billing_state'];?>, <?php echo $shop['Order']['shipping_country'];?> <?php echo $shop['Order']['shipping_zip'];?></p> </td> 
+     <p><?php echo $shop['Order']['first_name'] .' '.$shop['Order']['last_name']; ?><br><?php echo $shop['Order']['billing_address'];?> , <?php echo $shop['Order']['shipping_city'];?><br><?php echo $shop['Order']['billing_state'];?>, <?php echo $shop['Order']['shipping_country'];?> <?php echo $shop['Order']['shipping_zip'];?></p> </td> -->
      </tr> 
      </tbody> 
      </table> 
-     <h3 style="color: #505050; display: block; font-family: Arial; font-size: 30px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Contact Details</h3> 
+      <h3 style="color: #505050; display: block; font-family: Arial; font-size: 26px; font-weight: bold; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-align: left; line-height: 150%;">Contact Details</h3> 
      <p><strong>Email:</strong> 
     <a target="_blank" onclick="top.Popup.composeWindow('pcompose.php?sendto=<?php echo $shop['OrderInfo']['email'];?>'); return false;" href="mailto:swetanka.jaiswal@webenturetech.com"><?php echo $shop['OrderInfo']['email'];?></a>
     </p> 
@@ -132,8 +143,60 @@
      <tr> 
      <td align="center" valign="top" xml="lang"> 
      <table cellspacing="0" cellpadding="10" border="0" id="template_footer" style="border-top: 0px none; width: 600px;"> <tbody> <tr> <td valign="top" xml="lang"> 
-     <table cellspacing="0" cellpadding="10" border="0" style="width: 100%;"> <tbody> <tr> <td valign="middle" id="credit" style="border: 0; color: #99b1c7; font-family: Arial; font-size: 12px; line-height: 125%; text-align: center;" xml="lang" colspan="2"> 
-     <p>YumPlate</p> </td> </tr> 
+     <table cellspacing="0" cellpadding="10" border="0" style="width: 100%;"> <tbody> <tr> <td valign="top" align="left" >
+                    <table width="600" align="center" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td  valign="top" align="left">                                
+                                <table width="100%" align="center" cellspacing="0" cellpadding="0" style="background: #EBEBEB; padding-top: 15px; padding-right: 15px; padding-left: 15px; padding-bottom: 15px;">
+                                    <tr>
+                                        <td valign="top" align="left" width="50%" style="font-family: arial; font-size: 14px; padding-bottom: 10px ;padding-right: 10px">                                           
+                                            <table width="100%" align="center" cellspacing="0" cellpadding="0">                                            	<tr>
+                                            		<td style="font-size: 20px; color: #000; font-family: arial; padding-bottom: 10px; display: inline-block; ">Connect With Us:</td>
+                                            	</tr>
+                                            </table>
+                                            <br/>
+                                            <table width="100%" align="center" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="center" style="background: #3b5998; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; border: 1px solid #2d4473; font-size: 14px; font-family: arial; color: #fff;">
+														<a href="https://www.facebook.com/pages/Yumplate/346586222196988" style="font-size: 14px; font-family: arial; color: #fff; display: block; text-decoration: none;" >Facebook</a></td>
+                                                </tr>
+                                            </table>
+                                            <br/>
+                                            <table width="100%" align="center" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="center" style="background: #00acee; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; border: 1px solid #0087bb; font-size: 14px; font-family: arial; color: #fff;">
+														<a href="https://twitter.com/yum_plate" style="font-size: 14px; font-family: arial; color: #fff; display: block;  text-decoration: none;" >Twitter</a></td>
+                                                </tr>
+                                            </table>
+                                            <br/>
+                                            <table width="100%" align="center" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="center" style="background: #db4a39; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; border: 1px solid #cc0000; font-size: 14px; font-family: arial; color: #fff;">
+														<a href="https://instagram.com/yumplate" style="font-size: 14px; font-family: arial; color: #fff; display: block;  text-decoration: none;" >Instagram</a></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td valign="top" width="50%" align="left" style="font-family: arial; font-size: 14px; padding-bottom: 10px ;padding-left: 10px">                                            
+                                            <table width="100%" align="center" cellspacing="0" cellpadding="0">                                            	<tr>
+                                            		<td style="font-size: 20px; color: #000; font-family: arial; padding-bottom: 10px; display: inline-block; ">Contact Info:</td>
+                                            	</tr>
+                                            </table>
+                                            <br/>
+                                            <table width="100%" align="left" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="left" style="font-size: 14px; color:#000; font-family: arial; padding-bottom: 15px;">Phone : 647-607-0986</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="left" style="font-size: 14px; color:#000; font-family: arial;">Email : <a href="mailto:info@yumplate.com" style="color:#2ba6cb; text-decoration: none;">info@yumplate.com</a></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>                   
+                </td></tr> 
      </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> 
      </table> </div>
 

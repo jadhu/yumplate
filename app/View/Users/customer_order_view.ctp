@@ -19,13 +19,14 @@ function goBack() {
         <th>Chef Name</th>
         <th>Name</th>
         <th>Quantity</th>
-        <!--th>Weight</th-->
+        <th>Weight</th>
         <th>Price</th>
         <th>Subtotal</th>
         <th>Discount</th>
         <th>Pickup Time</th>
         <th>Pickup Date</th>
         <th>Created</th>
+       
         
         <!--th>Actions</th-->
     </tr>
@@ -36,9 +37,9 @@ function goBack() {
         <td><?php echo $orderItem['product_id']; ?></td>
         <td><?php echo !empty($orderItem['cook_name'])?$orderItem['cook_name']:''; ?></td>
         <td><?php echo $orderItem['name']; ?></td>
-        <td><?php echo @$orderItem['comment']; ?></td>
+       <!--  <td><?php echo @$orderItem['comment']; ?></td> -->
         <td><?php echo $orderItem['quantity']; ?></td>
-        <!--td><?php echo $orderItem['weight']; ?></td-->
+        <td><?php echo $orderItem['weight']; ?></td>
         <td><?php echo '$'.$orderItem['price']; ?></td>
         <td><?php echo '$'.$orderItem['subtotal']; ?></td>
         <td><?php echo !empty($orderItem['discount'])?'$'.$orderItem['discount']:''; ?></td>

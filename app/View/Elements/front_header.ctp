@@ -10,12 +10,12 @@
        
           <div class="form-group">
             <label for="recipient-name" class="control-label">Email:</label>
-            <?php echo $this->Form->input('email',array('type'=>'text','placeholder'=>'Email','div'=>false,'label'=>false,'class'=>'form-control','required'=>true));?>
+            <?php echo $this->Form->input('email',array('type'=>'text','div'=>false,'label'=>false,'class'=>'form-control','required'=>true));?>
            
           </div>
           <div class="form-group">
             <label for="message-text" class="control-label">Password:</label>
-            <?php echo $this->Form->input('password',array('type'=>'password','placeholder'=>'Password','div'=>false,'label'=>false,'class'=>'form-control'));?>
+            <?php echo $this->Form->input('password',array('type'=>'password','div'=>false,'label'=>false,'class'=>'form-control'));?>
           </div>
         
       </div>

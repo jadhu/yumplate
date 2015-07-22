@@ -1,7 +1,7 @@
 <div class="page-title">
 <h4> <?php 
 //$day_data=(date("l"))==$day?"Today's":$day.'\'s';
-echo "This meal available on ".$day=$product['Product']['day'];
+echo "This meal is available on ".$day=$product['Product']['day'];
 
 ?></h4>
 <div class="clear"></div> 

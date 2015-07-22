@@ -18,10 +18,11 @@
 //$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ?>
 <!DOCTYPE html>
-<html xmlns:fb="https://www.facebook.com/2008/fbml">
-<head>
+<html xmlns:fb="http://ogp.me/ns/fb#" lang="en" >
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 	<?php echo $this->Html->charset(); ?>
 	<title><?php echo Configure::read('Settings.SHOP_TITLE'); ?></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <?php
@@ -105,8 +106,16 @@ if($this->params->params['controller']=='stories' && $this->params->params['acti
 <script type="text/javascript">
 var SITE_URL = '<?php echo SITE_URL; ?>';
 </script>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 <body>
+
   <!-- HEADER -->
         <header class="header">
        
@@ -201,6 +210,26 @@ var SITE_URL = '<?php echo SITE_URL; ?>';
     $('.insert-anchor').wrap('<li>');
   });
 
+
+if(document.namespaces) {
+    //IE
+    document.namespaces.add("fb", "http://ogp.me/ns#");
+    document.namespaces.add("og", "http://ogp.me/ns/fb#");
+
+    if (typeof(console) != 'undefined' && console) {
+        console.log("IE: OG and FB NameSpace added");
+    } else {
+        //Other Browsers
+        var htmlRoot = jQuery(jQuery("html").get(0));
+        if(typeof(htmlRoot.attr("xmlns:fb")) == "undefined") {
+            htmlRoot.attr("xmlns:og",'http://ogp.me/ns#');
+            htmlRoot.attr("xmlns:fb",'http://ogp.me/ns/fb#');
+            if (typeof(console) != 'undefined' && console) {
+                console.log("OG and FB NameSpace added");
+            }
+        }
+    }
+  }
 </script>
 	<?php echo $this->element('sql_dump'); ?>
 </body>

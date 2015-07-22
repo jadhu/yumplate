@@ -594,6 +594,7 @@ public function order_confirm() {
         $ack = strtoupper($paypal['ACK']);
 
         if($ack == 'SUCCESS' || $ack == 'SUCESSWITHWARNING') {
+            $this->Session->write('ack','SUCCESS');
             $this->Session->write('Shop.Paypal.Details', $paypal);
             $shop = $this->Session->read('Shop');
           
@@ -694,7 +695,10 @@ public function order_confirm() {
         $this->loadModel('OrderInfo');
         $this->loadModel('Order');
         $this->loadModel('Cart');
-       
+        $ack=$this->Session->read('ack');
+        if( $ack!='SUCCESS' || empty($ack)){
+        return $this->redirect('/');
+        }
        if(empty($shop)) {
             return $this->redirect('/');
         }
@@ -702,6 +706,7 @@ public function order_confirm() {
      if(!empty($shop)){
             $this->Cart->deleteAll(array('Cart.user_id'=>$this->Auth->user('id')));
             $this->Session->delete('Shop');
+            $this->Session->delete('ack');
             }
          
 
@@ -904,7 +909,7 @@ public function order_confirm() {
          
           $email = new CakeEmail('smtp');
           $email->from($this->request->data['email']);
-          $email->to('pravendra.kumar@webenturetech.com');
+          $email->to(Configure::read('Settings.SUPPORT_EMAIL'));
           //$email->to('pravendra.kumar@webenturetech.com');
           $email->emailFormat('html');
           if($this->request->data['type']=='contact'){

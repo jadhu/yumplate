@@ -20,13 +20,19 @@
 <!DOCTYPE html>
 <html xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 	<?php echo $this->Html->charset(); ?>
 	<title><?php echo Configure::read('Settings.SHOP_TITLE'); ?></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
+ 
 	<?php
 		echo $this->Html->meta('icon');
-		echo $this->Html->css(array('bootstrap','check'));
+		echo $this->Html->css(array('bootstrap','check','fonts'));
   	echo $this->Html->script(array('jquery-1.11.2.min','bootstrap','modernizr','polyfiller'));
     
 
